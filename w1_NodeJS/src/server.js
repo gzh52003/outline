@@ -23,9 +23,6 @@
         * 客户端->服务器
     * 响应：response  响应对象
         * 服务器 -> 客户端
-        * 
-
-* Express
  */
 
 
@@ -34,13 +31,21 @@
  const path = require('path');
  const fs = require('fs');
 
- const mime = require('./js/mime')
+ const mime = require('./js/mime');
+
+ // require()： 引入一个模块
+ const {getData} = require('./module/test');
+ console.log('getData',getData);
+
+ // 默认引入 ./module/index.js
+ const myModule = require('./module')
+ console.log('myModule=',myModule);
 
  const server = http.createServer((req,res)=>{
     // 静态资源服务器要根据不同的请求地址响应不同的内容
 
     // 获取访问路径
-    const {pathname} = url.parse(req.url);
+    const {pathname} = url.parse(req.url);// {pathname,base...}
 
     // 把路径转成系统绝对路径
     const realpath = path.join(__dirname,pathname);

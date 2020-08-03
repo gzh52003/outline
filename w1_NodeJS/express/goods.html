@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表</title>
+</head>
+<body>
+    <h1>商品列表</h1>
+    <div id="goodslist">
+        <ul>
+
+        </ul>
+    </div>
+    <script>
+        const xhr = new XMLHttpRequest();
+        // xhr.onreadystatechange = ()=>{
+        //     if(xhr.readyState === 4){
+
+        //     }
+        // }
+
+        const list = document.querySelector('#goodslist ul')
+        xhr.onload = ()=>{
+            const data = JSON.parse(xhr.responseText)
+            console.log('data=',data);
+
+            list.innerHTML = data.map(item=>`<li>
+                <h4>${item.name}</h4>
+                <p class="price">价格：${item.price}</p>
+            </li>`).join('');
+        }
+
+        xhr.open('get','http://localhost:2003/goods',true);
+        xhr.send();
+
+    </script>
+</body>
+</html>
