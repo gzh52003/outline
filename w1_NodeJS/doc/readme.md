@@ -122,7 +122,20 @@
 * ES8: ES 2017
     * async/await
 
-
+* 改变this指向的方式
+    * fn.call(target,a,b,c,...)       改变fn的this指向并执行fn，参数为任意数量
+    * fn.apply(target,[a,b,c,...])      改变fn的this指向并执行fn，参数只能为一个数组
+    * fn.bind(target)       改变fn的this指向，返回一个函数
+    ```js
+        function test(a,b){
+            console.log(this);
+        }
+        test(10,20);// window
+        test.call(document,10,20);//document
+        test.apply(document,arguments);//document
+        const fn = test.bind(document);
+        fn();// document
+    ```
 ## 复习
 * 前端后端请求理解
 * 静态资源服务器
@@ -174,3 +187,15 @@
         > 通过req.body获取，前提使用相应中间件格式化参数
     * 动态路由
         > 通过req.params获取
+
+* 模块化路由
+    * express.Router()
+
+
+## 跨域解决方案
+> js是一门客户端语言：在客户端执行的语言
+
+* jsonp     需要服务器的支持
+* CORS      Cross Origin Resource Sharing   需要服务器的支持
+* 服务器代理
+    > 目标服务器有接口，但没有权限
