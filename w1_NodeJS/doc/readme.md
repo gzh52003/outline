@@ -1,6 +1,8 @@
 # NodeJS
 
 
+# Day1-1
+
 ## 模块化规范
 * AMD
 * CMD
@@ -76,3 +78,99 @@
     * 获取单个商品： `get /goods/:id`
     * 注册：`post /reg`
     * 登录：`post /login`
+
+
+
+# Day1-2
+
+## 面试题
+* event
+    * target            触发事件的元素
+    * currentTarget     绑定事件的元素
+
+    ```html
+        <table onclick="">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    ```
+* ES5：2009
+* ES6新特性：ES 2015
+    * let/const
+    * 解构
+    * 扩展运算符
+    * 箭头函数
+    * Promise
+    * class
+    * 对象简写
+    * 模板字符串
+    * for...of
+    * Set/Map
+    * ES Module
+* ES7:ES 2016
+    * Array.prototype.includes
+    * 2**16
+
+    ```js
+        const arr = [10,20,30,NaN]
+        arr.indexOf(20);//1
+        if(arr.indexOf(20)>=0){
+
+        }
+    ```
+* ES8: ES 2017
+    * async/await
+
+
+## 复习
+* 前端后端请求理解
+* 静态资源服务器
+* 模块化
+    * 规范
+        * CommonJS      NodeJS      同步
+        ```js
+            const expres = require('express');
+            const app = express();
+        ```
+        * AMD           require.js  异步
+        * CMD           sea.js      异步
+        ```js
+            require(['jquery'],function($){
+                $('.box')
+            })
+        ```
+        * ESModule      ES6         同步
+        ```js
+            import xxx from './module/xxx.js'
+        ```
+* express
+    * 中间件：一个函数
+        * 分类
+            * 内置中间件
+            * 自定义中间件
+            * 第三方中间件
+        * 使用
+            > 格式：xxx.use([path],middleware,...)
+
+
+## 知识点
+* 接口编写（RESTful Api规范）
+    1. 根据不同的请求类型实现不同的接口
+        * get       查
+        * post      增
+        * put       改（覆盖）
+        * patch     改（修改部分）
+        * delete    删
+    2. 根据不同的地址实现不同的接口
+
+* 获取请求参数
+    * url地址：get
+        > 通过req.query获取
+    ```js
+        // get /goods?page=1&size=10
+    ```
+    * 请求体
+        > 通过req.body获取，前提使用相应中间件格式化参数
+    * 动态路由
+        > 通过req.params获取

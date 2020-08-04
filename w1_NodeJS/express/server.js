@@ -39,8 +39,12 @@ app.use(middleware); // next()
 // 带路径的中间件：只有请求匹配路径后才进入中间件
 // use： 不管是get,post,patch,put,delete...都可以进入
 // app.use('/goods',(req,res,next)=>{
-app.get('/goods',(req,res,next)=>{
-    console.log('goods')
+    
+app.use(express.json(),express.urlencoded())
+
+// 查询商品
+app.get('/goods',(req,res)=>{
+    console.log('goods=',req.query);
     const goodslist = [];
     for(let i=0;i<10;i++){
         const goods = {
@@ -53,7 +57,34 @@ app.get('/goods',(req,res,next)=>{
         goodslist.push(goods);
     }
     res.send(goodslist);
+});
+
+// 增：添加商品
+
+app.post('/goods',(req,res)=>{
+    console.log('post=',req.body);
+    res.send('添加商品成')
 })
+
+// 删：删除商品
+// 动态路由
+app.delete('/goods/:id',(req,res)=>{
+    const {id} = req.params;
+    // 查询数据库，删除对应商品
+    res.send('添加商品成')
+})
+
+// 改：修改商品
+app.put('/goods/:id',(req,res)=>{
+    res.send(req.params)
+})
+
+app.post('/reg',(req,res)=>{
+
+   res.send('注册成功')
+});
+
+
 
 app.listen(2003,()=>{
     console.log('server is running on port 2003');
