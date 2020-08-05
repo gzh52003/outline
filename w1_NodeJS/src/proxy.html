@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器代理</title>
+</head>
+<body>
+    <h1>跨域请求之服务器代理</h1>
+    <button id="btn">获取数据</button>
+    <script>
+        const btn = document.querySelector('#btn');
+        // const targetUrl = `https://www.nanshig.com/shop/index.php?act=show_store&op=ajax_flowstat_record&store_id=39&goods_id=227010&act_param=goods&op_param=index`
+        // https://www.duitang.com/napi/debug/setting/?app_code=mdt&app_version=6.0&1596596430304
+
+        // 代理服务器接口地址
+        const url = 'http://localhost:2003/proxy/dt/napi/debug/setting/?app_code=mdt&app_version=6.0&1596596430304'
+
+        btn.onclick = ()=>{
+            const xhr = new XMLHttpRequest();
+            xhr.open('get',url,true);
+            xhr.send();
+
+        }
+    </script>
+</body>
+</html>

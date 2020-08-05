@@ -199,3 +199,67 @@
 * CORS      Cross Origin Resource Sharing   需要服务器的支持
 * 服务器代理
     > 目标服务器有接口，但没有权限
+
+
+## day1-3
+
+### 面试题
+* 专业术语
+    * 阻塞
+    * production    生产环境
+    * development   开发环境
+
+### 复习
+* 模块化路由
+    * 内置中间件：express.Router() 
+    ```js
+        // server.js
+        const express = require('express');
+        const app = express();
+        const allRouter = require('./router')
+        app.use('/api',allRouter)
+        app.listen(2003)
+
+
+        // index.js
+        const goodsRouter = require('./goods');
+        const userRouter = require('./user');
+
+        // 数据接口
+        app.use('/goods',goodsRouter)
+        app.use('/user',userRouter)
+
+
+        // goods.js
+        const router = express.Router();
+        router.get('/goods',(req,res)=>{
+
+        })
+        module.exports = router;
+
+
+        // html
+        xhr.open('get','http://localhost:2003/api/goods')
+    ```
+* 接收参数
+    * url参数：get
+    * 请求体: post
+    * 动态路由:
+* 跨域解决方案
+    * jsonp
+    * cors
+    * 服务器代理proxy
+
+### 知识点
+* jsonp
+    > 原理：利用script没有跨域限制的特点，请求接口并返回数据
+    * 利用script标签请求数据
+    ```html
+        <script src="http://localhost:20030/jsonp"></script>
+    ```
+    * 注意点
+        * 定义**全局函数名**，并传递到后端
+        * 需要服务器的支持
+            * 返回js代码（执行函数，并传递数据）
+* 服务器代理
+> 适合场景：目标服务器有接口，但没有权限访问

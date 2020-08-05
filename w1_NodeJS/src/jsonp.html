@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONP</title>
+</head>
+<body>
+    <h1>跨域请求之JSONP</h1>
+    <button id="btn">获取jsonp数据</button>
+    <script>
+        const btn = document.querySelector('#btn');
+
+        // 定义一个全局函数
+        function getLaoxie(data){
+            console.log('data=',data)
+        }
+
+        btn.onclick = ()=>{
+            // new XMLHttpRequest()
+            const script = document.createElement('script');
+
+            // 发起请求，并**传递函数名**
+            script.src = 'http://localhost:2003/jsonp?callback=getLaoxie'
+
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
