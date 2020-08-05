@@ -62,6 +62,8 @@
         // res.writeHead(200,{'Content-Type':'text/html;charset=utf8'});
         res.writeHead(200,{'Content-Type':mime[extname] + ';charset=utf8'});
         res.end(data);
+
+        
     })
 
     // console.log('server')

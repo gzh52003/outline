@@ -208,6 +208,8 @@
     * 阻塞
     * production    生产环境
     * development   开发环境
+* 你对原型链的理解
+    对象到Object.prototype之间的链条
 
 ### 复习
 * 模块化路由
@@ -263,3 +265,45 @@
             * 返回js代码（执行函数，并传递数据）
 * 服务器代理
 > 适合场景：目标服务器有接口，但没有权限访问
+
+
+#### 页面渲染模式
+* 客户端渲染（BSR：Browser Side Render）
+    * 步骤
+        1. 请求html页面（空页面）
+        2. 浏览器渲染html页面
+        3. ajax请求数据
+        4. 遍历数据并渲染到html页面
+    * 优点
+        * 前后端分离
+        * 用户体验好
+    * 缺点
+        * 对SEO（搜索引擎优化）不友好
+* 服务端渲染（SSR：Server Side Render）
+    * 步骤
+        1. 请求html页面（包含数据的html结构）
+        2. 浏览器渲染html页面
+    * 优点
+        * 速度快
+        * 对SEO友好
+    * 缺点
+        * 前后端不分离，对程序员要求较高
+        * 用户体验不够好
+
+#### 爬虫
+> 使用场景：目标服务器无接口，采用SSR方式渲染的网站
+
+1. 分析html结构，找出需要爬取的区域特点
+2. 使用特定工具
+    * request   用于获取目标html结构
+    * cheerio   用户过滤和获取数据（一个类似与jquery的工具）
+3. 把得到的数据写入数据库
+4. 下载图片到本地
+
+爬取目标网页：http://store.lining.com/shop/goodsCate-sale,desc,1,15s15_122,15_122_m,15_122_ls15_122_10,15_122_10_m,15_122_10_l-0-0-15_122_10,15_122_10_m,15_122_10_l-0s0-0-0-min,max-0.html
+
+
+#### stream数据流
+* fs.readFile()
+* fs.createReadStream() 读取文件流
+* fs.createWriteStream() 写入文件流
