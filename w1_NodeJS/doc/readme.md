@@ -340,3 +340,39 @@
         * fs.createWriteStream(path[, options])
 
 * Buffer： 二进制数据
+* base64
+    ```html
+
+        <img src="xxx.jpg" />
+        <img src="[base64]" />
+    ```
+
+
+### 数据库
+
+#### mySQL
+1. 配置数据库
+    * 连接对象
+    ```js
+        const connection = mysql.createConnection()
+    ```
+2. 连接数据库
+    ```js
+        connection.connect();
+    ```
+3. 操作数据库
+    * CRUD 增删改查
+    ```js
+        connection.query(sql)
+    ```
+4. 关闭连接
+    ```js
+        connection.end();
+    ```
+
+
+* ES8
+    * async & await : 用来简化promise的操作
+        * await 后必须为promise对象，等待promise对象的状态为Resolved后的返回结果
+        * await不能单独使用，必须放在async函数中
+
