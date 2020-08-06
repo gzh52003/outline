@@ -307,3 +307,36 @@
 * fs.readFile()
 * fs.createReadStream() 读取文件流
 * fs.createWriteStream() 写入文件流
+
+
+## day1-4
+
+### 复习
+* 跨域解决方案
+    * cors  
+    * jsonp
+    * 服务器代理
+
+* 请求与响应
+    * 请求：客户端->服务端
+    * 相应：服务端->客户端
+* 渲染模式
+    * 客户端渲染：BSR
+    * 服务端渲染：SSR
+* 爬虫
+    > 分析html结构
+    * request
+    * cheerio
+
+    * 爬取文本信息
+    * 爬取文件、多媒体等
+* stream（液体）
+    * fs模块
+        * 普通文件
+            * fs.readFile()    读取文件
+            * fs.writeFile()   写入文件
+    * 大文件
+        * fs.createReadStream(path[, options])
+        * fs.createWriteStream(path[, options])
+
+* Buffer： 二进制数据
