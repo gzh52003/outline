@@ -1,34 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const { MongoClient } = require('mongodb');
+const mongo = require('../utils/mongo');
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'gzh52003';
-
-// Use connect method to connect to the server
-MongoClient.connect(url, function (err, client) {
-    // client： mongo客户端
-
-    // 匹配数据库
-    const db = client.db(dbName);
-
-    // 数据库操作
-
-
-    // 数据库操作完成后关闭连接，释放资源
-    client.close();
-});
 
 
 // get /api/goods 查询所有商品
-router.get('/', (req, res) => {
-    // 
+router.get('/', async (req, res) => {
+    let {page=1,size=10,sort="add_time"} = req.query;
+    const skip = (page-1)*size; //0
+    const limit = size*1; //10
 
-    res.send()
+    
+    // 处理排序参数
+    sort = sort.split(',');// ['price'],['price','-1']
+    // 查询所有商品
+    const result = await mongo.find('goods',{},{skip,limit,sort})
+
+    res.send(result);
+})
+
+router.delete('/:id',async (req,res)=>{
+    const {id} = req.params;
+
+    try{
+        const result = await mongo.remove('goods',{_id:id})
+        res.send('success')
+
+    }catch(err){
+        res.send('fail');
+    }
+
 })
 
 

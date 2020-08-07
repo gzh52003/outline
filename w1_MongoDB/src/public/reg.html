@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css">
+</head>
+<body>
+    <div class="reg container-fluid">
+        <h1>免费注册</h1>
+
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
+            <div class="invalid-feedback">
+                用户名已存在
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <button type="submit" class="btn btn-primary btnReg">注册</button>
+    </div>
+    <script>
+        const username = document.querySelector('#username');
+        const password = document.querySelector('#password');
+        const btnReg = document.querySelector('.btnReg');
+
+        let canReg = true;
+
+        btnReg.onclick = async (e)=>{
+            if(!canReg) return;
+            const result = await fetch(`http://localhost:2003/api/reg`,{
+                method:'post',
+                body:JSON.stringify({
+                    username:username.value,
+                    password:password.value
+                }),
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            }).then(res=>res.json());
+
+            console.log('result=',result);
+
+            if(result.code === 1){
+                location.href = 'login.html'
+            }
+
+        }
+
+
+        // 查询用户是否被占用
+        username.onblur = async ()=>{
+
+            const result = await fetch(`http://localhost:2003/api/reg/check?username=${username.value}`,{
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            }).then(res=>res.json());
+
+            console.log('result=',result);
+
+            if(result.code === 0){
+                username.className = 'form-control is-invalid'
+                canReg =false;
+            }else if(result.code === 1){
+                username.className = 'form-control is-valid'
+                canReg = true;
+            }
+        }
+
+
+    </script>
+</body>
+</html>
