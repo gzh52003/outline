@@ -376,3 +376,26 @@
         * await 后必须为promise对象，等待promise对象的状态为Resolved后的返回结果
         * await不能单独使用，必须放在async函数中
 
+
+## day1-5
+
+### 面试题
+* 以最快的速度找出数组arr中哪组数的和为13
+```js
+    arr = [1,2,3,4,5,6,7,8,9,10,11];
+```
+
+### 复习
+* 在NodeJS中操作mysql
+    * 驱动： mysql
+        1. 配置
+        2. 连接数据库
+        3. 操作数据库（编写sql语句）
+        4. 关闭连接
+
+### 知识点
+* MongoDB
+
+* 在nodejs中操作mongoDB
+    * mongodb
+    * mongoose
