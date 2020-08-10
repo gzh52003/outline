@@ -51,6 +51,12 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label for="mdl">
+                <input type="checkbox" id="mdl" checked>
+                7天免登陆
+            </label>
+        </div>
         <button type="submit" class="btn btn-primary btnLogin">登录</button>
         <a href="forgotpassword.html">忘记密码</a>
     </div>
@@ -61,21 +67,36 @@
             const svgVcode = document.querySelector('#svgVcode');
             const vcode = document.querySelector('#vcode');
             const btnLogin = document.querySelector('.btnLogin');
+
+            // 判断用户是否已经登录
+            const authorization = localStorage.getItem('authorization');
+            if(authorization){
+                location.href = 'manage/index.html'
+            }
     
             // 获取图形验证码
             
-            const result = await fetch(`http://localhost:2003/api/vcode?`).then(res => res.json());
-    
-            if (result.code === 1) {
-                svgVcode.innerHTML = result.data;
+            async function getVcode(){
+                const result = await fetch(`http://localhost:2003/api/vcode?`).then(res => res.json());
+        
+                if (result.code === 1) {
+                    svgVcode.innerHTML = result.data;
+                }
+
             }
+
+            getVcode();
+
+            // 点击刷新验证码
+            svgVcode.onclick = getVcode;
     
             btnLogin.onclick = async () => {
                 const _username = username.value;
                 const _password = password.value;
                 const _vcode = vcode.value;
+                const _mdl = mdl.checked
     
-                const result = await fetch(`http://localhost:2003/api/login?username=${_username}&password=${_password}&vcode=${_vcode}`).then(res => res.json());
+                const result = await fetch(`http://localhost:2003/api/login?username=${_username}&password=${_password}&vcode=${_vcode}&mdl=${_mdl}`).then(res => res.json());
     
                 if (result.code === 0) {
                     username.className = password.className = 'form-control is-invalid';
@@ -83,6 +104,8 @@
                     vcode.className = 'form-control is-invalid';
                 }
                 else{
+                    // 登录成功
+                    localStorage.setItem('authorization',result.data);
                     location.href = 'manage/index.html'
                 }
     

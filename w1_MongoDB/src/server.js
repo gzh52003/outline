@@ -1,9 +1,11 @@
 const express = require('express');
 const {PORT} = require('./config.json');
 const rootRouter = require('./router');
+
+//创建一个服务器
 const app = express();
 
-// 静态资源服务器
+// 启用静态资源服务器
 app.use(express.static('./public',{
     maxAge:60*60*1000*24
 }));

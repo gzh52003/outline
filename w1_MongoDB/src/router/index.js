@@ -1,6 +1,7 @@
 const { Router, urlencoded, json } = require('express');
 // express.json===bodyParse.json, ....
 const session = require('express-session')
+const token = require('../utils/token');
 
 const router = Router();
 
@@ -10,6 +11,7 @@ const goodsRouter = require('./goods');
 const regRouter = require('./reg');
 const loginRouter = require('./login');
 const vcodeRouter = require('./vcode');
+const { formatData } = require('../utils/tools');
 
 
 // 数据格式化中间件
@@ -38,6 +40,27 @@ router.use('/reg', regRouter);
 
 // 登录
 router.use('/login', loginRouter);
+
+// 校验token
+router.get('/jwtverify',(req,res)=>{
+    const {authorization} = req.query;
+    console.log('test',authorization)
+
+    // verify方法校验成功：得到一个对象
+    // verify方法校验不通过：直接抛出错误
+    // try{
+    //     var decoded = jwt.verify(authorization, 'laoxie');
+    //     res.send(formatData())
+    // }catch(err){
+    //     res.send(formatData({code:0}))
+    // }
+
+    if(token.verify(authorization)){
+        res.send(formatData())
+    }else{
+        res.send(formatData({code:0}))
+    }
+});
 
 
 // 验证码

@@ -422,8 +422,56 @@
 
 ## day2-1
 
+### 面试题
+* jquery中attr与prop两个方法的区别
+    > html标签属性与dom节点属性
+    * attr(key,value) <=> setAttribute()
+    * prop(key,value)  <=> node.xxx
+    * html属性分类
+        * 全局属性
+            * id
+            * class
+            * title
+            * contenteditable
+            * ...
+        * 私有属性
+            * src: img,script,audio,video,iframe....
+            * checked
+            * href
+            * ....
+        * 自定义属性
+            * data-
+
+    ```js
+        <img id="pic" / >
+
+        // 给节点设置自定义属性，不会相互影响
+        pic.idx = 1; 
+
+        // 私有属性和全局属性，html与节点属性相互影响
+        pic.src = 'img/abc.jpg' // <img id="" src="">
+    ```
+```js
+    <div id="box"></div>
+
+    $('#box').attr('id');// box
+
+    // 一样的效果
+    $('#box').attr('title','text');// <div id="box" title="test"/> 获取：box.title
+    $('#box').prop('title','test');// <div id="box" title="test"/> 
+
+    // 不一样的效果
+    $('#box').attr('username','laoxie'); // <div id="box" username="laoxie"/>
+    $('#box').prop('username','jingjing');// #box节点设置username属性，通过原生代码box.username
+
+```
+* express的中间件的作用
+    > 中间件是一个函数，参数req,res,next
+    中间件是一个处理某些操作到达目的前的拦截函数
+
 ### 知识点
 
+#### sesscion
 * session: 会话
     * 第一次请求：获取图形验证码
         * 把验证码存入session
@@ -433,3 +481,17 @@
     > 需要引入第三方模块: express-session
 * session识别用户的原理
      * connect.sid
+
+
+#### token令牌
+> 一个加密后的字符串，可以保存任何信息，也可以设置有效期
+
+* token操作步骤
+    1. 生成token，并设置保存的数据和有效期（加密）
+    2. 返回给前端保存
+    3. 前端请求时，携带token
+    4. 后端对接收到的token进行校验（解密）
+        * 校验通过，允许登录
+        * 否则让用户重新登录
+* 使用第三方模块：jsonwebtoken 实现
+    * 签名：加密
