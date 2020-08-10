@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册</title>
+    <title>登录</title>
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css">
+    <style>
+
+        #svgVcode{
+            height:38px;overflow:hidden;
+            
+        }
+        #svgVcode svg{
+            position: relative;
+            top:-8px
+        }
+    </style>
 </head>
+
 <body>
     <div class="reg container-fluid">
-        <h1>登录获取更多...</h1>
+        <h1>登录</h1>
 
         <div class="form-group">
             <label for="username">用户名：</label>
@@ -19,20 +32,65 @@
         </div>
         <div class="form-group">
             <label for="password">密码</label>
+
             <input type="password" class="form-control" id="password">
             <div class="invalid-feedback">
                 用户或密码错误
             </div>
         </div>
+        <div class="form-group">
+            <label for="vcode">验证码</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="vcode">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="svgVcode" style="padding:0">Ad2b</span>
+                </div>
+
+                <div class="invalid-feedback">
+                    验证码错误
+                </div>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary btnLogin">登录</button>
+        <a href="forgotpassword.html">忘记密码</a>
     </div>
     <script>
-        const username = document.querySelector('#username');
-        const password = document.querySelector('#password');
-        const btnLogin = document.querySelector('.btnLogin');
+        (async ()=>{
+            const username = document.querySelector('#username');
+            const password = document.querySelector('#password');
+            const svgVcode = document.querySelector('#svgVcode');
+            const vcode = document.querySelector('#vcode');
+            const btnLogin = document.querySelector('.btnLogin');
+    
+            // 获取图形验证码
+            
+            const result = await fetch(`http://localhost:2003/api/vcode?`).then(res => res.json());
+    
+            if (result.code === 1) {
+                svgVcode.innerHTML = result.data;
+            }
+    
+            btnLogin.onclick = async () => {
+                const _username = username.value;
+                const _password = password.value;
+                const _vcode = vcode.value;
+    
+                const result = await fetch(`http://localhost:2003/api/login?username=${_username}&password=${_password}&vcode=${_vcode}`).then(res => res.json());
+    
+                if (result.code === 0) {
+                    username.className = password.className = 'form-control is-invalid';
+                } else if(result.code === 10){
+                    vcode.className = 'form-control is-invalid';
+                }
+                else{
+                    location.href = 'manage/index.html'
+                }
+    
+            }
 
-        
+        })()
 
     </script>
 </body>
+
 </html>

@@ -418,3 +418,18 @@
             * 对称加密: 加密和解密使用同一个密钥
                 * 使用场景：前后端数据交互
             * 非对称加密
+
+
+## day2-1
+
+### 知识点
+
+* session: 会话
+    * 第一次请求：获取图形验证码
+        * 把验证码存入session
+    * 第二次请求：登录
+        * 在session中获验证码
+* 在express中使用session
+    > 需要引入第三方模块: express-session
+* session识别用户的原理
+     * connect.sid

@@ -22,6 +22,7 @@
             <input type="password" class="form-control" id="password">
         </div>
         <button type="submit" class="btn btn-primary btnReg">注册</button>
+        <a href="login.html">已有账户，直接登录</a>
     </div>
     <script>
         const username = document.querySelector('#username');
@@ -53,9 +54,11 @@
 
 
         // 查询用户是否被占用
-        username.onblur = async ()=>{
+        username.onchange = async ()=>{
+            const _username = username.value.trim();
+            if(!_username) return;
 
-            const result = await fetch(`http://localhost:2003/api/reg/check?username=${username.value}`,{
+            const result = await fetch(`http://localhost:2003/api/reg/check?username=${_username}`,{
                 headers:{
                     'Content-Type':'application/json'
                 }
