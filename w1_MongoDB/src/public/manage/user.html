@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后台管理系统</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台管理系统</title>
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
 </head>
+
 <body>
-    <div class="container-xl">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">后台管理系统</a>
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <div class="container-xl">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html">后台管理系统</a>
+      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button> -->
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <!-- <ul class="navbar-nav mr-auto">
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                   <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -37,71 +39,100 @@
                   <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
               </ul> -->
-              
-            </div>
-            <span class="navbar-text ml-5">
-                <button class="btn btn-success btn-sm">退出</button>
-              </span>
-          </nav>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">首页</a></li>
-              <li class="breadcrumb-item"><a href="#">商品管理</a></li>
-              <li class="breadcrumb-item active" aria-current="page">添加</li>
-            </ol>
-          </nav>
-          <div class="row">
-            <!-- <div class="col col-xs-12 col-sm-4 col-lg-3"> -->
-            <div class="col-sm-3" style="min-width:200px">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="user.html">用户管理</a></li>
-                    <li class="list-group-item list-group-item-action"><a href="goods.html">商品管理</a></li>
-                    <li class="list-group-item list-group-item-action"><a href="order.html">订单管理</a></li>
-                  </ul>
-            </div>
-            <!-- <div class="col col-xs-12 col-sm-8 col-lg-9"> -->
-            <div class="col col-sm-9">
-              <table class="table table-striped table-hover" style="width:100%">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">用户名</th>
-                    <th scope="col">年龄</th>
-                    <th scope="col">性别</th>
-                    <th scope="col">操作</th>
-                  </tr>
-                </thead>
-                <tbody id="userlist">
-                  
-                </tbody>
-              </table>
-            </div>
-          </div>
 
+      </div>
+      <div class="navbar-text ml-5">
+        <span id="userInfo" class="mr-2"></span>
+        <button class="btn btn-success btn-sm" id="btnLogout">退出</button>
+      </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">首页</a></li>
+        <li class="breadcrumb-item"><a href="#">商品管理</a></li>
+        <li class="breadcrumb-item active" aria-current="page">添加</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <!-- <div class="col col-xs-12 col-sm-4 col-lg-3"> -->
+      <div class="col-sm-3" style="min-width:200px">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item list-group-item-action"><a href="user.html">用户管理</a></li>
+          <li class="list-group-item list-group-item-action"><a href="goods.html">商品管理</a></li>
+          <li class="list-group-item list-group-item-action"><a href="order.html">订单管理</a></li>
+        </ul>
+      </div>
+      <!-- <div class="col col-xs-12 col-sm-8 col-lg-9"> -->
+      <div class="col col-sm-9">
+        <table class="table table-striped table-hover" style="width:100%">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">用户名</th>
+              <th scope="col">年龄</th>
+              <th scope="col">性别</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody id="userlist">
+
+          </tbody>
+        </table>
+      </div>
     </div>
-    <script src="../js/auth.js"></script>
-    <script src="../js/http.js"></script>
-    <script>
-        (async ()=>{
-          const result = await request('/user');
 
-          const userlist = document.querySelector("#userlist");
+  </div>
+  <script src="../js/common.js"></script>
+  <script src="../js/tools.js"></script>
+  <script>
+    (async () => {
+      const userlist = document.querySelector("#userlist");
+      let datalist = await request('/user');
+      datalist = datalist.data;
+      render();
 
-          userlist.innerHTML = result.data.map((item,idx)=>{
-            return `<tr>
-              <td>${idx+1}</td>
-              <td>${item.username}</td>
-              <td>${item.age}</td>
-              <td>${item.gender}</td>
-              <td>
-                <div class="btn-group btn-group-sm">
-                <button class="btn btn-success">编辑</button>  
-                <button class="btn btn-danger">删除</button>
-                </div>
-              </td>
-            </tr>`
-          }).join('')
-        })();
-    </script>
+      function render(){
+        userlist.innerHTML = datalist.map((item, idx) => {
+          return `<tr>
+                <td>${idx + 1}</td>
+                <td>${item.username}</td>
+                <td>${item.age===undefined ? 18:item.age}</td>
+                <td>${item.gender ? item.gender : '未知'}</td>
+                <td>
+                  <div class="btn-group btn-group-sm">
+                  <button class="btn btn-success btnEdit">编辑</button>  
+                  <button class="btn btn-danger btnDel" data-id="${item._id}">删除</button>
+                  </div>
+                </td>
+              </tr>`
+        }).join('')
+      }
+
+      // 删除功能
+      userlist.onclick = async (e)=>{
+        const target = e.target;
+        const {id} = target.dataset
+        if(target.classList.contains('btnDel')){
+          if(confirm('are you 确定')){
+            // 删除
+            // const result = await request('/user/'+id,{},{method:'delete'});
+            const result = await request.get('/user/'+id)
+            if(result.code === 1){
+              // [{id:1},{id:2},{id:3}] , 2 => [{id:2},{id:3}]
+              datalist = datalist.filter(item=>item._id !== id);
+              render();
+            }
+
+          }
+        }else if(target.classList.contains('btnEdit')){
+          // 编辑
+          // const result = await request('/user/'+id,{age:28,gender:'男'},{method:'put'});
+          const result = await request.put('/user/'+id,{age:28,gender:'男'});
+
+        }
+      }
+    })();
+  </script>
 </body>
+
 </html>

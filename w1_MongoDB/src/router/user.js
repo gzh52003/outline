@@ -64,7 +64,8 @@ router.get('/',async (req,res)=>{
 
 router.delete('/:id',async (req,res)=>{
     const {id} = req.params;
-    let sql = `delete from user where id=${id}`;
+
+    // let sql = `delete from user where id=${id}`;
     // connection.connect();
     // connection.query(sql, (error, results, fields) => {
     //     if (error) throw error;
@@ -79,15 +80,21 @@ router.delete('/:id',async (req,res)=>{
     //     res.send('删除成功')
     // })
 
-    try{
-        // 尝试执行这里的代码
-        const result = await query(sql);
-        res.send(result)
-    }catch(err){
-        // 如果上面的代码有报错，则执行这里的代码
-        res.send('删除失败')
-    }
+    // try{
+    //     // 尝试执行这里的代码
+    //     const result = await query(sql);
+    //     res.send(result)
+    // }catch(err){
+    //     // 如果上面的代码有报错，则执行这里的代码
+    //     res.send('删除失败')
+    // }
 
+    try{
+        await mongo.remove('user',{_id:id});
+        res.send(formatData())
+    }catch(err){
+        res.send(formatData({code:0}))
+    }
     
     
 })

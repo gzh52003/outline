@@ -515,9 +515,46 @@
     * 买大屏幕为了看更多的内容而不是更大的内容
     * vw/vh/vmin/vmax
 
+* 代码执行顺序
+```js
+    console.log(1);
+    setTimeout(()=>{
+        console.log(2)
+    },0)
+    new Promise((res,rej)=>{
+        console.log(3)
+        // 这里的代码立即执行
+        res()
+    }).then(res=>{
+        // 这里的代码为异步代码
+        console.log(4)
+    })
+
+    setTimeout(()=>{
+        console.log(5)
+    },100)
+
+    console.log(6);
+
+    // 1,3,6,4,2,5
+    // 1,3,6,2,4,5
+```
+
 ### 知识点
 
 * npm script
     * 运行脚本命令：`npm run xxx`
         * start: `npm start`
         * test: `npm test`
+
+
+* className 与 classList
+    * className： 获取节点class属性值
+    * classList：获取节点的class属性对象
+        * value： 等效于className
+        * 常用方法
+            * add()
+            * remove()
+            * toggle()
+            * contains()
+            * replace()

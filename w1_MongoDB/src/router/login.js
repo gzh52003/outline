@@ -19,8 +19,13 @@ router.get('/',async (req,res)=>{
         return;
     }
 
+    // 加密后进行查询
+    const hash = crypto.createHash('md5');
+    hash.update(password+'laoxie'); // 加盐 盐值
+    password = hash.digest('hex');
+
     
-    const result = await mongo.find('user',{username,password});
+    let result = await mongo.find('user',{username,password});//[{}]
     if(result.length>0){
         // 用户名、密码、验证码都校验通过后，判断是否有免登陆选项
         console.log('req.query=',req.query);
@@ -33,9 +38,10 @@ router.get('/',async (req,res)=>{
             // });
 
             const authorization = token.create({ username })
-            
             console.log('token=',authorization);
-            res.send(formatData({data:authorization}));
+            result = result[0];
+            result.authorization = authorization
+            res.send(formatData({data:result}));
             return;
         }
 

@@ -58,7 +58,8 @@
             </label>
         </div>
         <button type="submit" class="btn btn-primary btnLogin">登录</button>
-        <a href="forgotpassword.html">忘记密码</a>
+        <a class="btn btn-link" href="reg.html">免费注册</a>
+        <a class="btn btn-link" href="forgotpassword.html">忘记密码</a>
     </div>
     <script>
         (async ()=>{
@@ -105,7 +106,7 @@
                 }
                 else{
                     // 登录成功
-                    localStorage.setItem('authorization',result.data);
+                    localStorage.setItem('currentUser',JSON.stringify(result.data));
                     location.href = 'manage/index.html'
                 }
     
