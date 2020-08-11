@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const query = require('../utils/mysql');
+const mongo = require('../utils/mongo');
+const {formatData} = require('../utils/tools')
 
 // const mysql = require('mysql');
 
@@ -25,7 +27,7 @@ const query = require('../utils/mysql');
 
 router.get('/',async (req,res)=>{
     // 读取数据库，获取所有用户
-    let sql = `select * from user`;
+    // let sql = `select * from user`;
     
     // 1. 连接mySQL数据库
     // connection.connect();
@@ -52,8 +54,12 @@ router.get('/',async (req,res)=>{
     //     res.send(reusult)
     // })
 
-    const result = await query(sql); // 等效于query(sql).then(result=>{})
-    res.send(result);
+    // const result = await query(sql); // 等效于query(sql).then(result=>{})
+
+
+    // mongo
+    const result = await mongo.find('user')
+    res.send(formatData({data:result}));
 })
 
 router.delete('/:id',async (req,res)=>{

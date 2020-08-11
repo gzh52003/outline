@@ -495,3 +495,29 @@
         * 否则让用户重新登录
 * 使用第三方模块：jsonwebtoken 实现
     * 签名：加密
+
+
+## day2-2
+
+### 面试题
+* 描述图形验证码的流程
+    * 应用场景
+    * 解决了什么问题
+    * 操作流程
+        * 两次请求
+            1. 第一次请求：后端生成验证码并存到Session，并返回图形验证码到前端
+            2. 第二次请求：前端发送验证码到后端进行校验
+        * session
+            * session的原理（识别两次请求是否为同一个用户）：sessionid
+                * sessionid通过set-cookie响应头存入客户端
+* rem布局的缺陷
+    * rem布局为简单粗暴的**缩放布局**
+    * 买大屏幕为了看更多的内容而不是更大的内容
+    * vw/vh/vmin/vmax
+
+### 知识点
+
+* npm script
+    * 运行脚本命令：`npm run xxx`
+        * start: `npm start`
+        * test: `npm test`

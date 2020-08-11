@@ -7,7 +7,9 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"supervisor src/server.js",
+    "start":"npm run server"
   },
   "keywords": [],
   "author": "",

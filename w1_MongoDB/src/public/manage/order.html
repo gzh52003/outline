@@ -53,38 +53,19 @@
           <div class="row">
             <!-- <div class="col col-xs-12 col-sm-4 col-lg-3"> -->
             <div style="width:200px">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item list-group-item-action"><a href="user.html">用户管理</a></li>
-                <li class="list-group-item list-group-item-action"><a href="goods.html">商品管理</a></li>
-                <li class="list-group-item list-group-item-action"><a href="order.html">订单管理</a></li>
-              </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action"><a href="user.html">用户管理</a></li>
+                    <li class="list-group-item list-group-item-action"><a href="goods.html">商品管理</a></li>
+                    <li class="list-group-item list-group-item-action"><a href="order.html">订单管理</a></li>
+                  </ul>
             </div>
             <!-- <div class="col col-xs-12 col-sm-8 col-lg-9"> -->
             <div class="col col-auto">
-              One of three columns
+              订单管理
             </div>
           </div>
 
     </div>
-    <script>
-        (async ()=>{
-            const authorization = localStorage.getItem('authorization');
-            console.log('auth=',authorization)
-            if(!authorization){
-                location.href = '../login.html'
-            }else{
-                // 校验token的有效性
-    
-                const result = await fetch(`http://localhost:2003/api/jwtverify?authorization=${authorization}`).then(res => res.json());
-        
-                if (result.code === 0) {
-                    localStorage.removeItem('authorization');
-                    location.href = '../login.html'
-                } 
-            }
-
-        })();
-
-    </script>
+    <script src="../js/auth.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ router.get('/',async (req,res)=>{
             //     expiresIn: 20//1000 * 60 * 60 * 24 * 7
             // });
 
-            const authorization = token.create({ username },20)
+            const authorization = token.create({ username })
             
             console.log('token=',authorization);
             res.send(formatData({data:authorization}));
