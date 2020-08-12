@@ -558,3 +558,75 @@
             * toggle()
             * contains()
             * replace()
+
+
+## day2-3
+
+### 面试题
+* 如何获取当天0时0分0秒对应的时间戳
+    ```js
+        let now = new Date();// 2020-8-12
+        let dateString = now.toLocaleDateString()
+
+        // 当天0时0分0秒
+        const today = Date.parse(dateString);
+
+        // 明天0时0分0秒
+        const tomorrow = today + 24*60*60*1000
+        Date.parse(now.setDate(now.getDate()+1).toLocaleDateString());// 2020-8-13
+    ```
+* 如何取消ajax请求
+    ```js
+        const xhr = new XMLHttpRequest();
+        xhr.open()
+        xhr.send()
+
+        // 取消ajax请求
+        xhr.abort()
+
+        // fetch()
+
+    ```
+* 如何解决setInterval()中代码执行时间大于间隔时间的问题
+```js
+
+    setInterval(()=>{
+        // 这里的代码执行时间超过50ms
+    },50);
+
+    // 每隔50ms执行一次函数中的代码
+    // 如果函数中的代码执行炒作50ms，函数执行就会出现排队效果
+    // 要求：保证当前代码执行完成后再执行下一次代码
+
+    setTimeout(function handle(){
+        // 代码执行时间：100ms
+        // arguments.callee：对当前函数的引用
+
+        setTimeout(handle,50)
+    },50)
+
+    console.log(handle)
+```
+
+
+### 知识点
+
+* websocket
+    * 特点：
+        * 长连接
+        * 服务端与客户端都可以主动发起请求
+        * 不受同源策略限制
+
+* 多人聊天室
+    * 服务端
+        * 依赖 ws模块
+        * 步骤
+            1. 启动一个socket服务器
+    * 客户端
+        * html5新特性WebSocket
+
+
+* socket心跳包
+    > 不断给服务器发送心跳包(每间隔一段时间给服务器发送一条简单的数据)
+    * 由客户端发起心跳包
+    * 由服务器发起心跳包

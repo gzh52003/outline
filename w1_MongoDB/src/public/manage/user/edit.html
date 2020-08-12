@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <style>
+        #avatar{width:100%;}
+    </style>
+</head>
+
+<body>
+    <div class="container-xl">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="../index.html">后台管理系统</a>
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button> -->
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+              </ul> -->
+
+            </div>
+            <div class="navbar-text ml-5">
+                <span id="userInfo" class="mr-2"></span>
+                <button class="btn btn-success btn-sm" id="btnLogout">退出</button>
+            </div>
+        </nav>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">首页</a></li>
+                <li class="breadcrumb-item"><a href="#">商品管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">添加</li>
+            </ol>
+        </nav>
+        <div class="row">
+            <!-- <div class="col col-xs-12 col-sm-4 col-lg-3"> -->
+            <div class="col-sm-3" style="min-width:200px">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action"><a href="../user.html">用户管理</a></li>
+                    <li class="list-group-item list-group-item-action"><a href="../goods.html">商品管理</a></li>
+                    <li class="list-group-item list-group-item-action"><a href="../order.html">订单管理</a></li>
+                </ul>
+            </div>
+            <!-- <div class="col col-xs-12 col-sm-8 col-lg-9"> -->
+            <div class="col col-sm-9">
+                <div class="row">
+                    <div class="col col-sm-9">
+                        <div class="form-group">
+                            <label for="username">用户名：</label>
+                            <input type="text" class="form-control" id="username" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码：</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">性别</label>
+                            <select class="form-control" id="gender">
+                                <option>男</option>
+                                <option>女</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">年龄</label>
+                            <input type="number" id="age" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg mb-2" id="btnSubmit">提交</button>
+                    </div>
+                    <div class="col col-sm-3">
+                        <img src="/img/g3.jpg" id="avatar" />
+                        <!-- <from enctype="multipart/form-data" method="post" action="http://localhost:2003/api/upload/avatar"> -->
+                            <input type="file" class="form-control-file" id="uploadAvatar">
+                        <!-- </from> -->
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/tools.js"></script>
+    <script>
+        (async () => {
+            const username = document.querySelector('#username')
+            const password = document.querySelector('#password')
+            const gender = document.querySelector('#gender')
+            const age = document.querySelector('#age')
+            const btnSubmit = document.querySelector('#btnSubmit')
+            const uploadAvatar = document.querySelector('#uploadAvatar')
+
+            // 获取当前用户信息
+            let currentUser = localStorage.getItem('currentUser');
+            currentUser = JSON.parse(currentUser);
+
+            // 通过用户id获取用户信息
+            // let _id;
+            // let params = location.search.slice(1);
+            // params = params.split('&');
+            // params.forEach(item=>{
+            //     const arr = item.split('=')
+            //     if(item[0] === 'id'){
+            //         _id = arr[1];
+            //     }
+            // });
+
+            let _id = location.search.match(/id=([\da-z]{24})/)[1];
+            console.log(_id);
+
+            const {data} = await request.get('/user/'+_id);
+
+            // 把数据写入表单
+            username.value = data.username
+            // password.value = data.password
+            gender.value = data.gender
+            age.value = data.age
+            avatar.src = data.avatarUrl || '/uploads/avatar.jpg'
+
+
+            btnSubmit.onclick = async () => {
+                const result = await request.put('/user/' + currentUser._id, {
+                    password: password.value,
+                    gender: gender.value,
+                    age: age.value
+                });
+
+                if (result.code === 1) {
+                    alert('更新成功')
+
+                    // 如果修改的用为为自己
+                    if(_id === currentUser._id){
+                        Object.assign(currentUser, result.data);
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    }
+
+                } else {
+                    alert('更新失败')
+                }
+            }
+
+            //  上传头像
+            uploadAvatar.onchange = async(e)=>{
+                // html5新特性：FormData
+                console.log(e);
+
+                // 创建一个用户存放数据的容器
+                const data = new FormData();
+                data.set('_id',_id);
+                data.set('avatar',e.target.files[0]);
+
+                // 一次性上传多张图片时
+                // for(let i=0;i<e.target.files.length;i++){
+                //     data.append('goods',e.target.files[i]);
+                // }
+
+                const result = await request.post('/upload/avatar', data,{
+                    contentType:false, // 告诉fetch，不需要自定义content-type
+                    // headers:{
+                    //     'Content-Type':'multipart/form-data'
+                    // }
+                });
+
+                // 更新页面
+                avatar.src = result.data.avatarUrl;
+
+                // 更新本地存储数据
+                if(_id === currentUser._id){
+                    currentUser.avatarUrl = result.data.avatarUrl;
+                    localStorage.setItem('currentUser',JSON.stringify(currentUser));
+                }
+            }
+        })();
+    </script>
+</body>
+
+</html>

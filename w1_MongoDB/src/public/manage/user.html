@@ -100,7 +100,7 @@
                 <td>${item.gender ? item.gender : '未知'}</td>
                 <td>
                   <div class="btn-group btn-group-sm">
-                  <button class="btn btn-success btnEdit">编辑</button>  
+                  <button class="btn btn-success btnEdit" data-id="${item._id}">编辑</button>  
                   <button class="btn btn-danger btnDel" data-id="${item._id}">删除</button>
                   </div>
                 </td>
@@ -127,7 +127,7 @@
         }else if(target.classList.contains('btnEdit')){
           // 编辑
           // const result = await request('/user/'+id,{age:28,gender:'男'},{method:'put'});
-          const result = await request.put('/user/'+id,{age:28,gender:'男'});
+          location.href="./user/edit.html?id="+id
 
         }
       }

@@ -11,6 +11,7 @@ const goodsRouter = require('./goods');
 const regRouter = require('./reg');
 const loginRouter = require('./login');
 const vcodeRouter = require('./vcode');
+const uploadRouter = require('./upload');
 const { formatData } = require('../utils/tools');
 
 
@@ -40,6 +41,9 @@ router.use('/reg', regRouter);
 
 // 登录
 router.use('/login', loginRouter);
+
+// 上传
+router.use('/upload', uploadRouter);
 
 // 校验token
 router.get('/jwtverify',(req,res)=>{

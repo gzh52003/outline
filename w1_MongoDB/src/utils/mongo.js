@@ -101,6 +101,10 @@ async function find(colName,query={},options={}){ // options={litmit:10,skip:0}
     
     const collection = db.collection(colName);
 
+    if(query._id && typeof query._id === 'string'){
+        query._id = ObjectId(query._id);
+    }
+
     // 查询到数据集合
     let result = collection.find(query); // 50->10
 

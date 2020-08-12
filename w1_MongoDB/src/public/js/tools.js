@@ -19,13 +19,22 @@ async function request(url,data={},options={}){
 
         url = url + '?' + params; // 'http://localhost:2003/api/user?a=10&b=20'
     }else if(['post','put','patch'].includes(options.method)){
-        options.body = JSON.stringify(data);
+        
 
         if(options.headers === undefined){
             options.headers = {}
         }
-        options.headers['Content-Type'] = 'application/json';
+        if(options.headers['Content-Type'] === undefined && options.contentType !== false){
+            options.headers['Content-Type'] = 'application/json';
+        }
+
+        if(options.headers['Content-Type'] === 'application/json'){
+            options.body = JSON.stringify(data);
+        }else{
+            options.body = data;
+        }
     }
+
 
     const result = await fetch(url,{
         ...options,
@@ -34,27 +43,27 @@ async function request(url,data={},options={}){
     return result;
 }
 
-request.get = (url,data,options)=>{
+request.get = (url,data,options={})=>{
     options.method = 'get';
     return request(url,data,options);
 }
 
-request.post = (url,data,options)=>{
+request.post = (url,data,options={})=>{
     options.method = 'post';
     return request(url,data,options);
 }
 
-request.put = (url,data,options)=>{
+request.put = (url,data,options={})=>{
     options.method = 'put';
     return request(url,data,options);
 }
 
-request.patch = (url,data,options)=>{
+request.patch = (url,data,options={})=>{
     options.method = 'patch';
     return request(url,data,options);
 }
 
-request.delete = (url,data,options)=>{
+request.delete = (url,data,options={})=>{
     options.method = 'delete';
     return request(url,data,options);
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const query = require('../utils/mysql');
 const mongo = require('../utils/mongo');
-const {formatData} = require('../utils/tools')
+const {formatData,md5} = require('../utils/tools')
 
 // const mysql = require('mysql');
 
@@ -99,4 +99,35 @@ router.delete('/:id',async (req,res)=>{
     
 })
 
+// 获取单个用户信息、
+router.get('/:id',async(req,res)=>{
+    const {id} = req.params;console.log('id=',id)
+
+    const result = await mongo.find('user',{_id:id});
+    console.log(result)
+    res.send(formatData({data:result[0]}));
+})
+
+router.put('/:id',async (req,res)=>{
+    const {id} = req.params;
+    let {password,age,gender} = req.body;
+
+    console.log()
+
+    let newData = {age,gender}
+    if(password){
+        password = md5(password);
+        newData.password = password
+    }
+
+    try{
+        await mongo.update('user',{_id:id},{$set:newData});
+        res.send(formatData({data:{_id:id,...newData}}))
+    }catch(err){
+        // console.log('err=',err);
+        res.send(formatData({code:0}))
+    }
+    
+    
+})
 module.exports = router;

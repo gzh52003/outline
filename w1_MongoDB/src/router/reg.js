@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto');
+// const crypto = require('crypto');
 
-const {formatData} = require('../utils/tools');
+const {formatData,md5} = require('../utils/tools');
 const mongo = require('../utils/mongo');
 
 // RESTful api规范
@@ -10,11 +10,12 @@ const mongo = require('../utils/mongo');
 router.post('/',async (req,res)=>{
     let {username,password} = req.body;
     console.log('password1=',password)
-    const hash = crypto.createHash('md5');
-    hash.update(password+'laoxie'); // 加盐 盐值
-    password = hash.digest('hex');
-    console.log('password2=',password,password.length)
+    // const hash = crypto.createHash('md5');
+    // hash.update(password+'laoxie'); // 加盐 盐值
+    // password = hash.digest('hex');
+    // console.log('password2=',password,password.length)
 
+    password = md5(password)
     let result
     try{
         result = await mongo.insert('user',{username,password});
