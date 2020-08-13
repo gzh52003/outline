@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <h1>Vue的使用</h1>
+    <div id="app">
+        <!-- 这里的变量就是vm实例的属性 -->
+        {{username}} - {{password}}
+    </div>
+
+    <h4>传统写法：</h4>
+    <div id="app2">
+
+    </div>
+    <script>
+        // function Vue(){
+        //     // 大量操作
+        // }
+
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                username:'laoxie',
+                age:18,
+                password:1234
+            }
+        });
+        console.log(vm)
+
+        let username = 'laoxie'
+        document.querySelector('#app2').innerHTML = username
+    </script>
+</body>
+</html>

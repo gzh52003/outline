@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.响应式数据的原理</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>3.响应式数据的原理</h1>
+    <div id="app">
+        {{JSON.stringify(score)}}
+    </div>
+
+
+    <h4>响应式属性的原理</h4>
+    <div id="box">
+
+    </div>
+    <script>
+        /**
+         *  3.响应式数据的原理
+                * 响应式属性：能监听到修改操作，并更新视图
+            
+                * 如何设置一个属性为响应式属性（属性特性）
+                    * 值属性：拥有值的属性
+                        * configurable  可配置性（其他属性特性的总开关）
+                        * enumerable    可枚举性
+                        * writable      可写性
+                        * value         属性的值
+
+                        > 特别说明：
+                            1. 传统方式添加的属性，所有属性特性默认为true
+                            2. 通过Object.defineProperty()添加的属性，所有属性特性默认为false
+                    * 存储器属性：本身没有值，一般用于代理其他数据
+                        * configurable 
+                        * enumerable
+                        * get
+                        * set
+         */
+
+        // 一、值属性
+        const data = {
+            username: 'laoxie',
+            age: 18
+        }
+
+        // 1.传统添加属性的方式
+        data.password = '123456';
+        // data.age = 28;
+        
+
+        // 2.通过Object.defineProperty(target,prop,descriptor)设置属性
+        // * target : 目标对象
+        // * prop： 目标属性
+        // * descriptor：属性特性
+        // 目的：控制data.age属性为不可修改
+        Object.defineProperty(data,'age',{
+            writable:false
+        });
+
+        // 目的：控制data.password不可枚举
+        Object.defineProperty(data,'password',{
+            enumerable:false
+        })
+
+        for(let key in data){
+            console.log('key=',key);
+        }
+
+        // 传统方式添加的属性
+        data.gender = '男';// gender的所有属性特性为true
+
+        // Object.defineProperty()添加的属性
+        Object.defineProperty(data,'title',{
+            value:'这条街最靓的仔' // 等效于data.title = '这条街最靓的仔'
+        })
+
+
+        // 二、存储器属性
+        const user = {
+            username:'jingjing',
+
+            // 添加存储器属性
+            get gender(){
+                return '女'
+            },
+            set gender(newVal){
+                console.log('gender.setter=',newVal)
+            }
+        }
+        const jj = {
+            age:36
+        }
+
+        Object.defineProperty(user,'age',{
+            get(){
+                console.log('getter')
+                return jj.age
+            },
+            set:function(newVal){
+                console.log('setter=',newVal);
+                jj.age = newVal;
+            }
+        });
+
+        // user.age; // 读取时：执行getter方法
+        // user.age = 36 // 设置时，执行setter
+
+
+        // 响应式属性的原理：把值属性变成存储器属性（getter&setter）
+        const laoxie = {
+            username:'laoxie',
+            password:123456
+        }
+        box.innerText = laoxie.username;
+
+        const newLaoxie = {}
+
+        // 把所有属性变成存储器属性
+        for(let key in laoxie){
+            Object.defineProperty(newLaoxie,key,{
+                get(){
+                    return laoxie[key]
+                },
+                set(newVal){
+                    box.innerText = newVal;
+                    laoxie[key] = newVal
+                }
+            })
+        }
+        
+        const initData = {
+            username:'jingjing',
+            password:123,
+            score:{
+                english:40,
+                math:50
+            }
+        }
+        const vm = new Vue({
+            el: '#app',
+
+            // 实例化Vue时，内部自动遍历initData下所有的属性，把所有属性变成getter&setter，并写入vm实例
+            data:initData
+        });
+        console.log('vm=',vm);
+
+        // 实例化后，如果还想设置响应式属性，必须通过:Vue.set()
+        // vm.score.chinese = 55;
+        // Vue.set(vm.score,'chinese',55);
+    </script>
+</body>
+
+</html>

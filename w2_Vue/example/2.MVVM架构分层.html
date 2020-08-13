@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>Vue的使用</h1>
+    <div id="app">
+        <!-- 这里的变量就是vm实例的属性 -->
+        {{username}} - {{password}}
+    </div>
+    <script>
+        /**
+         *  架构分层
+            * MVC
+                * Model         数据层
+                * View          视图层
+                * Controller    控制层
+                * 缺点：依赖复杂
+            * MVP
+                * Model         数据层
+                * View          视图层
+                * Presenter
+            * MVVM
+                * Model         数据层
+                * View          视图层
+                * ViewModel     
+         */
+
+        const data = {
+            username: 'laoxie',
+            age: 18,
+            password: 1234
+        }
+
+        const vm = new Vue({
+            el: '#app',
+            data
+        });
+        console.log(vm)
+    </script>
+</body>
+
+</html>
