@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.todolist</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>5.todolist</h1>
+        <div id="app">
+            <div class="input-group mb-3">
+                <input type="search" class="form-control" ref="search" v-model="todoTitle" @keyup.enter="addItem">
+                <div class="input-group-append">
+                  <button class="btn btn-success" v-on:click="addItem">添加</button>
+                </div>
+              </div>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">待办事项</th>
+                    <th scope="col">是否完成</th>
+                    <th scope="col">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item,idx in todolist">
+                    <th scope="row">{{idx+1}}</th>
+                    <td>{{item.title}}</td>
+                    <td>{{item.done ? '是' : '否'}}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm" @click="completeItem(item.id)">完成</button>
+                        <button class="btn btn-danger btn-sm" @click="removeItem(item.id)">删除</button>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+
+              <!-- 多种数据绑定的区别
+              <div>{{todoTitle}}</div>
+              <div v-text="todoTitle"></div>
+              <div v-html="todoTitle"></div>
+              <div :title="todoTitle"></div> -->
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                todolist:[
+                    {
+                        id: 1,
+                        title: '实现个小目标，月薪过万',
+                        done: false, // 是否完成
+                        addtime: Date.now()
+                    },
+                    {
+                        id: 2,
+                        title: '实现第二个小目标，赚他一个亿',
+                        done: false,
+                        addtime: Date.now() + 100
+                    },
+                    // {
+                    //     id: 3,
+                    //     title: '实现第二个小目标，赚他一个亿',
+                    //     done: false,
+                    //     addtime: Date.now() + 100
+                    // }
+
+                    // 2
+                    // const res = todolist.filter(item=>{
+                        // return item.id != 2
+                    // })
+                ],
+                todoTitle:''
+            },
+            methods:{
+                addItem(){
+                    const data = {
+                        id: this.todolist.length+1,
+                        title:this.todoTitle,
+                        done: false,
+                        addtime: Date.now()
+                    }
+                    this.todolist.unshift(data)
+
+                    // 清空并自动获得焦点
+                    this.todoTitle = '';
+                    this.$refs.search.focus();
+                },
+                removeItem(id){
+                    console.log('remove');
+                    this.todolist = this.todolist.filter(item=>item.id!==id)
+                },
+                completeItem(id){
+                    console.log('complete')
+                    this.todolist = this.todolist.map(item=>{
+                        if(item.id === id){
+                            item.done = true
+                        }
+                        return item;
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

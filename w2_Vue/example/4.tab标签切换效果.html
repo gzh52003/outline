@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.tab标签切换效果</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>4.tab标签切换效果</h1>
+        <div id="app">
+            <!-- <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+              </ul>
+              <div class="content p-3">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+              </div> -->
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item" v-for="(item,idx) in tabs" v-on:click="changeTab(idx)">
+                    <a class="nav-link" v-bind:class="{active:currentTab===idx}">{{item.title}}</a>
+                </li>
+            </ul>
+            <div class="content p-3">
+                <!-- <div v-for="(item,idx) in tabs" v-show="currentTab===idx">{{item.title + item.content}}</div> -->
+                <div v-for="(item,idx) in tabs" v-if="currentTab===idx">{{item.title + item.content}}</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app', //挂载
+            //
+            data: {
+                tabs: [{
+                    title: 'laoxie',
+                    content: '喜欢写代码'
+                }, {
+                    title: 'jingjing',
+                    content: '喜欢大保健'
+                }, {
+                    title: '小羊',
+                    content: '喜欢不穿衣服'
+                }, {
+                    title: 'xiaoxie',
+                    content: '喜欢钱'
+                }],
+                currentTab:0
+            },
+
+            // 用于定义函数
+            methods:{
+                changeTab(idx){
+                    // 在函数中如何改变数据
+                    // 在所有方法中，this指向vm实例
+
+                    this.currentTab = idx
+                }
+            }
+        });
+
+        // vm.currentTab
+    </script>
+</body>
+
+</html>

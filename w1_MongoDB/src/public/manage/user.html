@@ -116,7 +116,7 @@
           if(confirm('are you 确定')){
             // 删除
             // const result = await request('/user/'+id,{},{method:'delete'});
-            const result = await request.get('/user/'+id)
+            const result = await request.delete('/user/'+id)
             if(result.code === 1){
               // [{id:1},{id:2},{id:3}] , 2 => [{id:2},{id:3}]
               datalist = datalist.filter(item=>item._id !== id);
