@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.组件</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>7.组件</h1>
+        <div id="app">
+            <div class="row">
+                <div class="col-sm-3" style="min-width:200px">
+                    <main-Menu></main-Menu>
+                </div>
+                <div class="col col-sm-9">
+                    <main-content>
+                    </main-content>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <template id="mainMenu">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action" v-for="item in menu">
+                <a :href="item.path">{{item.text}}</a>
+            </li>
+        </ul>
+    </template>
+    <template id="mainContent">
+        <div class="container-fluid">
+            <div>欢迎进入后台管理系统</div>
+            <user />
+        </div>
+    </template>
+    <template id="user">
+        <div>
+            <table class="table table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">年龄</th>
+                        <th scope="col">性别</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item,idx in datalist">
+                        <td>{{idx + 1}}</td>
+                        <td>{{item.username}}</td>
+                        <td>{{item.age===undefined ? 18:item.age}}</td>
+                        <td>{{item.gender ? item.gender : '未知'}}</td>
+                        <td>
+                          <div class="btn-group btn-group-sm">
+                          <button class="btn btn-success">编辑</button>  
+                          <button class="btn btn-danger" @click="removeItem(item._id)">删除</button>
+                          </div>
+                        </td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+    <script>
+        /**
+            * 组件
+                > 一个组件也是一个Vue实例
+                * 全局组件: Vue.component(name,options)
+                    * name: 组件名
+                    * options: 组件配置
+                * 局部组件：components
+
+         */
+
+
+         const user = {
+            template: '#user',
+            data() {
+                return {
+                    datalist: [{ "_id": "5f2d1deec24a6d73484352a5", "username": "laoxie", "password": "0847c487af6ee0236110330d2c2b9ae6", "age": "20", "gender": "男", "avatarUrl": "/uploads/avatar-1597216066044.jpg" }, { "_id": "5f338ee11860ab4560d790fb", "username": "jingjing", "password": "4bd6fb9802874037077ec81d248aba8c", "avatarUrl": "/uploads/avatar-1597215932948.png" }, { "_id": "5f338f071860ab4560d790fc", "username": "不穿衣服的公羊", "password": "0847c487af6ee0236110330d2c2b9ae6", "avatarUrl": "/uploads/avatar-1597216026531.png" }]
+                }
+            },
+            methods:{
+                removeItem(id){
+                    this.datalist = this.datalist.filter(item=>item._id!==id)
+                }
+            }
+        }
+
+
+        Vue.component('mainMenu', {
+            // 配置参数与Vue实例基本一致
+            template: '#mainMenu',
+            data: function () {
+                return {
+                    name: '后台管理系统',
+                    menu: [{
+                        text: '首页',
+                        path: 'index.html'
+                    }, {
+                        text: '用户管理',
+                        path: 'manage/user.html'
+                    }, {
+                        text: '商品管理',
+                        path: 'manage/goods.html'
+                    }, {
+                        text: '订单管理',
+                        path: 'manage/order.html'
+                    }]
+                }
+            },
+            // components:{
+            //     user
+            // }
+        })
+
+
+        
+        Vue.component('mainContent', {
+            data() {
+                return {
+
+                }
+            },
+            template: '#mainContent',
+            components: {
+                user
+            }
+        })
+        const vm = new Vue({
+            el: '#app',
+            // template:`<storng>{{name}}</strong>`,
+            data: {
+                name: 'app'
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.常用配置参数</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+    <style>
+        .goodslist{overflow: hidden;}
+        .card{float:left;margin:10px;width:200px;}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>6.常用配置参数</h1>
+        <div id="app">
+            <div>{{pageName}}</div>
+            {{totalPrice()}}
+            <div class="goodslist">
+                <div class="row">
+                    <div class="col">购物车<span class="badge badge-danger">{{cartlist.length}}</span></div>
+                    <div class="col" style="text-align: right;">价格：{{totalprice}}</div>
+                </div>
+                <div class="card" v-for="goods in goodslist">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{goods.name}}</h5>
+                      <p class="card-text">￥{{goods.sale_price}}</p>
+                      <a href="#" class="btn btn-primary" @click="add2cart(goods._id)">加入购物车</a>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            // 配置参数
+            el: "#app",
+            data: {
+                goodslist: [
+                    { "_id": "5c128cdbd1233ce12c878a34", "name": "浪琴Longines-康卡斯系列 L3.741.4.56.6 机械男表", "category": "浪琴", "price": 220, "add_time": 1544719578085, "sale_price": 8160 },
+                    { "_id": "5c128cdbd1233ce12c878a35", "name": "浪琴longines-心月系列 L8.110.4.87.6 女士石英表", "model": "", "category": "浪琴", "price": 0, "sale_price": 8528, "add_time": 1544719578086 },
+                    { "_id": "5c128cdbd1233ce12c878a36", "name": "浪琴longines-名匠系列 L2.755.4.78.6 机械男表", "model": "", "category": "浪琴", "price": 0, "sale_price": 14020, "add_time": 1544719578086 },
+                    { "_id": "5c128cdbd1233ce12c878a37", "name": "浪琴longines-嘉岚系列 L4.209.4.87.6 女士石英表", "model": "", "category": "浪琴", "price": 0, "sale_price": 9430, "add_time": 1544719578087 },
+                    { "_id": "5c128cdbd1233ce12c878a38", "name": "浪琴longines-康卡斯系列 L3.741.4.96.6 机械男表", "model": "", "category": "浪琴", "price": 0, "sale_price": 8160, "add_time": 1544719578087 },
+                    { "_id": "5c128cdbd1233ce12c878a39", "name": "浪琴longines-军旗系列 L4.274.4.12.6 机械女表", "model": "", "category": "浪琴", "price": 0, "sale_price": 8938, "add_time": 1544719578088 },
+                ],
+                cartlist:[],
+                pageName:'cart'
+            },
+            computed:{
+                // computed一般用于对data数据进行加工处理，具有缓存的效果（当所需的数据没改变时，不会重新执行getter）
+                // 写在这里的属性为存储器属性（默认为getter）
+                totalprice(){console.log('total.computed')
+                    const result = this.cartlist.reduce((prev,item)=>{
+                        // prev: 上一次循环的返回值（第一次循环prev为初始值）
+                        // item: 这次循环的数组元素
+                        return prev+item.sale_price
+                    },0)
+
+                    return result
+                },
+                // totalprice:{
+                //     // getter
+                //     get(){
+
+                //     },
+
+                //     //setter
+                //     set(){
+
+                //     }
+                // }
+            },
+            methods:{
+                add2cart(id){
+                    console.log(id);
+                    const current = this.goodslist.filter(item=>item._id === id);
+                    this.cartlist.push(current[0])
+                },
+                totalPrice(){
+                    console.log('total.method')
+                    const result = this.cartlist.reduce((prev,item)=>{
+                        // prev: 上一次循环的返回值（第一次循环prev为初始值）
+                        // item: 这次循环的数组元素
+                        return prev+item.sale_price
+                    },0)
+
+                    return result
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

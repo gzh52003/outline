@@ -59,3 +59,95 @@
     * el        挂载
     * data      数据
     * methods   方法
+
+
+## day2-5
+
+### 复习
+* Vue指令
+    * v-for     列表循环
+    ```js
+        data = [10,20];
+        <div v-for="item,idx in data">
+        data2 = {a:10,b:20}
+        <div v-for="val,key in data">
+    ```
+    * v-text
+    * v-html    
+    * v-bind    动态绑定属性    简写： :
+    * v-on      绑定事件        简写：@
+        * 修饰符
+    * v-show
+    * v-if/v-else/v-else-if
+* 数据绑定
+    * 单向
+        * {{}}
+        * v-text
+        * v-html
+        * v-bind
+        ```js
+            <div v-text="data" v-html="data">{{data}}</div>
+            data = 'info'
+            <div class="goods" v-bind:class="data"></div>
+            <div class="goods info"></div>
+        ```
+    * 双向
+        * v-model
+* 架构模式
+    * MVC
+    * MVP
+    * MVVM
+* 响应式属性的原理
+    * getter&setter
+    * 属性特性
+        * 值属性
+        * 存储器属性
+        * 获取属性特性：
+            * Object.getOwnPropertyDescriptor(target,pro)
+            * Object.getOwnPropertyDescriptors(target)
+        * 设置属性特性：
+            * Object.defineProperty(target,pro,descriptor)
+            * Object.defineProperties(target,descriptor)
+            ```js
+                let data = {}
+                Object.defineProperties(data,{
+                    a: {
+                        writable:true,
+                        value:10
+                    },
+                    b:{
+                        enumerable:true,
+                        get(){
+                            return 100
+                        },
+                        set(newVal){
+
+                        }
+                    }
+                })
+            ```
+
+### 知识点
+* 配置参数
+    * el
+    * data
+    * computed
+    * methods
+    * template
+        * 格式
+        * 高亮
+        * 只能有一个根元素
+    * components    定义局部组件
+
+#### 组件Component
+
+* 组件的优点
+    * 复用
+    * 维护
+* 组件的定义
+    > 组件就是一个封装了具有某些功能的自定义标签（创建一个标签）
+    * 全局组件：在任何地方都能使用
+        > 
+    * 局部组件：只有在特定位置使用
+* 组件的使用
+    > 注意：不能有大写
