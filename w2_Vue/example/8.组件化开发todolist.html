@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8.组件化开发todolist</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>8.组件化开发todolist</h1>
+        <div id="app">
+            <todo-list></todo-list>
+        </div>
+
+        <template id="todoList">
+            
+            <div class="todolist">
+                <todo-form v-on:add="addItem"></todo-form>
+                <!-- <todo-form v-bind:changename.sync="name"></todo-form> -->
+                <todo-content :datalist="datalist"></todo-content>
+            </div>
+        </template>
+        <template id="todoForm">
+            <div class="input-group mb-3">
+                <input type="search" class="form-control" ref="search" v-model="todoTitle" @keyup.enter="confirm">
+                <div class="input-group-append">
+                  <button class="btn btn-success" v-on:click="confirm">添加</button>
+                </div>
+              </div>
+        </template>
+        <template id="todoContent">
+            <!-- 能写在这里的变量都是实例的属性 -->
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">待办事项</th>
+                    <th scope="col">是否完成</th>
+                    <th scope="col">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <todo-item></todo-item> -->
+                  <tr is="todo-item" v-for="item,idx in datalist" :item="item" :idx="idx"></tr>
+                </tbody>
+              </table>
+        </template>
+        <template id="todoItem">
+            <tr :class="{'table-success':item.done}">
+                <th scope="row">{{idx+1}}</th>
+                <td>{{item.title}}</td>
+                <td>{{item.done ? '是' : '否'}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" @click="completeItem(item.id)">完成</button>
+                    <button class="btn btn-danger btn-sm" @click="removeItem(item.id)">删除</button>
+                </td>
+              </tr>
+        </template>
+    </div>
+    <script>
+        Vue.component('todoButton',{
+
+        })
+
+        const todoItem = {
+            template:'#todoItem',
+            props:['item','idx']
+        }
+
+        const todoContent = {
+            template:'#todoContent',
+            // 接收父组件传入的数据
+            props:['datalist'],
+            data(){
+                return {
+                    a:10
+                }
+            },
+            components:{
+                todoItem
+            }
+        }
+        
+        const todoForm = {
+            template:'#todoForm',
+            data(){
+                return {
+                    todoTitle:''
+                }
+            },
+            methods:{
+                confirm(){console.log(this.$parent,this.$root)
+                    // 在子组件中触发自定义事件，并传递参数
+                    this.$emit('add',this.todoTitle)
+
+                    // 简单数据的修改
+                    // this.$emit('update:changename','laoxie');
+                    // 等效于v-on:add="事件处理函数"
+                    // this.$on('add',()=>{
+
+                    // })
+
+                    this.todoTitle = '';
+                    this.$refs.search.focus();
+                }
+            }
+        }
+
+        const todoList = {
+            template:'#todoList',
+            data(){
+                return {
+                    name:'todoList',
+                    datalist:[
+                    {
+                        id: 1,
+                        title: '实现个小目标，月薪过万',
+                        done: false, // 是否完成
+                        addtime: Date.now()
+                    },
+                    {
+                        id: 2,
+                        title: '实现第二个小目标，赚他一个亿',
+                        done: false,
+                        addtime: Date.now() + 100
+                    },
+                    {
+                        id: 3,
+                        title: '迎娶白富美，达到疯癫状态',
+                        done: false,
+                        addtime: Date.now() + 100
+                    }
+                ],
+                }
+            },
+            components:{
+                todoForm,
+                todoContent
+            },
+            methods:{
+                addItem(title){
+                    const data = {
+                        id: this.datalist.length+1,
+                        title,
+                        done: false,
+                        addtime: Date.now()
+                    }
+                    this.datalist.unshift(data);
+                },
+                changeName(name){
+                    this.name = name
+                }
+            }
+        }
+        const vm = new Vue({
+            el:'#app',
+            // template:'<div id="app"></div>', //如不配置tempalte,Vue会把el所在的元素的outerHTML当做template
+            data:{
+                name:'Vue'
+            },
+            components:{
+                todoList
+            }
+        })
+    </script>
+</body>
+
+</html>
