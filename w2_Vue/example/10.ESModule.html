@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.ESModule</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>10.ESModule</h1>
+       
+    </div>
+   
+    <script type="module">
+        /**
+            10.ESModule
+            格式：import <module> from <url>
+                url必须为./相对路径或绝对路径，换句话说，ESModule只能在服务器环境中使用
+         */
+        import getData from './js/moduleTest.js';
+        
+         var username = 'laoxie';
+
+         console.log('username=',username)
+         console.log('getData=',getData())
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.生命周期</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>9.生命周期</h1>
+        <div id="app">
+            {{username}} - {{password}}
+
+            <user ref="user" v-if="showXiaoxie"></user>
+            <button @click="showXiaoxie=!showXiaoxie">显示/隐藏</button>
+        </div>
+    </div>
+   
+    <script>
+        /**
+            * 生命周
+
+         */
+
+         const vm = new Vue({
+            el:"#app",
+            data:{
+                username:'laoxie',
+                password:123456,
+                showXiaoxie:true
+            },
+            components:{
+                user:{
+                    // props:['a'],
+                    template:`<div style="border:10px solid #58bc58;padding:10px;">
+                        <h4>用户名：{{username}}</h4>
+                        <p>年龄：{{age}}</p>    
+                    </div>`,
+                    data(){
+                        return {
+                            username:'xiaoxie',
+                            age:19,
+                        }
+                    },
+                    // 创建阶段
+                    beforeCreate(){
+                        console.log('beforeCreate')
+                        console.log('username=',this.username);// undefined
+                    },
+                    created(){
+                        console.log('created')
+                        console.log('username=',this.username);//laoxie
+                        console.log('this.$el=',this.$el);//undefined
+                    },
+
+                    // 挂载阶段: 把数据挂载到视图
+                    // 对节点的操作，一般放到Mount阶段执行
+                    beforeMount(){
+                        console.log('beforeMount')
+                        console.log('$el=',this.$el);// 无数据的node
+                    },
+                    mounted(){
+                        console.log('mounted')
+                        console.log('$el=',this.$el);// 有数据node
+                    },
+
+                    // 更新阶段
+                    beforeUpdate(){
+                        console.log('beforeUpdate',this.$el.innerHTML)
+                    },
+                    updated(){
+                        console.log('updated',this.$el.innerHTML)
+                    },
+
+                    // 销毁阶段
+                    beforeDestroy(){
+                        console.log('beforeDestroy')
+                    },
+                    destroyed(){
+                        console.log('destroyed')
+                    }
+                }
+            },
+
+            // template:`<div id="app" class="has-template">
+            //     {{username}} -> {{password}}
+            // </div>`,
+
+            // render(){
+                // return 
+            // },
+
+            // 生命周期函数
+            
+         });
+
+
+        //  btn.onclick = ()=>{
+        //     // 手动挂载
+        //     vm.$mount('#app'); 
+        //  }
+    </script>
+</body>
+
+</html>
