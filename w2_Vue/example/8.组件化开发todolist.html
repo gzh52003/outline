@@ -22,13 +22,16 @@
                 <todo-form v-on:add="addItem"></todo-form>
                 <!-- <todo-form v-bind:changename.sync="name"></todo-form> -->
                 <todo-content :datalist="datalist"></todo-content>
+
+                <div>待办事项:{{datalist.length}}，完成：{{doneList.length}}，未完成：{{unDoneList.length}}</div>
             </div>
         </template>
         <template id="todoForm">
             <div class="input-group mb-3">
                 <input type="search" class="form-control" ref="search" v-model="todoTitle" @keyup.enter="confirm">
                 <div class="input-group-append">
-                  <button class="btn btn-success" v-on:click="confirm">添加</button>
+                  <!-- <button class="btn btn-success" v-on:click="confirm">添加</button> -->
+                  <todo-button class="btn-success" v-on:click.native="confirm">添加</todo-button>
                 </div>
               </div>
         </template>
@@ -55,20 +58,61 @@
                 <td>{{item.title}}</td>
                 <td>{{item.done ? '是' : '否'}}</td>
                 <td>
-                    <button class="btn btn-success btn-sm" @click="completeItem(item.id)">完成</button>
-                    <button class="btn btn-danger btn-sm" @click="removeItem(item.id)">删除</button>
+                    <!-- <button class="btn btn-success btn-sm" @click="complete(item.id)">完成</button>
+                    <button class="btn btn-danger btn-sm" @click="remove(item.id)">删除</button> -->
+                    <todo-button class="btn-success" @click.native="complete(item.id)">完成</todo-button>
+                    <todo-button class="btn-danger" @click.native="remove(item.id)">
+                        <span>删除</span>
+                        <!-- <template v-slot:en="enProps">
+                            <em>Delete {{enProps.a}}</em>
+                        </template> -->
+                    </todo-button>
                 </td>
               </tr>
         </template>
+        <template id="todoButton">
+            <button class="btn btn-sm">
+                <slot></slot>
+                <!-- <span class="en">
+                    <slot name="en"></slot>
+                </span>
+                组件内：{{a}} -->
+            </button>
+        </template>
     </div>
     <script>
-        Vue.component('todoButton',{
+        // 1. 定义个Vue实例
+        const Bus = new Vue();
 
+        // 2. 定义事件
+        // Bus.$on('up',(num)=>{
+        //     console.log('up')
+        // })
+        // 3. 触发事件
+        // Bus.$emit('up',100)
+
+
+        Vue.component('todoButton',{
+            template:'#todoButton',
+            props:['text'],
+            data(){
+                return {
+                    a:100
+                }
+            }
         })
 
         const todoItem = {
             template:'#todoItem',
-            props:['item','idx']
+            props:['item','idx'],
+            methods:{
+                remove(id){
+                    Bus.$emit('remove',id)
+                },
+                complete(id){
+                    Bus.$emit('complete',id)
+                }
+            }
         }
 
         const todoContent = {
@@ -137,6 +181,15 @@
                 ],
                 }
             },
+            computed:{
+                // 这里为属性getter&setter
+                doneList(){
+                    return this.datalist.filter(item=>item.done)
+                },
+                unDoneList(){
+                    return this.datalist.filter(item=>!item.done)
+                }
+            },
             components:{
                 todoForm,
                 todoContent
@@ -151,10 +204,31 @@
                     }
                     this.datalist.unshift(data);
                 },
+                completeItem(id){
+                    this.datalist = this.datalist.map(item=>{
+                        if(item.id === id){
+                            item.done = true
+                        }
+                        return item;
+                    })
+                },
+                removeItem(id){
+                    this.datalist = this.datalist.filter(item=>item.id!==id)
+                },
                 changeName(name){
                     this.name = name
                 }
-            }
+            },
+           
+            mounted(){
+               // mounted生命周函数在组件渲染后执行 
+                Bus.$on('complete',(id)=>{
+                    this.completeItem(id)
+                })
+                Bus.$on('remove',(id)=>{
+                    this.removeItem(id)
+                })
+            },
         }
         const vm = new Vue({
             el:'#app',
