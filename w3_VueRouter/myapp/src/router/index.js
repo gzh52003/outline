@@ -5,7 +5,11 @@ import VueRouter from 'vue-router'
 
 
 import Home from '../pages/Home.vue'
-import User from '../pages/User.vue'
+
+import User from '../pages/user/Default.vue'
+import UserList from '../pages/user/List.vue'
+import UserAdd from '../pages/user/Add.vue'
+
 import Order from '../pages/Order.vue'
 import Goods from '../pages/Goods.vue'
 import Reg from '../pages/Reg.vue'
@@ -30,7 +34,19 @@ const router = new VueRouter({
         },
         {
             path: '/user',
-            component: User
+            component: User,
+            children: [
+                // 进入用户管理页面直接跳到用户列表
+                {
+                    path: '',
+                    redirect: 'list'
+                }, {
+                    path: 'add',
+                    component: UserAdd
+                }, {
+                    path: 'list',
+                    component: UserList
+                }]
         },
         {
             path: '/order',
@@ -55,12 +71,12 @@ const router = new VueRouter({
 
         // 404页面效果
         {
-            path:'*',
-            redirect:'/404'
+            path: '*',
+            redirect: '/404'
         }
     ]
 })
 
 export default router;
 
-console.log('router=',router);
+console.log('router=', router);

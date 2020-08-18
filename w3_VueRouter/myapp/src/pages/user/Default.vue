@@ -1,6 +1,7 @@
 <template>
     <div>
-        User
+        用户管理
+        <router-view/>
     </div>
 </template>
 <script>
