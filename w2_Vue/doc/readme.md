@@ -320,3 +320,99 @@
         ```
     * 导出: export
         > 导出 export 后自能跟var,let,const,function,class,default,{}
+
+## day3-2
+
+### 面试题
+* ESModule规范中对url路径的要求
+
+* 对组合标签封装组件导致浏览器解析错误的问题
+* v-model的替代方案
+    * v-bind:value  model->view
+    * v-on:input    view->model
+    ```js
+        <input v-model="username" />
+        <input v-bind:value="username" v-on:input="changeUasername">
+
+        methods:{
+            changeUsername(e){
+                this.username = e.target.value
+            }
+        }
+    ```
+* v-html有哪些风险
+    > 只渲染信任的内容
+    * xss 跨域脚本攻击
+        * 如何规避
+            * 对用户的输入进行过滤处理，如：script,style,a,iframe...
+* event对象target与currentTarget的区别
+    * target        触发事件的元素
+    * currentTarget 绑定事件的元素
+    * 事件触发阶段
+        1. 捕获阶段
+        2. 触发阶段
+        3. 冒泡阶段
+
+
+    三段论：
+        1. 给出一个前提条件         金属能导电          
+        2. 给出一个已知条件         我是金属做得        
+        3. 得到一个结论             我能导电
+
+
+### 知识点
+* 多页面应用：MPA（Multiple Page Application）
+    > 整个应用具有多个页面，页面间通过a标签跳转
+* 单页面应用：SPA （Single Page Application）
+    > 整个应用只有一个页面，页面间通过路由进行跳转
+
+#### VueRouter
+Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现多视图的单页Web应用
+* 使用步骤
+    1. 引入vue-router
+    ```js
+        import VueRouter from 'vue-router'
+    ```
+    2. 使用vue-router
+    ```js
+        Vue.use(VueRouter)
+    ```
+    3. 实例化router并配置参数
+    ```js
+        import Home from './pages/Home.vue';
+        import User from './pages/User.vue';
+        const router = new VueRouter({
+            // 配置路由规则
+            routes:[{
+                // 当浏览器url地址为/home时，显示Home组件的内容
+                path:'/home',
+                component:Home
+            },{
+                path:'/user',
+                component:User
+            }]
+        })
+    ```
+    4. 把router实例注入到vue实例中
+    ```js
+        new Vue({
+            router,
+            render: h => h(App),
+        }).$mount('#app')
+
+    ```
+
+* 配置参数
+    * mode：路由模式
+        * hash      hash路由（默认）
+        * history   history路由
+
+* 显示路由内容
+    > 通过VueRouter内置组件`<router-view/>`来实现
+* 路由跳转
+    * 声明式导航：利用内置组件`<router-link/>`实现跳转
+    * 编程式导航：利用js实现跳转
+        * $router
+            * push()
+            * replace()
+            * go()/back()/forward()

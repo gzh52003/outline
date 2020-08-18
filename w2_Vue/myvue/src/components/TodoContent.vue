@@ -10,7 +10,8 @@
     </thead>
     <tbody>
       <!-- <todo-item></todo-item> -->
-      <tr is="todo-item" :key="item.id" v-for="(item,idx) in datalist" :item="item" :idx="idx"></tr>
+      <!-- <tr is="todo-item" :key="item.id" v-for="(item,idx) in datalist" :item="item" :idx="idx"></tr> -->
+      <TodoItem :key="item.id" v-for="(item,idx) in datalist" :item="item" :idx="idx" />
     </tbody>
   </table>
 </template>
