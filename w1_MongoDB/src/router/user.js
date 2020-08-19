@@ -61,7 +61,7 @@ router.get('/',async (req,res)=>{
     const {page=1,size=10} = req.query;
     const limit = size*1;
     const skip = (page-1)*size;
-    const result = await mongo.find('user',{},{limit,skip})
+    const result = await mongo.find('user',{},{limit,skip,field:{password:false}})
     res.send(formatData({data:result}));
 })
 
@@ -106,7 +106,10 @@ router.delete('/:id',async (req,res)=>{
 router.get('/:id',async(req,res)=>{
     const {id} = req.params;console.log('id=',id)
 
-    const result = await mongo.find('user',{_id:id});
+    const result = await mongo.find('user',{_id:id},{
+        // 过滤字段：password不返回前端
+        field:{password:false}
+    });
     console.log(result)
     res.send(formatData({data:result[0]}));
 })
@@ -115,7 +118,6 @@ router.put('/:id',async (req,res)=>{
     const {id} = req.params;
     let {password,age,gender} = req.body;
 
-    console.log()
 
     let newData = {age,gender}
     if(password){

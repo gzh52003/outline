@@ -12,7 +12,7 @@
       <el-table-column label="用户名" prop="username"></el-table-column>
       <el-table-column prop="age" label="年龄" width="120"></el-table-column>
       <el-table-column prop="gender" label="性别" width="120" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="120">
         <!-- 需要获取数据id -->
         <!-- <slot name="title"></slot>
         <slot :row="item"/>-->
@@ -67,7 +67,14 @@ export default {
     },
     goto(id) {
       // 跳转路由传参
-      this.$router.push("/user/edit");
+    //   this.$router.push("/user/edit/"+id + '?a=10');
+      this.$router.push({
+          name:'userEdit',
+          params:{id},
+          query:{
+              a:10,b:20
+          }
+      })
     },
   },
   async created() {

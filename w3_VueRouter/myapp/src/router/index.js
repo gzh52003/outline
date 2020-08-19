@@ -48,7 +48,8 @@ const router = new VueRouter({
                     path: 'list',
                     component: UserList
                 }, {
-                    path: 'edit',
+                    name:'userEdit',
+                    path: 'edit/:id',
                     component: UserEdit
                 }]
         },

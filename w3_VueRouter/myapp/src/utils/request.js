@@ -9,5 +9,7 @@ const request = axios.create({
 //     baseURL:'http://www.nsg.com'
 // });
 
+// axios.get(url,config)
+// axios.post(url,data,config)
 
 export default request;
