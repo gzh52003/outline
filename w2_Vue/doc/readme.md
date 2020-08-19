@@ -425,3 +425,113 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
 * iView         腾讯
 * ant-design    阿里
 ....
+
+## day3-3
+
+### 面试题
+* websocket心跳包
+    > 作用：用来判断客户端与服务端是否断开
+* 如何设置Vue的响应式属性
+    * 配置data
+    ```js
+        const vm = new Vue({
+            data:{
+                score:{
+                    englisht:100,
+                    math:99
+                }
+            }
+        })
+
+        //vm.score.chinese = 120; // chinese为非响应式属性
+        Vue.set(target,prop,value) // target不能为实例,也不能为根数据属性$data
+        Vue.set(vm,'username','laoxie');// 报错
+        Vue.set(vm.$data,'username','laoxie');// 报错
+
+        //vm.$set();
+        //this.$set();
+    ```
+
+### 知识点
+* key的作用
+    > Vue识别DOM节点的一个通用机制，一般用户同级别同类型的节点
+    * key值必须是唯一且稳定的数据
+    * 虚拟DOM （Virtual DOM）
+        > 是一个结构类似与真实DOM的js对象 `{props:value}`
+        * 为什么虚拟DOM能提高页面性能
+            * 减少DOM节点操作
+            * 对虚拟DOM的前后状态进行对比
+            
+        ```js
+            const vmStart = {
+                type:'div',
+                props:{id:'datalist'},
+                children:[
+                    {
+                    type:'h1'
+                    props:null,
+                    children:'xxx'
+                },{
+                    type:'ul',
+                    props:null,
+                    chilren:[{
+                        type:'li',
+                        children:'text'
+                    },{
+                        type:'li',
+                        children:'text'
+                    },{
+                        type:'li',
+                        children:'text'
+                    }]
+                }]
+            }
+
+        const vmEnd = {
+                type:'div',
+                props:{id:'datalist'},
+                children:[{
+                    type:'h1'
+                    props:null,
+                    children:'xxx'
+                },{
+                    type:'ul',
+                    props:null,
+                    chilren:[{
+                        type:'li',
+                        children:'text1'
+                    },{
+                        type:'li',
+                        children:'text'
+                    },{
+                        type:'li',
+                        children:'text'
+                    }]
+                }]
+            }
+
+        // 减少节点操作
+        app.innerText = 10;
+        app.innerText = 11;
+        app.innerText = 12;
+        app.innerText = 10;
+        ```
+
+
+### 项目
+* 要求
+    * 数据：爬
+    * 接口：nodejs+express+mongo
+    * 后台管理系统
+* github
+    1. 注册账户，把账号写入文档（邀请到github组织）
+    2. 创建team，并添加团队成员 
+    3. 创建仓库，添加权限（把团队设置为可读写权限）
+    4. 初始化项目，安装依赖
+        * 添加.gitignore
+    5. 推送到github,其他成员clone
+    
+* git分支
+    > 不要直接在master分支上修改
+    * dev   开发分支
+    * 遇到冲突，一定要两个人共同解决

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12.节点操作对性能的影响</title>
+</head>
+<body>
+    <h1>12.节点操作对性能的影响</h1>
+    <div id="app">
+        1
+    </div>
+    <script>
+        /**
+         * 影响页面性能的几大因素
+            * 节点数量
+            * 频繁的节点操作
+            * 事件数量
+         * 以下案例得出的结论：频繁的节点操作特别影响页面性能
+         * 节点操作不可避免，但可以减少
+         */
+        console.time('start')
+        // 以下代码有多少次节点操作：3w
+        // for(let i=0;i<10000;i++){
+        //     let app = document.querySelector('#app');
+        //     let num = app.innerText;
+        //     num++;
+        //     app.innerText = num;
+        // }
+
+        let app = document.querySelector('#app');
+        let num = app.innerText;
+        for(let i=0;i<10000;i++){
+            num++;
+        }
+        app.innerText = num;
+        console.timeEnd('start');
+
+        
+    </script>
+</body>
+</html>

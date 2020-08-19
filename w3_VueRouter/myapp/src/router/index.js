@@ -9,6 +9,7 @@ import Home from '../pages/Home.vue'
 import User from '../pages/user/Default.vue'
 import UserList from '../pages/user/List.vue'
 import UserAdd from '../pages/user/Add.vue'
+import UserEdit from '../pages/user/Edit.vue'
 
 import Order from '../pages/Order.vue'
 import Goods from '../pages/Goods.vue'
@@ -46,6 +47,9 @@ const router = new VueRouter({
                 }, {
                     path: 'list',
                     component: UserList
+                }, {
+                    path: 'edit',
+                    component: UserEdit
                 }]
         },
         {

@@ -2,6 +2,7 @@ const { Router, urlencoded, json } = require('express');
 // express.json===bodyParse.json, ....
 const session = require('express-session')
 const token = require('../utils/token');
+const cors = require('../filter/cors')
 
 const router = Router();
 
@@ -14,9 +15,13 @@ const vcodeRouter = require('./vcode');
 const uploadRouter = require('./upload');
 const { formatData } = require('../utils/tools');
 
+// CORS跨域
+router.use(cors);
 
 // 数据格式化中间件
 router.use(urlencoded({ extended: false }), json())
+
+
 
 // 使用session会话
 // 通过req.session获取存入会话的数据
@@ -29,6 +34,7 @@ router.use(session({
         maxAge: 1000*60*60*2
     }
 }))
+
 
 // /api/user
 router.use('/user', userRouter);

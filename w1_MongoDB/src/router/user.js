@@ -58,7 +58,10 @@ router.get('/',async (req,res)=>{
 
 
     // mongo
-    const result = await mongo.find('user')
+    const {page=1,size=10} = req.query;
+    const limit = size*1;
+    const skip = (page-1)*size;
+    const result = await mongo.find('user',{},{limit,skip})
     res.send(formatData({data:result}));
 })
 
