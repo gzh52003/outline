@@ -65,6 +65,22 @@ router.get('/',async (req,res)=>{
     res.send(formatData({data:result}));
 })
 
+// 添加用户
+router.post('/',async (req,res)=>{
+    let {username,password,gender,age} = req.body;
+
+
+    password = md5(password)
+    let result
+    try{
+        result = await mongo.insert('user',{username,password,gender,age});
+        res.send(formatData());
+    }catch(err){
+        res.send(forMatData({code:0}))
+
+    }
+})
+
 router.delete('/:id',async (req,res)=>{
     const {id} = req.params;
 

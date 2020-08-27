@@ -43,9 +43,10 @@ const router = new VueRouter({
                     redirect: 'list'
                 }, {
                     path: 'add',
-                    component: UserAdd
+                    component: UserEdit
                 }, {
                     path: 'list',
+                    name:'UserList',
                     component: UserList
                 }, {
                     name:'userEdit',
