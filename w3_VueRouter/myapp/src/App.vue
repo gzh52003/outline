@@ -6,8 +6,8 @@
           <i class="el-icon-connection"></i>金锋后台管理系统
         </el-col>
         <el-col :span="12" style="text-align:right">
-          <el-button type="text">注册</el-button>
-          <el-button type="text">登录</el-button>
+          <el-button type="text" @click="goto('/reg')">注册</el-button>
+          <el-button type="text" @click="goto('/login')">登录</el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -97,11 +97,8 @@ export default {
     };
   },
   methods: {
-    goto(path, idx) {
-      console.log(this.$router);
+    goto(path) {
       this.$router.push(path);
-      // this.$router.replace(path);
-      this.currentIndex = idx;
     },
     back() {
       this.$router.back();

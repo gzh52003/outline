@@ -20,10 +20,10 @@ router.get('/',async (req,res)=>{
    // 验证码在这里生成
    const captcha = svgCaptcha.create(options);// {data:'<svg/>',text:'abcd'}
 
-   console.log('vcode.session=',req.session);
    // 把验证码存入会话Session
    req.session.vcode = captcha.text.toLowerCase();
    
+   console.log('vcode.session=',req.session);
    res.send(formatData({data:captcha.data}));
 })
 

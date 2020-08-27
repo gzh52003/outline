@@ -94,30 +94,30 @@ export default {
       },
     };
   },
-  // watch:{
-  //   // 监听实例属性，如果有变化则执行这里的代码
-  //   userid:function(newVal,oldVal){
-  //     // 监听userid，当userid有变化时，执行这里的代码
-  //     console.log('userid change',newVal,oldVal)
-  //   },
+  watch:{
+    // 监听实例属性，如果有变化则执行这里的代码
+    userid:function(newVal,oldVal){
+      // 监听userid，当userid有变化时，执行这里的代码
+      console.log('userid change',newVal,oldVal)
+    },
 
-  //   // 深度监听
-  //   'ruleForm.gender'(newVal,oldVal){
-  //     console.log('gender',newVal,oldVal)
-  //   },
-  //   '$route.path'(newVal,oldVal){
-  //     console.log('$route change',newVal,oldVal);
-  //     if(newVal === '/user/add'){
-  //       this.userid = '',
-  //       this.ruleForm = {
-  //         username: "",
-  //         password: "",
-  //         gender: "male",
-  //         age: "",
-  //       }
-  //     }
-  //   }
-  // },
+    // 深度监听
+    'ruleForm.gender'(newVal,oldVal){
+      console.log('gender',newVal,oldVal)
+    },
+    '$route.path'(newVal,oldVal){
+      console.log('$route change',newVal,oldVal);
+      if(newVal === '/user/add'){
+        this.userid = '',
+        this.ruleForm = {
+          username: "",
+          password: "",
+          gender: "male",
+          age: "",
+        }
+      }
+    }
+  },
   methods: {
     submitForm() {
       this.$refs["ruleForm"].validate(async (valid) => {
@@ -165,7 +165,11 @@ export default {
       this.userid = id;
       Object.assign(this.ruleForm, data.data);
     }
+
+    // this.$watch('userid',function(){})
   },
+
+  // 监听动态路由改变
   beforeRouteUpdate (to, from, next) {
       //to:目标路由
       //from:当前路由

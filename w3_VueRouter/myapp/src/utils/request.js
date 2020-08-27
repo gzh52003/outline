@@ -3,7 +3,8 @@ import axios from 'axios';
 const baseUrl = process.env.NODE_ENV === 'production' ? 'http://10.123.122.12' : 'http://localhost:2003'
 
 const request = axios.create({
-    baseURL:baseUrl + '/api'
+    baseURL:baseUrl + '/api',
+    withCredentials:true
 });
 
 

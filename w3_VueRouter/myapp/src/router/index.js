@@ -31,11 +31,17 @@ const router = new VueRouter({
         },
         {
             path: '/home',
-            component: Home
+            component: Home,
+            meta:{
+                requiresAuth:true
+            }
         },
         {
             path: '/user',
             component: User,
+            meta:{
+                requiresAuth:true
+            },
             children: [
                 // 进入用户管理页面直接跳到用户列表
                 {
@@ -56,11 +62,22 @@ const router = new VueRouter({
         },
         {
             path: '/order',
-            component: Order
+            component: Order,
+            meta:{
+                requiresAuth:true
+            }
         },
         {
             path: '/goods',
-            component: Goods
+            component: Goods,
+            meta:{
+                requiresAuth:true
+            },
+
+            // 路由独享的守卫
+            // beforeEnter(to,from,next){
+            //     console.log('beforeEnter')
+            // }
         },
         {
             path: '/login',
@@ -81,7 +98,53 @@ const router = new VueRouter({
             redirect: '/404'
         }
     ]
+});
+
+
+
+// 全局路由守卫
+// beforeEach：在路由切换前执行
+router.beforeEach(function(to,from,next){
+    // 判断目标路由是否需要登录才可访问
+    console.log('beforeEach',to,from);
+    // if(to.meta.requiresAuth){
+    if(to.matched.some(item=>item.meta.requiresAuth)){
+        let userInfo = localStorage.getItem('userInfo') || {};
+        try{
+            userInfo = JSON.parse(userInfo)
+        }catch(err){
+            userInfo = {};
+        }
+        console.log('userInfo',userInfo)
+
+        // 判断当前用户信息是否包含token
+        if(userInfo.authorization){
+            next()
+        }else{
+            // router.push('/login');
+            // router.push({
+            //     path:'/login'
+            // });
+            next({
+                path:'/login',
+                query:{
+                    // 跳转到登录页面，并传递目标页面路径
+                    redirectTo:to.fullPath
+                }
+            })
+        }
+    }else{
+        next();
+    }
+
+    
+});
+
+// afterEach： 路由切换完成后执行
+router.afterEach((to,from)=>{
+    console.log('afterEach',to,from);
 })
+
 
 export default router;
 
