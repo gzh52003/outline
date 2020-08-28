@@ -1,20 +1,46 @@
 <template>
-  <el-container style="height:100%">
-    <el-header class="header">
-      <el-row>
-        <el-col :span="12" class="logo">
-          <i class="el-icon-connection"></i>金锋后台管理系统
-        </el-col>
-        <el-col :span="12" style="text-align:right">
-          <span>{{userInfo.username}} </span>
-          <el-button type="text" @click="logout" v-if="userInfo.authorization">退出</el-button>
-          <!-- <el-button type="text" @click="goto('/reg')">注册</el-button> -->
-          <el-button type="text" @click="goto('/login')" v-else>登录</el-button>
-        </el-col>
-      </el-row>
-    </el-header>
+  <el-container style="margin:-20px;height:100%">
+    <el-aside width="200px">
+      <el-menu
+        style="height:100%"
+        :default-active="activeIndex"
+        mode="vertical"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ff0"
+        @select="changeMenu"
+        :default-openeds="openMenu"
+        router
+      >
+        <template v-for="item in menu">
+          <el-menu-item :index="item.path" :key="item.path" v-if="!item.submenu">
+            <i :class="item.icon" style="color:#fff"></i>
+            {{item.text}}
+          </el-menu-item>
+          <el-submenu :key="item.path" :index="item.path" v-else>
+            <template v-slot:title>
+              <i :class="item.icon" style="color:#fff"></i>
+              {{item.text}}
+            </template>
+            <el-menu-item
+              :key="sub.path"
+              :index="item.path+sub.path"
+              v-for="sub in item.submenu"
+            >{{sub.text}}</el-menu-item>
+          </el-submenu>
+        </template>
+      </el-menu>
+    </el-aside>
     <el-main>
-      <router-view />
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      </el-breadcrumb>
+      <div style="padding:15px 0;">
+        <router-view />
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -24,7 +50,6 @@ export default {
   name: "App",
   data() {
     return {
-      userInfo:{},
       activeIndex: "/home",
       openMenu: [],
       menu: [
@@ -62,14 +87,6 @@ export default {
       currentIndex: 0,
     };
   },
-  watch:{
-    $route(to,from){
-      if(from.path === '/login'){
-        this.getUserInfo();
-
-      }
-    }
-  },
   methods: {
     goto(path) {
       this.$router.push(path);
@@ -80,25 +97,8 @@ export default {
     changeMenu(path) {
       this.activeIndex = path;
     },
-    logout(){
-      localStorage.removeItem('userInfo');
-      this.userInfo = {}
-      this.$router.push('/login')
-    },
-    getUserInfo(){
-      const userInfo = localStorage.getItem('userInfo') || {};
-      try{
-        this.userInfo = JSON.parse(userInfo);
-      }catch(err){
-        this.userInfo = {}
-      }
-    }
   },
   components: {},
-  created(){
-    console.log(this)
-    this.getUserInfo();
-  }
 };
 </script>
 

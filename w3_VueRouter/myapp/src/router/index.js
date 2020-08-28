@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router'
 
 
+import Index from '../pages/Index.vue'
 import Home from '../pages/Home.vue'
 
 import User from '../pages/user/Default.vue'
@@ -26,58 +27,55 @@ const router = new VueRouter({
     // mode:'history', // 一般上线后改为history路由(需要额外配置服务器)
     routes: [
         {
-            path: '/', // /->/home
-            redirect: '/home'
-        },
-        {
-            path: '/home',
-            component: Home,
-            meta:{
-                requiresAuth:true
-            }
-        },
-        {
-            path: '/user',
-            component: User,
+            path:'/',
             meta:{
                 requiresAuth:true
             },
-            children: [
-                // 进入用户管理页面直接跳到用户列表
+            component:Index,
+            children:[
                 {
-                    path: '',
-                    redirect: 'list'
-                }, {
-                    path: 'add',
-                    component: UserEdit
-                }, {
-                    path: 'list',
-                    name:'UserList',
-                    component: UserList
-                }, {
-                    name:'userEdit',
-                    path: 'edit/:id',
-                    component: UserEdit
-                }]
-        },
-        {
-            path: '/order',
-            component: Order,
-            meta:{
-                requiresAuth:true
-            }
-        },
-        {
-            path: '/goods',
-            component: Goods,
-            meta:{
-                requiresAuth:true
-            },
-
-            // 路由独享的守卫
-            // beforeEnter(to,from,next){
-            //     console.log('beforeEnter')
-            // }
+                    path: '/', // /->/home
+                    redirect: '/home'
+                },
+                {
+                    path: '/home',
+                    component: Home,
+                },
+                {
+                    path: '/user',
+                    component: User,
+                    children: [
+                        // 进入用户管理页面直接跳到用户列表
+                        {
+                            path: '',
+                            redirect: 'list'
+                        }, {
+                            path: 'add',
+                            component: UserEdit
+                        }, {
+                            path: 'list',
+                            name:'UserList',
+                            component: UserList
+                        }, {
+                            name:'userEdit',
+                            path: 'edit/:id',
+                            component: UserEdit
+                        }]
+                },
+                {
+                    path: '/order',
+                    component: Order,
+                },
+                {
+                    path: '/goods',
+                    component: Goods,
+        
+                    // 路由独享的守卫
+                    // beforeEnter(to,from,next){
+                    //     console.log('beforeEnter')
+                    // }
+                },
+            ]
         },
         {
             path: '/login',
