@@ -77,6 +77,16 @@ export default {
           text: "商品管理",
           path: "/goods",
           icon: "el-icon-grape",
+           submenu: [
+            {
+              text: "添加商品",
+              path: "/add",
+            },
+            {
+              text: "商品列表",
+              path: "/list",
+            },
+          ],
         },
         {
           text: "订单管理",

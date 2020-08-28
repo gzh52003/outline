@@ -12,11 +12,17 @@ import UserList from '../pages/user/List.vue'
 import UserAdd from '../pages/user/Add.vue'
 import UserEdit from '../pages/user/Edit.vue'
 
+import Goods from '../pages/goods/Default.vue'
+import GoodsList from '../pages/goods/List.vue'
+import GoodsAdd from '../pages/goods/Add.vue'
+import GoodsEdit from '../pages/goods/Edit.vue'
+
 import Order from '../pages/Order.vue'
-import Goods from '../pages/Goods.vue'
 import Reg from '../pages/Reg.vue'
 import Login from '../pages/Login.vue'
 import NotFound from '../pages/NotFound.vue'
+
+import request from '../utils/request';
 
 
 // 2. 使用VueRouter
@@ -69,6 +75,22 @@ const router = new VueRouter({
                 {
                     path: '/goods',
                     component: Goods,
+                    children: [
+                        // 进入用户管理页面直接跳到用户列表
+                        {
+                            path: '',
+                            redirect: 'list'
+                        }, {
+                            path: 'add',
+                            component: GoodsEdit
+                        }, {
+                            path: 'list',
+                            name:'UserList',
+                            component: GoodsList
+                        }, {
+                            path: 'edit/:id',
+                            component: GoodsEdit
+                        }]
         
                     // 路由独享的守卫
                     // beforeEnter(to,from,next){
@@ -117,7 +139,24 @@ router.beforeEach(function(to,from,next){
 
         // 判断当前用户信息是否包含token
         if(userInfo.authorization){
-            next()
+            console.log('token=',userInfo.authorization);
+            // 发起请求校验token的有效性
+            request.get('/jwtverify',{
+                params:{
+                    authorization:userInfo.authorization
+                }
+            }).then(({data})=>{
+                if(data.code === 0){
+                    next({
+                        path:'/login',
+                        query:{
+                            // 跳转到登录页面，并传递目标页面路径
+                            redirectTo:to.fullPath
+                        }
+                    });
+                }
+            })
+            next();
         }else{
             // router.push('/login');
             // router.push({

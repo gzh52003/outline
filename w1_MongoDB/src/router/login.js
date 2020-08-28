@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
             //     expiresIn: 20//1000 * 60 * 60 * 24 * 7
             // });
 
-            authorization = token.create({ username }, '7d')
+            authorization = token.create({ username }, '3d')
         }else{
             authorization = token.create({ username })
         }

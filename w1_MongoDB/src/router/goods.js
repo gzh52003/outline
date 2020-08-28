@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const mongo = require('../utils/mongo');
-
+const {formatData} = require('../utils/tools')
 
 
 // get /api/goods 查询所有商品
 router.get('/', async (req, res) => {
-    let {page=1,size=10,sort="add_time"} = req.query;
+    let {page=1,size=10,sort="add_time",total=1} = req.query;
     const skip = (page-1)*size; //0
     const limit = size*1; //10
 
@@ -15,9 +15,9 @@ router.get('/', async (req, res) => {
     // 处理排序参数
     sort = sort.split(',');// ['price'],['price','-1']
     // 查询所有商品
-    const result = await mongo.find('goods',{},{skip,limit,sort})
+    const result = await mongo.find('goods',{},{skip,limit,sort,total})
 
-    res.send(result);
+    res.send(formatData({data:result}));
 })
 
 router.delete('/:id',async (req,res)=>{

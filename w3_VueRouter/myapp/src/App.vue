@@ -68,6 +68,10 @@ export default {
         this.getUserInfo();
 
       }
+
+      if(to.path === '/login'){
+        this.logout();
+      }
     }
   },
   methods: {
