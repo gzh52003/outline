@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>案例_keep-alive实现状态保留</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>案例_keep-alive实现状态保留</h1>
+    <div id="app">
+        <ul class="nav nav-tabs">
+            <li class="nav-item" v-for="tab in tabs">
+                <a class="nav-link" href="#" :class="{active:tab==currentTab}" @click="currentTab=tab">{{tab}}</a>
+            </li>
+        </ul>
+        <keep-alive :exclude="/^L/">
+            <component :is="currentTab"></component>
+        </keep-alive>
+    </div>
+    <script>
+    /*
+          案例_keep-alive实现状态保留
+            * <kepp-alive/>
+                * include {String|RegExp}
+                * exclude {String|RegExp}
+            * <component/>
+                动态组件在切换时，组件会重建和销毁
+         */
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            currentTab: 'Laoxie',
+            tabs: ['Laoxie', 'Jingjing', 'Tiantian','Lemon']
+        },
+        created() {
+            this.tabs.forEach(item => {
+                Vue.component(item, {
+                    data(){
+                        return{
+                            num:1
+                        }
+                    },
+                    methods:{
+                        change(){
+                            this.num++;
+                        }
+                    },
+                    created(){
+                        console.log('created',item)
+                    },
+                    destroyed(){
+                        console.log('destroyed',item)
+                    },
+                    template: `<div class="p-3">
+                        <h4>${item}</h4>
+                        <input type="text" />
+                        <button @click="change">点击增加:{{num}}</button>
+                    </div>`
+                });
+
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

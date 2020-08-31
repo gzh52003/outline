@@ -31,8 +31,9 @@ router.use(session({
     saveUninitialized: true,
     cookie: { 
         // 设置cookie有效期
-        maxAge: 1000*60*60*2
-    }
+        maxAge: 1000*60*60*2,
+        sameSite:'none'
+    },
 }))
 
 

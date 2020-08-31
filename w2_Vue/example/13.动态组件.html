@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.动态组件</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <h1>13.动态组件</h1>
+    <div id="app">
+        <com-a></com-a>
+        <com-b></com-b>
+        <component is="com-b"></component>
+
+        <h4>动态组件实现tab标签切换</h4>
+        <ul class="nav nav-tabs">
+            <li class="nav-item" v-for="(item) in tabs" v-on:click="changeTab(item)">
+                <a class="nav-link" v-bind:class="{active:comName===item.title}">{{item.title}}</a>
+            </li>
+        </ul>
+        <div class="content p-3">
+            <component :is="comName"/>
+        </div>
+    </div>
+    <script>
+        /**
+            13.动态组件component
+                组件不会固定显示某些内容，会根据is属性显示指定的组件内容
+                * is:指定渲染的组件
+        */
+        
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                tabs: [{
+                    title: 'laoxie',
+                    content: '喜欢写代码'
+                }, {
+                    title: 'jingjing',
+                    content: '喜欢大保健'
+                }, {
+                    title: '小羊',
+                    content: '喜欢不穿衣服'
+                }, {
+                    title: 'xiaoxie',
+                    content: '喜欢钱'
+                }],
+                currentTab:0,
+                comName:'laoxie'
+            },
+            components:{
+                comA:{
+                    template:`<div>A组件</div>`
+                },
+                comB:{
+                    template:`<div>B组件</div>`
+                },
+                //laoxie:{},
+                // jingjign:{}
+            },
+            methods:{
+                changeTab(item){
+                    this.comName = item.title;
+                }
+            },
+            created(){
+                this.tabs.forEach(item=>{
+                    // 为每个tab标签定义一个组件
+                    Vue.component(item.title,{
+                        template:`<div>${item.title}${item.content}</div>`
+                    })
+                })
+            }
+        })
+
+        // vm.$mount('#app')
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>15.transition过渡动画</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.0/animate.compat.min.css"> -->
+    <link rel="stylesheet" href="./node_modules/animate.css/animate.css">
+    <script src="./js/vue.js"></script>
+    <style>
+        /* 入场动画：显示 */
+        /* 初始状态 */
+        .v-enter{
+            opacity: 0;
+        }
+        .v-enter-active{
+            transition: opacity 10s;
+        }
+
+        /* 结束状态 */
+        .v-enter-to{
+            opacity: 1;
+        }
+
+        /* 出场动画：隐藏 */
+         /* 初始状态 */
+         .v-leave{
+            opacity: 1;
+        }
+        .v-leave-active{
+            transition: opacity 10s;
+        }
+
+        /* 结束状态 */
+        .v-leave-to{
+            opacity: 0;
+        }
+
+
+        /* 入场动画：显示 */
+        /* 初始状态 */
+        .slide-enter{
+            transform: translateX(-100%);
+        }
+        .slide-enter-active{
+            transition: transform 0.5s;
+        }
+
+        /* 结束状态 */
+        .slide-enter-to{
+            transform: translateX(0);
+        }
+
+        /* 出场动画： */
+         /* 初始状态 */
+         .slide-leave{
+            transform: translateX(0);
+        }
+        .slide-leave-active{
+            transition: transform 0.5s;
+        }
+
+        /* 结束状态 */
+        .slide-leave-to{
+            transform: translateX(100%);
+        }
+
+        /* 自定义样式 */
+        .start{}
+        .active{}
+        .end{}
+
+        .pic{position: relative;width:320px;height:320px;}
+        .pic img{position: absolute;left:0;top:0}
+    </style>
+</head>
+
+<body>
+    <h1>15.transition过渡动画</h1>
+    <div id="app">
+        <ul class="nav nav-tabs">
+            <li class="nav-item" v-for="tab in tabs">
+                <a class="nav-link" href="#" :class="{active:tab==currentTab}" @click="currentTab=tab">{{tab}}</a>
+            </li>
+        </ul>
+        <!-- <keep-alive :exclude="/^L/"> -->
+            <transition 
+            enter-to-class="animate__backInLeft" 
+            enter-active-class="animate__animated"
+            leave-to-class="animate__backOutRight" 
+            leave-active-class="animate__animated">
+                <component :is="currentTab"></component>
+            </transition>
+        <!-- </keep-alive> -->
+
+        <transition-group 
+            enter-to-class="animate__flipInX" 
+            enter-active-class="animate__animated"
+            leave-to-class="animate__flipOutX" 
+            leave-active-class="animate__animated"
+            class="pic"
+        >
+            <img src="img/g2.jpg" @click="show=!show" v-show="show" key="1" />
+            <img src="img/g3.jpg" @click="show=!show" v-show="!show" key="2" />
+        </transition-group>
+    </div>
+    <script>
+    /*
+          15.transition过渡动画
+            * 动画前提
+                1. 初始值
+                2. 最终值
+                3. 过渡时间
+         */
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            show:true,
+            currentTab: 'Laoxie',
+            tabs: ['Laoxie', 'Jingjing', 'Tiantian','Lemon']
+        },
+        created() {
+            this.tabs.forEach(item => {
+                Vue.component(item, {
+                    data(){
+                        return{
+                            num:1
+                        }
+                    },
+                    methods:{
+                        change(){
+                            this.num++;
+                        }
+                    },
+                    created(){
+                        console.log('created',item)
+                    },
+                    destroyed(){
+                        console.log('destroyed',item)
+                    },
+                    template: `<div class="p-3">
+                        <h4>${item}</h4>
+                        <input type="text" />
+                        <button @click="change">点击增加:{{num}}</button>
+                    </div>`
+                });
+
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>
