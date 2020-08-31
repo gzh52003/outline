@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>16.自定义指令</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+    <style>
+        [v-cloak]{
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>16.自定义指令</h1>
+    <div id="app" class="container">
+       <input type="text" id="username" v-autofocus:username.native.stop="true" />
+       <!-- <input type="password" id="password" v-autofocus="false" /> -->
+
+       <div v-pre>数据绑定写法：{{username}}</div>
+       <div v-cloak>数据绑定结果：{{username}}</div>
+       <div v-once>v-once：{{username}}</div>
+    </div>
+    <script>
+    /*
+        16.自定义指令
+            * 全局指令
+                Vue.directive(name,options)
+            * 局部指令
+                directives
+
+            * 钩子函数参数
+                * el:指令所在的元素节点
+                * binding
+                    * name:指令名
+                    * value:指令值
+                    * expression:字符串形式的指令表达式
+                    * arg:指令参数，
+                    * modifiers指令修饰符
+            
+            <button v-on:click.native="handle"></button>
+    */
+
+    // 全局指令
+    Vue.directive('autofocus',{
+        bind(el,binding){
+            // el: 指令所在的元素节点
+            // binding：指令的信息
+            console.log('el=',el)
+            console.log('binding=',binding)
+        },
+        inserted(el,binding){
+            el.focus();
+        }
+    })
+
+    Vue.component('myform',{
+        data(){
+            return {}
+        },
+
+        // 局部指令
+        directives:{
+            autofocus:{
+                bind(el,binding){},
+                inserted(){}
+            },
+            // autofocus(){
+
+            // }
+        }
+    })
+
+    const vm = new Vue({
+        // el:'#app',
+        data:{
+            username:'laoxie'
+        }
+    });
+    
+    // setTimeout(()=>{
+        vm.$mount('#app');
+    // },5000)
+    </script>
+</body>
+
+</html>

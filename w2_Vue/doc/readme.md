@@ -690,3 +690,16 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
 ### 内置组件
 > Vue定义好的组件
 * component 动态组件
+* keep-alive
+* slot
+* transition/transition-group
+
+### 自定义指令
+> 定义一个属性
+* 全局指令：Vue.directive()
+* 局部指令: directives
+
+### mixin
+> 提取组件公共代码，便于复用与维护
+* 全局
+* 局部

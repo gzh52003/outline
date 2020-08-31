@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>18.mixins</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>18.mixins</h1>
+    <div id="app" class="container">
+        <div>name:{{name}}->{{qty}}</div>
+
+        <coma></coma>
+    </div>
+    <script>
+        /**
+            * Mixin
+                * 全局：Vue.mixin(options)
+                    > 全局注册一个混入，会影响后面所有创建的每个 Vue 实例/组件（影响较大，一般用于插件编写）
+                * 局部：mixins
+         */
+        Vue.mixin({
+            data(){
+                return {
+                    qty:10
+                }
+            },
+            methods:{
+                getData(){
+                    console.log('getData',this.name)
+                }
+            },
+            created(){
+                this.getData();
+            }
+        });
+
+        const myMixin = {
+            data(){
+                return {
+                    type:'myMixin',
+                    name:'myMixin'
+                }
+            },
+            mounted(){
+                console.log('myMixin mounted')
+            }
+        }
+
+        Vue.component('coma',{
+            data(){
+                return {
+                    name:'coma',
+                }
+            },
+            template:`<div>
+                <h4 @click="getData">{{name}}-> {{qty}}</h4>
+                <coma1></coma1>
+                <coma2></coma2>
+            </div>`,
+            components:{
+                coma1:{
+                    data(){
+                        return {
+                            name:'coma1'
+                        }
+                    },
+                    mixins:[myMixin],
+                    template:`<div>{{name}}</div>`
+                },
+                coma2:{
+                    data(){
+                        return {
+                            name:'coma2'
+                        }
+                    },
+                    template:`<div>{{name}}</div>`
+                }
+            }
+        });
+       const vm = new Vue({
+           el:'#app',
+            data:{
+                name:'root'
+            },
+            mixins:[myMixin],
+            mounted(){
+                console.log('root mounted')
+            }
+       })
+    </script>
+</body>
+
+</html>

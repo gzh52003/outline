@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>19.定义Vue插件</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>19.定义Vue插件</h1>
+    <div id="app" class="container">
+        <test></test>
+    </div>
+    <script>
+        /**
+            * 定义插件
+                * 插件可以是一个对象（必须提供 install 方法）。也可以是一个函数，它会被作为 install 方法。并把 Vue 作为参数传入
+            * 使用插件：Vue.use(plugin)
+                * 调用Vue.use()方法，内部会自动执行install
+         */
+
+         const myPlugin1 = {
+             install:function(Vue){
+                console.log('myPlugin2.install');
+                // 自定义组件
+                // 自定义过滤器
+                // 自定义指令
+                // ....
+                Vue.component('test',{
+                    template:'<div>test组件</div>'
+                })
+             }
+         }
+         const myPlugin2 = function(){
+            console.log('myPlugin2')
+         }
+         Vue.use(myPlugin1)
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

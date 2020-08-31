@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>17.过滤器</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1>17.过滤器</h1>
+    <div id="app" class="container">
+        <ul>
+            <li>用户名：{{currentUser.username | capitalize}}</li>
+            <li>密码：{{currentUser.password}}</li>
+            <li>余额：{{currentUser.balance | formatMoney}}</li>
+            <!-- <li>注册时间：{{formatDate(currentUser.regtime)}}</li> -->
+            <li>注册时间：{{currentUser.regtime|formatdate('YYYY-M-D')}}</li>
+        </ul>
+       
+    </div>
+    <script>
+        /**
+         * 过滤器
+            * 定义
+                * 全局过滤器：Vue.filter(name,definition)
+                * 局部过滤器：filters
+            * 使用
+                * 管道符
+         */
+
+        Vue.filter('formatdate',(val,fmt)=>{
+            // fmt: YYYY-MM-DD hh:mm:ss
+            const d = new Date(val);
+            var o = {
+                "M+": d.getMonth() + 1, //月份 
+                "D+": d.getDate(), //日 
+                "h+": d.getHours(), //小时 
+                "m+": d.getMinutes(), //分 
+                "s+": d.getSeconds(), //秒 
+                "q+": Math.floor((d.getMonth() + 3) / 3), //季度 
+                "S": d.getMilliseconds() //毫秒 
+            };
+
+            // 匹配年份
+            // 年份比较特殊，所以单独处理
+            // test方法如果返回true，RegExp.$1得到匹配的字符
+            if(/(Y+)/.test(fmt)){
+                // 得到fmt字符串中Y字符对应的时间
+                // YYYY => 2017
+                // YY => 17
+                var res = String(d.getFullYear()).substr(4 - RegExp.$1.length);
+
+                // 替换年份:YYYY-MM-DD hh:mm:ss -> 2017-MM-DD hh:mm:ss
+                fmt = fmt.replace(RegExp.$1,res);
+            }
+
+            for(var str in o){
+                // 创建正则时设定分组，以便获取匹配到的字符
+                // RegExp.$1
+                var reg = new RegExp('(' + str + ')');
+
+                // 如果有匹配则把fmt中匹配到的字符替换成o中对应的时间，根据fmt中的字符决定是否补0
+                // YYYYDDMM => 20170813
+                // YYYY-DD-MM hh:mm:ss => 2017-08-13 20:12:30
+                if(reg.test(fmt)){
+                    // 得到匹配字符对应的时间
+                    var res = RegExp.$1.length>1 ? ('00' + o[str]).substr(String(o[str]).length) : o[str];
+                    fmt = fmt.replace(RegExp.$1,res);
+                }
+            }
+
+            return fmt;
+        });
+
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                currentUser:{
+                    username:'jingjing',
+                    password:123,
+                    balance:1112099800,// 余额
+                    regtime:Date.now()
+                }
+            },
+            methods:{
+                formatDate(date){
+                    let d = new Date(date);
+                    return d.toLocaleDateString();
+                }
+            },
+            filters:{
+                capitalize(val){
+                    return val.toUpperCase();
+                },
+                formatMoney(val){
+                    // '2099800'.replace()
+                    // \b：匹配一个单词边界
+                    // \B: 匹配一个非单词边界
+                    // hellolaoxie
+                    return String(val).replace(/\B(?=(\d{3})+(?!\d))/g,',')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
