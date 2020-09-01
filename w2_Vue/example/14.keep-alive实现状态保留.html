@@ -56,6 +56,12 @@
                     destroyed(){
                         console.log('destroyed',item)
                     },
+                    activated(){
+                        console.log('activated',item)
+                    },
+                    deactivated(){
+                        console.log('deactivated',item)
+                    },
                     template: `<div class="p-3">
                         <h4>${item}</h4>
                         <input type="text" />

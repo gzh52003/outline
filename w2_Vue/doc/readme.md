@@ -703,3 +703,108 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
 > 提取组件公共代码，便于复用与维护
 * 全局
 * 局部
+
+## day5-2
+
+### 面试题
+
+### 复习
+* 自定义组件
+    * 全局：Vue.component(name,option)
+    * 局部：components:{name:option}
+* 单文件组件（后缀：.vue）
+    * template
+    * script
+        ```js
+            export default {
+                name
+            }
+        ```
+    * style
+* 内置组件
+    * component
+        * is {String|Object}
+        ```html
+            <component is="Button"/>
+            <component :is="{template,data,methods}"/>
+        ```
+    * keep-alive
+        * include/exclude {String|Array|RegExp}
+        ```html
+            <transition>
+                <keep-alive include="">
+                    <router-view/>
+                </keep-alive>
+            </transition>
+        ```
+        * 组件不会销毁和重建
+            * activated
+            * deactivated
+    * transition/transition-group
+        * 页面转场动画
+        * animate.css
+        ```js
+            <transition>
+                <router-view/>
+            </transition>
+        ```
+    * slot
+
+* 自定义指令
+    * 全局：Vue.directive(name,option)
+    * 局部: directives:{name:option}
+        * option: {Function|Object}
+            * bind：初始化时执行（默认）
+            * inserted：元素插入页面时执行
+    ```js
+        Vue.directive('autofocus',{
+            bind(){},
+            inserted(el,binding){
+                el.focus();
+            }
+        })
+
+        // 使用、
+        <input v-autofocus />
+    ```
+* 自定义过滤器filter
+    * 全局：Vue.filter(name,callback)
+    * 局部: filters:{name:callback}
+        > 操作的数据会自动传入callback的第一个参数
+    * 使用位置
+        * {{regtime | formatdate('YYYY-MM-DD') }}
+        * v-bind
+    * 多个过滤器
+        {{username | capitalize | reverse}} -> reverse(captitalize(username))
+* mixins混入
+    > 提取组件的公共部分，与组件配置一致
+    * 全局：Vue.mixin(options)
+    * 局部：mixins:[mixin1,mixin2,...]
+
+    * 同名配置
+        * data -> 保留组件的配置
+        * 生命周期函数
+
+* 插件
+    * 定义：
+        * Function
+        * Object
+            * install
+    * 使用：Vue.use(plugin)
+        > 执行install方法，并传递Vue
+
+        ```js
+            const lxPlugin = {
+                install(Vue){
+                    // 业务逻辑
+                    Vue.component('laoxie',{
+
+                    })
+                }
+            }
+
+            Vue.use(lxPlugin);
+
+            <laoxie></laoxie>
+
+        ```

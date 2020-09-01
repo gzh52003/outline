@@ -27,6 +27,7 @@
 </template>
 <script>
 export default {
+  name:'UserEdit',
   data() {
     var checkUsername = (rule, value, callback) => {
       console.log('value',value);

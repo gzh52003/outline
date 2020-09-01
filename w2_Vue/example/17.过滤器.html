@@ -13,7 +13,7 @@
     <h1>17.过滤器</h1>
     <div id="app" class="container">
         <ul>
-            <li>用户名：{{currentUser.username | capitalize}}</li>
+            <li>用户名：{{currentUser.username | capitalize | reverse}}</li>
             <li>密码：{{currentUser.password}}</li>
             <li>余额：{{currentUser.balance | formatMoney}}</li>
             <!-- <li>注册时间：{{formatDate(currentUser.regtime)}}</li> -->
@@ -93,7 +93,13 @@
             },
             filters:{
                 capitalize(val){
+                    console.log('capitalize',val)
                     return val.toUpperCase();
+                },
+                reverse(val){
+                    console.log('reverse',val)
+                    //'laoxie' -> 'eixoal'
+                    return val.split(/\B/).reverse().join('');
                 },
                 formatMoney(val){
                     // '2099800'.replace()
