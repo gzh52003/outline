@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import request from './utils/request'
 
 // 全部引入
 // import Vant from 'vant'
@@ -14,9 +15,10 @@ import router from './router'
 // Vue.use(Button);
 
 // 利用工具实现按需引入
+// babel-plugin-import
 
 Vue.config.productionTip = false
-
+Vue.prototype.$request = request;
 new Vue({
   router,
   render: h => h(App)

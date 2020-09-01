@@ -808,3 +808,12 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
             <laoxie></laoxie>
 
         ```
+
+### 知识点
+* vue add router
+* 路由懒加载
+    * component: {Component|Function}
+        * import()
+    * 优点
+        * 减少打包文件大小
+        * 优化首页打开速度

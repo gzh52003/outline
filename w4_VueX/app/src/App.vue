@@ -1,32 +1,47 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+    <van-tabbar v-model="active" route>
+      <van-tabbar-item :icon="item.icon" v-for="item in menu" :key="item.name" :to="item.path">{{item.text}}</van-tabbar-item>
+  </van-tabbar>
   </div>
 </template>
-
+<script>
+import Vue from 'vue'
+import {Button,Tabbar, TabbarItem} from 'vant';
+Vue.use(Button)
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
+export default {
+  data(){
+    return {
+      menu:[{
+        name:'home',
+        path:'/home',
+        icon:'wap-home-o',
+        text:'首页'
+      },
+      {
+        name:'discover',
+        path:'/discover',
+        icon:'eye-o',
+        text:'发现'
+      },{
+        name:'cart',
+        path:'/cart',
+        icon:'shopping-cart-o',
+        text:'购物车'
+      },{
+        name:'mine',
+        path:'/mine',
+        icon:'user-o',
+        text:'我的'
+      }]
+    }
+  }
+}
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
+
