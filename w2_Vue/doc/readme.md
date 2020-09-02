@@ -817,3 +817,47 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
     * 优点
         * 减少打包文件大小
         * 优化首页打开速度
+
+
+## day5-3
+
+### 面试题
+* querySelectorAll('a')和getElementsByTagName('a')
+
+### 知识点
+* 路由传参
+    * params
+        * 动态路由
+        ```js
+            // path
+            this.$router.push(`/goods/123`)
+            // name
+            this.$router.push({
+                name:'Goods',
+                params:{
+                    id:123,
+                    a:10
+                }
+            })
+        ```
+        > 除动态路由参数外，params传递的参数刷新页面后消失
+    * query
+        > 刷新后依然存在
+
+* SEO   搜索引擎优化
+* 动态路由
+
+* Vuex
+    * 状态管理工具，用于数据共享
+    * 规则
+        * 唯一数据源：一个应用只允许一个数据源
+    * 使用步骤
+        1. 引入并使用
+        2. 实例化并创建一个store仓库
+        3. 注入Vue根实例
+        4. 在组件中使用
+    * store核心配置
+        * state,
+        * mutations
+    * 使用
+        this.$store.state.goodslist

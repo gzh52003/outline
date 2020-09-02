@@ -78,7 +78,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .my-swipe .van-swipe-item {
   color: #fff;
   font-size: 20px;
@@ -95,21 +95,6 @@ export default {
   h4 {
     margin-bottom:0;
     font-size: 14px;
-  }
-}
-.price {
-  del {
-    color: #999;
-    margin-right: 5px;
-    &::before {
-      content: "￥";
-    }
-  }
-  span {
-    color: #f00;
-    &::before {
-      content: "￥";
-    }
   }
 }
 </style>

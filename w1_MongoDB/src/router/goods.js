@@ -25,10 +25,23 @@ router.delete('/:id',async (req,res)=>{
 
     try{
         const result = await mongo.remove('goods',{_id:id})
-        res.send('success')
+        res.send(formatData())
 
     }catch(err){
-        res.send('fail');
+        res.send(formatData({code:0}));
+    }
+
+})
+
+router.get('/:id',async (req,res)=>{
+    const {id} = req.params;
+
+    try{
+        const result = await mongo.find('goods',{_id:id})
+        res.send(formatData({data:result[0]}))
+
+    }catch(err){
+        res.send(formatData({code:0}));
     }
 
 })
