@@ -823,6 +823,33 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
 
 ### 面试题
 * querySelectorAll('a')和getElementsByTagName('a')
+* XMLHttpRequest
+    ```js
+        const xhr = new XMLHttpRequest();
+        xhr.open('post','/api/user',true);
+
+        // 设置请求头
+        xhr.setRequestHeader('content-type','application/json')
+        xhr.setRequestHeader('laoxie','aaa')
+
+        xhr.send();
+
+        // 复杂跨域请求，浏览器会自动发送OPTIONS请求，用于判断目标服务器是否支持跨域
+        // OPTIONS  预请求
+        // POST
+
+        // 取消请求
+        xhr.abort()
+
+        // axios
+    ```
+* cookie
+    * 格式：name=value;参数
+    * 参数
+        * expires
+        * path
+        * domain
+        * secure
 
 ### 知识点
 * 路由传参
@@ -857,7 +884,16 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
         3. 注入Vue根实例
         4. 在组件中使用
     * store核心配置
-        * state,
-        * mutations
+        * state：状态（共享的数据）
+        * mutations： 修改state的唯一方式
+            * 定义：定义一个方法（事件处理函数）
+            * 调用：this.$store.commit('add')
+                * 传参：this.$store.commit('add',data)
+        * getters: 类似于组件中的computed
+            * 只有依赖的数据发生变化时才重新计算，否则从缓存中获取
+        * ations
     * 使用
-        this.$store.state.goodslist
+        * 获取
+            this.$store.state.goodslist
+        * 修改
+            this.$store.commit(mutation,params)

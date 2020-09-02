@@ -12,7 +12,7 @@
       :thumb="item.img_url"
       v-for="item in goodslist"
       :key="item._id"
-      @click="gotoDetail(item._id)"
+      @click-thumb="gotoDetail(item._id)"
     >
       <template #tag>
         <van-checkbox v-model="item.checked"></van-checkbox>
@@ -21,13 +21,16 @@
         <p class="price">
           <del>{{item.price}}</del>
           <span>{{item.sales_price}}</span>
-          &times; {{item.qty}}
+          <van-stepper v-model="item.qty" input-width="20px" button-size="20px" theme="round" @change="changeQty(item._id,$event)" />
         </p>
       </template>
       <template #footer>
-        <van-button plain size="mini" type="danger" icon="cross"></van-button>
+        <van-button plain size="mini" type="danger" icon="cross" @click.stop="removeItem(item._id)"></van-button>
       </template>
     </van-card>
+    <div style="padding:10px">
+      <van-button plain type="danger" size="small" @click="clearCart">清空购物车</van-button>
+    </div>
     <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
       <van-checkbox v-model="checkAll">全选</van-checkbox>
       <template #tip>
@@ -39,12 +42,13 @@
 </template>
 <script>
 import Vue from "vue";
-import { Card, Step, Steps, SubmitBar } from "vant";
+import { Card, Step, Steps, SubmitBar, Stepper } from "vant";
 
 Vue.use(Card);
 Vue.use(Step);
 Vue.use(Steps);
 Vue.use(SubmitBar)
+Vue.use(Stepper)
 
 export default {
   name: "Cart",
@@ -115,7 +119,8 @@ export default {
       }
     },
     totalPrice(){
-      return this.goodslist.reduce((pre,item)=>pre+item.sales_price*item.qty,0)*100;
+      // return this.goodslist.reduce((pre,item)=>pre+item.sales_price*item.qty,0)*100;
+      return this.$store.getters.totalPrice
     }
   },
   methods:{
@@ -124,6 +129,15 @@ export default {
     },
     gotoDetail(id){
       this.$router.push('/goods/'+id);
+    },
+    removeItem(id){
+      this.$store.commit('remove',id)
+    },
+    clearCart(){
+      this.$store.commit('clear')
+    },
+    changeQty(id,qty){
+      this.$store.commit('changeQty',{_id:id,qty})
     }
   },
   created(){

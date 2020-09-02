@@ -94,8 +94,11 @@ export default {
       });
     },
     async getData(id){
-      
-      const { data } = await this.$request.get("/goods/" + id);
+      // this.goodsRequestSource = this.$request.source;
+      console.log('source=',this.$request.source)
+      const { data } = await this.$request.get("/goods/" + id,{
+        // cancelToken:this.goodsRequestSource.token
+      });
       this.data = data.data;
       console.log("data=", data);
     },
@@ -111,9 +114,21 @@ export default {
     },
     add2cart(){
       // 添加当前商品到购物车;
-      const goods = {
-        ...this.data,
-        qty:1
+      // 判断当前商品是否已经存在购物车中
+      // 存在：数量+1
+      // 不存在：添加到购物车
+      const {_id} = this.data;
+      const current = this.cartlist.filter(item=>item._id === _id)[0]
+      if(current){
+        this.$store.commit('changeQty',{_id,qty:current.qty+1})
+      }else{
+        const goods = {
+          ...this.data,
+          qty:1
+        }
+        // 调用mutation方法
+        this.$store.commit('add',goods);
+
       }
 
     },
@@ -139,6 +154,7 @@ export default {
   },
   destroyed(){
     this.$parent.showMenu = true;
+    // this.goodsRequestSource.cancel()
   },
   beforeRouteUpdate(to,from,next){
     console.log(to.params.id,from.params.id)
