@@ -59,7 +59,7 @@ export default {
   },
   computed:{
     cartlist(){
-      return this.$store.state.goodslist;
+      return this.$store.state.cart.goodslist;
     }
   },
   methods:{
@@ -149,11 +149,13 @@ export default {
   },
   mounted(){
     // 控制菜单显示
-    this.$parent.showMenu = false;
-    console.log('goods.created',this.$parent.showMenu)
+    // this.$parent.showMenu = false;
+    // console.log('goods.created',this.$parent.showMenu)
+    this.$store.commit('displayTabbar',false);
   },
   destroyed(){
-    this.$parent.showMenu = true;
+    // this.$parent.showMenu = true;
+    this.$store.commit('displayTabbar',true);
     // this.goodsRequestSource.cancel()
   },
   beforeRouteUpdate(to,from,next){

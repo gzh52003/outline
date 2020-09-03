@@ -21,7 +21,8 @@
         <p class="price">
           <del>{{item.price}}</del>
           <span>{{item.sales_price}}</span>
-          <van-stepper v-model="item.qty" input-width="20px" button-size="20px" theme="round" @change="changeQty(item._id,$event)" />
+          <van-stepper :value="item.qty" input-width="20px" button-size="20px" theme="round" async-change integer @change="changeQty(item._id,$event)" />
+          <!-- async-change: 点击按钮时不会直接修改数量，而是根据value的值来显示 -->
         </p>
       </template>
       <template #footer>
@@ -43,6 +44,7 @@
 <script>
 import Vue from "vue";
 import { Card, Step, Steps, SubmitBar, Stepper } from "vant";
+import {mapState,mapGetters,mapMutations,mapActions} from 'vuex';
 
 Vue.use(Card);
 Vue.use(Step);
@@ -104,9 +106,21 @@ export default {
     };
   },
   computed:{
-    goodslist(){
-      return this.$store.state.goodslist
-    },
+    // goodslist(){
+    //   return this.$store.state.cart.goodslist
+    // },
+
+    // 把vuex中state数据映射到组件的computed
+    // ...mapState(['goodslist']), // 等效于：goodslist()=>this.$store.state.goodslist
+    ...mapState({
+      // cartlist:'goodslist', // 等效于：cartlist()=>this.$store.state.goodslist
+
+      // 映射模块化后的数据
+      goodslist(state){
+        console.log('mapState=',state)
+        return state.cart.goodslist
+      }
+    }),
     checkAll:{
       get(){
         return this.goodslist.every(item=>item.checked);
@@ -121,6 +135,9 @@ export default {
     totalPrice(){
       // return this.goodslist.reduce((pre,item)=>pre+item.sales_price*item.qty,0)*100;
       return this.$store.getters.totalPrice
+
+      // 添加命名空间的获取方式
+      // return this.$store.getters['cart/totalPrice']
     }
   },
   methods:{
@@ -130,23 +147,38 @@ export default {
     gotoDetail(id){
       this.$router.push('/goods/'+id);
     },
-    removeItem(id){
-      this.$store.commit('remove',id)
-    },
-    clearCart(){
-      this.$store.commit('clear')
-    },
-    changeQty(id,qty){
-      this.$store.commit('changeQty',{_id:id,qty})
-    }
+    // removeItem(id){
+    //   this.$store.commit('remove',id)
+    // },
+    // clearCart(){
+    //   this.$store.commit('clear')
+    // },
+    // ...mapMutations(['removeItem','clearCart']), //等效于上面的代码
+    ...mapMutations({
+      removeItem:'remove',
+      clearCart:'clear'
+    }),
+    // changeQty(id,qty){
+    //   // this.$store.commit('changeQty',{_id:id,qty})
+    //   this.$store.dispatch('changeQtyAsync',{_id:id,qty})
+    // }
+    ...mapActions({
+      // changeQty:'changeQtyAsync'
+      changeQty(dispatch,_id,qty){
+        dispatch('changeQtyAsync',{_id,qty})
+      }
+    })
   },
   created(){
-    this.$parent.showMenu = false;
-    console.log('goodslist=',this.$store.state)
+    // this.$parent.showMenu = false;
+    // console.log('goodslist=',this.$store.state)
+
+    this.$store.commit('displayTabbar',false);
   },
   beforeDestroy(){
-    this.$parent.showMenu = true;
-     console.log('cart.destroyed',this.$parent.showMenu)
+    // this.$parent.showMenu = true;
+    //  console.log('cart.destroyed',this.$parent.showMenu)
+    this.$store.commit('displayTabbar',true);
   }
 };
 </script>

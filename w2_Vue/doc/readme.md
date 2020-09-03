@@ -897,3 +897,54 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
             this.$store.state.goodslist
         * 修改
             this.$store.commit(mutation,params)
+
+## day5-4
+
+### 复习
+* VueX
+    > 一个全局状态管理工具
+    * 解决哪些问题
+        * 组件间数据共享问题
+        * 组件刷新问题
+    * 使用步骤
+        1. 引入并使用
+        2. 实例化一个store
+            > 设置配置参数
+        3. 注入根实例
+        4. 在组件中使用
+    * VueX的操作
+        * 获取
+            `this.$store.state.xxx`
+            `this.$store.getters.xxx`
+        * 修改
+            `store.commit()`
+    * 核心配置
+        * state
+        * getters
+            > 只有在依赖的数据发生改变时才会重新计算，否则从缓存中获取
+        * mutations（用于同步操作）
+            > 唯一修改state的方式
+            * 参数：
+                * state
+                * payload
+            * 触发：store.commit(mutation,参数)
+        * actions（用于异步操作）
+            * 参数：
+                * context：一个类似于store的对象
+            * 触发：store.dispatch(action,参数)
+            ```js
+                store.dispatch('changeQtyAsync',{_id,qty})
+            ```
+    * store模块化
+        * modules
+            * state必须通过模块名去获取
+            * getters,mutations,actions默认保存在全局
+            * PS: 在模块中获取state,getters,mutations,actions不需要额外添加名称空间
+        * 操作
+            * 获取
+                * state的获取，必须添加模块
+                ```js
+                    this.$store.state.cart.xxx
+                    this.$store.state.common.xxx
+                ```
+            * 修改

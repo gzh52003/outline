@@ -43,7 +43,17 @@ router.get('/:id',async (req,res)=>{
     }catch(err){
         res.send(formatData({code:0}));
     }
+})
 
+router.get('/:id/kucun',async (req,res)=>{
+    const {id} = req.params;
+
+    // 读取数据库的库存信息
+    const kc = 6;
+
+    setTimeout(()=>{
+        res.send(formatData({data:kc}))
+    },500);
 })
 
 
