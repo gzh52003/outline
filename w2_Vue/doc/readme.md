@@ -900,6 +900,37 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
 
 ## day5-4
 
+### 面试题
+* v-model原理，替代方案，如何让它在组件上生效
+```js
+    // 单向绑定：model -> view        this.username = 'xxx'
+    <input v-bind:value="username" />
+
+    // 双向绑定
+    // model -> view : getter&setter
+    // view -> model : 事件
+    <input v-model="username" />
+
+    // 替代方案
+    <input v-bind:value="username" v-on:input="changeUser"/>
+
+    <login v-model="username" /> // 等效与  <login v-bind:value="username" v-on:input="xxx">
+    // login.vue
+    <div>
+        <input type='text' v-bind:value="value" v-on:input="changeusername"  />
+    </div>
+
+    export default {
+        props:['value'],
+        methods:{
+            changeusername(e){
+                this.$emit('input',e.target.value)
+            }
+        }
+    }
+```
+* 
+
 ### 复习
 * VueX
     > 一个全局状态管理工具
@@ -948,3 +979,45 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
                     this.$store.state.common.xxx
                 ```
             * 修改
+
+
+### 项目
+* 接口服务器
+* 后台管理系统（PC端）
+* webApp（移动端）
+
+* readme.md
+```
+    # 项目名称: 拼多多
+    ## 演示
+        * 官网： http://pinduoduo.com
+        * 上线网址
+            * 后台管理系统：xxx
+            * webapp：xxx
+    ## git仓库地址: https://github.com/gzh52003/Flowers
+
+    ## 团队与分工
+        * 组长：xxx，成员：xxx,xxx
+            
+        * 负责模块说明
+            * laoxie
+                * 负责购物流程的实现
+                * 注册与登录
+                * 全局组件和公共模块维护
+                * 协调工作
+            * jingjing
+                * 静态页面
+    ## 项目页面截图（3-5张）
+        ![](./img/xxx.jpg)
+    
+    ## 项目目录说明
+        ├─public    网站根目录
+        │  └─img    
+        └─src
+            ├─assets        静态资源
+            ├─components    组件
+            ├─router        路由配置
+            ├─store         Vuex
+            ├─utils         工具包
+            └─views         页面
+```
