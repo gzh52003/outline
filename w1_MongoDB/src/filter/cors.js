@@ -1,4 +1,4 @@
-const whiteList = ['http://localhost:8080','http://localhost:8081']
+const whiteList = ['http://localhost:8080','http://localhost:8081','http://120.76.247.5:2004']
 
 function cors(req,res,next){
     // 设置响应头
@@ -27,6 +27,8 @@ function cors(req,res,next){
         } else{
             next();
         }
+    }else{
+        next();
     }
 
    

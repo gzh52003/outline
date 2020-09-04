@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20.ES6新特性之Proxy</title>
+</head>
+<body>
+    <h1>20.ES6新特性之Proxy</h1>
+    <script>
+        /**
+            * ES6新特性之Proxy
+                格式：new Proxy(target,handler)
+         */
+        const user = {
+            username:'laoxie',
+            password:123456
+        }
+
+        // Object.defineProperties(user,{
+        //     username:{
+        //         get(){
+
+        //         },set(){
+
+        //         }
+        //     },
+        //     password:{
+
+        //     }
+        // })
+
+        
+        const proxy =  new Proxy(user,{
+            get(target, key){
+                console.log('get=',target,key)
+                return target[key];
+            },
+            set(target,key,value){
+                console.log('set=',target,key,value)
+                target[key] = value
+            }
+        })
+    </script>
+</body>
+</html>

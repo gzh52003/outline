@@ -1021,3 +1021,62 @@ Vue-Router允许我们通过不同的 URL 访问不同的内容。 可以实现�
             ├─utils         工具包
             └─views         页面
 ```
+
+发封邮件给我，抄给小谢
+
+
+## day5-5
+
+### 知识点
+
+#### 项目优化
+* 性能优化
+    * 按需加载
+        * UI框架按需加载
+        * 路由懒加载
+    * http请求优化
+        * 合并压缩
+        * 图片使用base64编码
+    * 代码质量
+        * Eslint
+    * 图片优化
+        * 大小
+        * 缓存：针对静态资源（图片、css,js）
+        * 更新问题件如何避免缓存：添加时间戳 xxx.js?t=11234366345
+    * SSR
+    * 服务器压缩
+    * history路由
+    * ...
+* UEO用户体验优化（用户使用产品过程中的主观感受）
+    * 界面友好性
+    * 操作便捷性
+    * 增加用户粘性
+    * ...
+* SEO搜索引擎优化
+    * 标签使用
+    * 布局
+    ```
+        <section></section>
+        <div></div>
+    ```
+
+#### history路由
+1. mode:'history'
+2. 服务器配置
+    > 服务器需要做相应的配置来支持history路由
+    * 服务器如何支持：让除静态资源外所有的请求都响应index.html的内容
+
+* history路由的原理
+    * 利用HTML5的新特性（history新增了state状态）
+        * pushState()
+        * replaceState()
+* hash路由的原理
+    * 利用window下的hashchange事件来监听hash值的改变
+    * hash值的改变不会刷新页面
+
+    ```js
+        push()
+        replace()
+
+    ```
+

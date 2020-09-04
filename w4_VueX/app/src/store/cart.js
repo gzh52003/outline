@@ -116,6 +116,7 @@ const cart = {
         async getCart(){
             const {data} = await request.get(`/cart`);
             context.commit('initCart',data.data)
+
         }
     }
 }

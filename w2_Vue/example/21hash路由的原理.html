@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21hash路由的原理</title>
+</head>
+<body>
+    <h1>21hash路由的原理</h1>
+    <div id="app"></div>
+    <script>
+
+        const routes = [{
+            path:'/reg',
+            component:'<div>Reg</div>'
+        },{
+            path:'/login',
+            component:'<div>Login</div>'
+        }]
+        // 页面hash值（锚点）的改变会触发hashchange事件
+        window.onhashchange = function(){
+            console.log(666);
+            // 获取当前has值
+            const currentHash = location.hash.slice(1);
+
+            // 匹配路由配置
+            const currentRouter = routes.filter(item=>item.path===currentHash)[0];
+
+            app.innerHTML = currentRouter.component;
+        }
+    </script>
+</body>
+</html>
