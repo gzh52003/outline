@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.React组件定义</title>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./js/browser.js"></script>
+</head>
+<body>
+    <h1>3.React组件定义</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        /**
+            * React组件的定义
+                > 简单理解为定义一个html标签，组件名首字母必须使用大写
+                * 函数组件
+                * 类组件
+         */
+
+
+        // 函数组件
+         function Button(){
+             // 组件的返回值就是组件显示的内容
+            // return React.createElement('button',null,'点我有惊喜')
+            return <button>点我有惊喜</button>
+         }
+
+        //  类组件
+        class List extends React.Component{
+            render(){
+                return (
+                    <div>
+                    <h4>List</h4>
+                    <ul>
+                        <li>data1</li>
+                        <li>data2</li>
+                        <li><Button/></li>
+                    </ul>
+                    </div>
+                )
+            }
+        }
+
+         ReactDOM.render(
+             <div>
+                <h1>React组件定义</h1>
+                <Button></Button>
+                <List/>
+            </div>,
+             document.getElementById('app')
+         )
+
+    </script>
+</body>
+</html>
