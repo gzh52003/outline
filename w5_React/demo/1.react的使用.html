@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React的使用</title>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <h1>React的使用</h1>
+    <div id="app"></div>
+    <script>
+        // react -> window.React
+        // react-dom -> window.ReactDOM
+        // 创建真实节点：document.createElement()
+        // 创建虚拟节点：React.createElement(type,props,children)
+        /*
+            // 虚拟节点：<div id="box">box</div>
+            // 虚拟DOM
+            <div id="box">
+                <h4>虚拟节点测试</h4>
+            </div>
+            <div id="box">
+                <h4>虚拟节点测试</h4>
+                 <ul class="list">
+                    <li>data1</li>
+                    <li>data2</li>
+                </ul>
+            </div>
+        */ 
+        const div1 = React.createElement('div',{id:'box'},'box');
+        console.log('div1=',div1);
+
+        const div2 = React.createElement(
+            'div',
+            {id:'box'},
+            React.createElement('h4',null,'虚拟节点测试')
+        )
+        console.log('div2=',div2);
+
+        const div3 = React.createElement(
+            'div',
+            {id:'box'},
+            [
+                React.createElement('h4',null,'虚拟节点测试'),
+                React.createElement(
+                    'ul',
+                    {className:'list'},
+                    [
+                        React.createElement('li',null,'data1'),
+                        React.createElement('li',null,'data2'),
+                    ]
+                )
+
+            ]
+        )
+        console.log('div3=',div3);
+
+        // 渲染节点
+        ReactDOM.render(
+            div3,
+            document.querySelector('#app')
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.JSX的使用</title>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./js/browser.js"></script>
+</head>
+<body>
+    <h1>2.JSX的使用</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        
+        /*
+            JSX：JS的扩展，可以在JS中直接使用html代码，但浏览器无法识别
+                可以使用babel工具编译JSX代码为浏览器支持的格式
+            
+            <div id="box">
+                <h4>虚拟节点测试</h4>
+            </div>
+            <div id="box">
+                <h4>虚拟节点测试</h4>
+                 <ul class="list">
+                    <li>data1</li>
+                    <li>data2</li>
+                </ul>
+            </div>
+        */ 
+        // const div1 = React.createElement('div',{id:'box'},'box');
+        // console.log('div1=',div1);
+
+        // const div2 = React.createElement(
+        //     'div',
+        //     {id:'box'},
+        //     React.createElement('h4',null,'虚拟节点测试')
+        // )
+        // console.log('div2=',div2);
+
+        // const div3 = React.createElement(
+        //     'div',
+        //     {id:'box'},
+        //     [
+        //         React.createElement('h4',null,'虚拟节点测试'),
+        //         React.createElement(
+        //             'ul',
+        //             {className:'list'},
+        //             [
+        //                 React.createElement('li',null,'data1'),
+        //                 React.createElement('li',null,'data2'),
+        //             ]
+        //         )
+        //     ]
+        // )
+        // console.log('div3=',div3);
+
+        const user = {
+            username:'laoxie',
+            password:123456
+        }
+
+        const titleStyle = {color:'#f00'}
+
+        const box = <div id="box">
+            <h4>虚拟节点测试</h4>
+                <ul className="list">
+                <li>data1</li>
+                <li>data2</li>
+            </ul>
+            <h4 style={titleStyle}>{user.username}</h4>
+            <label htmlFor="username">用户名</label>
+            <input type="text" id="username" value={user.username} />
+            <img src="" />
+        </div>
+
+        // 渲染节点
+        ReactDOM.render(
+            // JSX: js代码与html代码混写
+            // 结构，行为，表现三者分离
+            // <div id="box">
+            //     <h4>虚拟节点测试</h4>
+            //      <ul className="list">
+            //         <li>data1</li>
+            //         <li>data2</li>
+            //     </ul>
+            // </div>,
+            box,
+            document.querySelector('#app')
+        );
+    </script>
+</body>
+</html>
