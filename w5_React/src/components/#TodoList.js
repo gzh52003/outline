@@ -79,7 +79,7 @@ class TodoList extends Component {
 
         // 给当前组件添加状态
         this.state = {
-            keyword:'laoxie',
+            keyword:'',
             title: 'todolist待办事项',
             datalist: [
                 {
@@ -97,23 +97,53 @@ class TodoList extends Component {
         }
 
         // 改变自定义函数this指向（推荐）
-        this.add = this.add.bind(this)
+        this.addItem = this.addItem.bind(this)
+        this.removeItem = this.removeItem.bind(this)
+        this.completeItem = this.completeItem.bind(this)
         this.changeKeyword = this.changeKeyword.bind(this)
     }
     // 添加自定义方法：默认没有this指向
     // 这里添加的方法会自动成为原型的方法
-    add(){
+    addItem(){
         const {datalist,keyword} = this.state;
         const newData = {
             id:datalist.length+1,
             title:keyword,
+            // title:document.getElementById('keyword').value,
+            // title:this.keyword.value,
+            // title:this.kw.current.value,
             done:false,
             addtime:Date.now()
         }
         console.log(this)
         // this.state.datalist.unshift(newData) // 不同于Vue的getter&setter，直接修改state数据无法刷新页面
         this.setState({
-            datalist:[newData,...datalist]
+            datalist:[newData,...datalist],
+            keyword:''
+        })
+
+        // 清空并自动获得焦点
+        this.keyword.focus();
+    }
+
+    completeItem(id){
+        const datalist = this.state.datalist.map(item=>{
+            if(item.id === id){
+                item.done = true
+            }
+            return item
+        })
+
+        console.log('datalist=',datalist)
+
+        this.setState({
+            datalist
+        })
+    }
+
+    removeItem(id){
+        this.setState({
+            datalist:this.state.datalist.filter(item=>item.id!==id)
         })
     }
 
@@ -123,15 +153,19 @@ class TodoList extends Component {
         })
     }
 
+
     render() {
         console.log('App=',this)
         const { datalist, title,keyword } = this.state;
+        // this.kw = React.createRef();
         return (
             <div>
                 <h1>{title}</h1>
                 <div className="todo-form">
-                    <input type="text" value={keyword} onChange={this.changeKeyword} />
-                    <button onClick={this.add}>添加</button>
+                    <input type="text" value={keyword} onChange={this.changeKeyword} ref={el=>this.keyword=el} />
+                    {/* <input type="text" ref={el=>this.keyword=el} id="keyword" /> */}
+                    {/* <input type="text" ref={this.kw} /> */}
+                    <button onClick={this.addItem}>添加</button>
                 </div>
                 <table style={{ width: '100%' }} className="todo-content">
                     <thead>
@@ -152,8 +186,8 @@ class TodoList extends Component {
                                         <td>{item.title}</td>
                                         <td>{item.done ? '是' : '否'}</td>
                                         <td>
-                                            <button>完成</button>
-                                            <button>删除</button>
+                                            <button onClick={this.completeItem.bind(this,item.id)}>完成</button>
+                                            <button onClick={this.removeItem.bind(this,item.id,10,20)}>删除</button>
                                         </td>
                                     </tr>
                                 )
