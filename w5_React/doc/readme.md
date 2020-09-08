@@ -74,3 +74,69 @@
         * 运行任务
     * webpack: 基于配置的构建工具
         * 在项目跟目录下创建一个`webpack.config.js`，所有的配置规则都写到该文件中，文件内部返回一个commonJS模块
+
+## day6-2
+
+### 面试题
+* webpack常用配置
+* 局部样式的原理
+    > 添加scoped
+    1. 给当前组件的元素添加data-v-[hash]
+    2. css属性选择器: .el-button[data-v-xxxx]{}
+
+    * 在局部样式中修改第三方组件样式
+        * /deep/
+        * >>>
+        * 添加一个不带scoped的style
+* 单页面应用的原理
+    * hash
+    * history
+        * state
+        * pushState()
+        * replaceState()
+
+### 复习
+* webpack与gulp的区别
+    * gulp：基于任务的构建工具
+    * webpack：基于配置的构建工具
+* webpack的常用配置
+    > 手动搭建基于webpack的React开发环境
+    * entry     入口
+    * devServer 开发服务器
+        > webpack-dev-server
+    * loader    加载器
+        > module.rules
+        * test  匹配规则（正则）
+        * use   使用加载器
+    * plugins   插件
+        * html-webpack-plugin
+* webpack的工作原理
+    > 从入口开始，分析整个项目依赖，并使用加载器/插件编译相应的代码，并构建出一个或多个文件
+
+* React
+    * 特点
+    * JSX
+        * JSX -> React.createElement()
+    * 组件
+        * 定义
+            * 函数组件
+
+            * 类组件
+                * 继承自React.Component
+                * render
+        * 使用
+### 知识点
+    * 函数组件（无状态组件、UI组件）
+    * 类组件（状态组件、容器组件）
+    * 数据渲染
+        * 显示数据：{}
+        * 列表循环
+            * map
+            * filter
+            * ...
+        * 事件绑定
+            * 改变this指向
+            * event对象
+        * 组件状态：state
+            * 修改状态: this.setState()
+                > 规则：创建新的数据并覆盖

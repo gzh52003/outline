@@ -1,12 +1,11 @@
 import React from 'react';
 
 import Home from './pages/Home.jsx'
+import TodoList from './components/TodoList'
 
 function App(){
     return <div>
-        App, laoxie 666
-
-        <Home/>
+        <TodoList/>
     </div>
 }
 
