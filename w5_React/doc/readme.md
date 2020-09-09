@@ -161,3 +161,82 @@
         * 子组件
             * 函数组件：函数的第一个参数为props对象
             * 类组件：this.props
+
+## day6-3
+
+### 复习
+* 组件的使用
+    * 什么时候用函数组件，什么时候用类组件
+        * 函数组件（无状态组件, UI组件）
+        * 类组件（状态组件，容器组件）
+            * state
+    * todolist
+* 数据的挂载方式
+    * 数据绑定：
+        * 单向：{}
+        * 双向：
+            * value
+            * onChange事件
+    * 列表循环
+        * map()
+        * filter()
+        * key
+    * 事件绑定
+        * event: 事件处理函数的最后一个参数
+        * this指向：
+            * bind(target,...args): 只在第一次生效
+        * 传参
+    * refs
+        * 回调函数
+        * React.createRef()
+        ```js
+            // 字符串
+            // 获取：this.refs.xxx（不推荐）
+            <input ref="xxx"> 
+
+            // 回调函数（推荐）
+            const callback = function(el){
+                this.keyword = el
+            }
+            <input ref={callback} /> 
+            
+            // React.createRef()
+            // 获取：myref.current
+            const myref = React.createRef()
+            <input ref={myref} /> 
+        ```
+* 受控组件与非受控组件
+    * 受控组件：把state绑定到表单元素的value属性，并绑定onChange事件
+    * 非受控组件：表单元素不受state/props控制，通过节点方式获取
+        * 原生
+        * refs
+* state
+    > 组件的状态
+    * 读取：this.state.xxx
+    * 修改：this.setState()
+        > 原则：创建新数据并覆盖
+* props
+
+### 知识点
+
+* 组件通讯
+    * 父子通讯：props
+        * 父组件操作：定义属性并传递数据
+        * 子组件操作
+            * 函数组件：函数的第一个参数
+            * 类组件：this.props
+    * 子父通讯：把父组件的方法传到子组件去执行并传递参数
+        * 父组件操作：定义方法并通过props传入子组件
+            > 数据在哪里，就把方法定义在哪里
+        * 子组件操作：执行方法并传递参数
+    * 多层次组件通讯
+        * 逐层传递
+        * Context
+            1. 创建Contenxt
+            2. 父组件操作：Provider共享数据
+                * value
+            3. 子组件操作：接收数据
+                * 函数组件：Consumer
+                * 类组件：
+                    * Consumer
+                    * this.context

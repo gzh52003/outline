@@ -2,7 +2,7 @@ import React from 'react';
 
 import TodoItem from './TodoItem';
 
-function TodoContent({datalist}) {
+function TodoContent({datalist,removeItem,completeItem}) {
     console.log('TodoContent=',datalist)
     return (
         <table style={{ width: '100%' }} className="todo-content">
@@ -16,7 +16,7 @@ function TodoContent({datalist}) {
             </thead>
             <tbody>
                 {
-                    datalist.map((item,idx)=><TodoItem index={idx} data={item} key={item.id}/>)
+                    datalist.map((item,idx)=><TodoItem key={item.id} index={idx} data={item} removeItem={removeItem} completeItem={completeItem}/>)
                 }
             </tbody>
         </table>

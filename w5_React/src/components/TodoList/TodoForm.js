@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
+import myContext from './myContext'
 
 
 class TodoForm extends React.Component{
     constructor(){
         super();
         this.state = {
-            keyword:''
+            keyword:'',
         }
         
         this.changeKeyword = this.changeKeyword.bind(this);
@@ -19,6 +19,8 @@ class TodoForm extends React.Component{
     }
     add(){
 
+        this.props.addItem(this.state.keyword);
+
         // 清空并获得焦点
         this.setState({
             keyword:''
@@ -26,7 +28,7 @@ class TodoForm extends React.Component{
         this.keyword.focus();
     }
     render(){
-    
+        console.log('todoform.context=',this.context)
         return (
             <div>
                 <input type="text" value={this.state.keyword} onChange={this.changeKeyword} ref={el=>this.keyword=el} />
@@ -35,5 +37,8 @@ class TodoForm extends React.Component{
         )
     }
 }
+
+// 添加静态属性
+TodoForm.contextType = myContext;
 
 export default TodoForm;
