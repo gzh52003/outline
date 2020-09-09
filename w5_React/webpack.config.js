@@ -26,8 +26,13 @@ module.exports = {
 
                     // babel-loader的参数
                     options:{
-                        presets:['@babel/preset-react']
-                    }
+                        // 插件集合
+                        presets:['@babel/preset-react'],
+
+                        // 插件
+                        plugins:['@babel/plugin-proposal-class-properties']
+                    },
+
                 }]
             }
         ]

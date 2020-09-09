@@ -1,7 +1,8 @@
 import React from 'react';
 import myContext from './myContext';
 
-function TodoItem({ data, index,removeItem,completeItem }) {
+function TodoItem({ data, index,removeItem,completeItem,children }) {
+    console.log('children=',children)
     return (
         <tr>
             <td>{index + 1}</td>
@@ -25,6 +26,7 @@ function TodoItem({ data, index,removeItem,completeItem }) {
                     
                 </myContext.Consumer>
             </td>
+                <td>{children(data)}</td>
         </tr>
     )
 }

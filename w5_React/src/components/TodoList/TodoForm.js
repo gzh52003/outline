@@ -3,21 +3,33 @@ import myContext from './myContext'
 
 
 class TodoForm extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            keyword:'',
-        }
+    // constructor(){
+    //     super();
+    //     this.state = {
+    //         keyword:'',
+    //     }
         
-        this.changeKeyword = this.changeKeyword.bind(this);
-        this.add = this.add.bind(this);
+    //     // this.changeKeyword = this.changeKeyword.bind(this);
+    //     // this.add = this.add.bind(this);
+    // }
+
+    // 添加静态属性:等效于TodoForm.xxx = xxx
+    // PS：ES6支持静态方法，但不支持静态属性
+    static contextType = myContext;
+    // static getData(){}
+
+    // 添加实例属性：等效于this.state = {}
+    state = {
+        keyword:''
     }
-    changeKeyword(e){
+
+    // 添加实例方法
+    changeKeyword = (e)=>{
         this.setState({
             keyword:e.target.value
         })
     }
-    add(){
+    add = ()=>{
 
         this.props.addItem(this.state.keyword);
 
@@ -28,7 +40,7 @@ class TodoForm extends React.Component{
         this.keyword.focus();
     }
     render(){
-        console.log('todoform.context=',this.context)
+        console.log('todoform=',this)
         return (
             <div>
                 <input type="text" value={this.state.keyword} onChange={this.changeKeyword} ref={el=>this.keyword=el} />
@@ -39,6 +51,6 @@ class TodoForm extends React.Component{
 }
 
 // 添加静态属性
-TodoForm.contextType = myContext;
+// TodoForm.contextType = myContext;
 
 export default TodoForm;

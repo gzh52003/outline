@@ -164,6 +164,36 @@
 
 ## day6-3
 
+### 面试题
+* 移动端适配
+    * 自适应布局
+        * 百分比布局
+        * 弹性盒布局
+        * rem布局
+        * vw/vh/vmin/vmax
+        * ...
+    * 响应式布局
+        * media query 媒体查询
+* arguments
+    * callee    在严格模式下无法使用
+    ```js
+        function show(){
+            // arguments.callee()
+            // show()
+        }
+        setTimeout(function get(){
+            // 这里的代码执行超过1s
+            // setTimeout(arguments.callee,1000)
+            setTimeout(get,1000)
+        },1000)
+
+        setInterval(function(){
+            // 这里的代码执行超过1s
+        },1000);
+
+        //get()
+    ```
+
 ### 复习
 * 组件的使用
     * 什么时候用函数组件，什么时候用类组件
@@ -240,3 +270,29 @@
                 * 类组件：
                     * Consumer
                     * this.context
+    * 组件内容通讯: props.children
+        
+* 自定义方法使用箭头函数
+    > @babel/plugin-proposal-class-properties
+
+* render props
+    > 使用一个值为函数的 prop 共享代码的简单技术（类似于 Vue 中的作用域插槽）
+* props类型校验：propTypes
+    > 一般用于组件编写
+
+    ```js
+        {
+            <mycomponent :index="10" age="" />
+            props:{
+                // index:Number,
+                // index: [String, Number],
+                index:{
+                    type:[String, Number],
+                    // default:0,
+                    required: true
+                }
+            }
+        }
+    ```
+* props默认值：defaultProps
+    > 一般用于组件编写
