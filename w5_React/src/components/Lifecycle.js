@@ -1,6 +1,9 @@
 import React from 'react'
 
-class Lifecycle extends React.Component{
+// PureComponent做了性能优化的组件
+
+// class Lifecycle extends React.Component{
+class Lifecycle extends React.PureComponent{
     constructor(){
         super();
         this.state = {
@@ -14,6 +17,7 @@ class Lifecycle extends React.Component{
     }
     componentDidMount(){
         console.log('componentDidMount')
+        // ajax
     }
 
     // 不推荐
@@ -37,24 +41,24 @@ class Lifecycle extends React.Component{
     }
 
     // shouldComponentUpdate一般用于性能优化
-    shouldComponentUpdate(nextProps, nextState){
-        // this.state.qty: 当前值
-        // nextState.qty: 将要改变的值
-        console.log('shouldComponentUpdate')
-        // this.forceUpdate(); //强制刷新（不推荐）
+    // shouldComponentUpdate(nextProps, nextState){
+    //     // this.state.qty: 当前值
+    //     // nextState.qty: 将要改变的值
+    //     console.log('shouldComponentUpdate')
+    //     // this.forceUpdate(); //强制刷新（不推荐）
 
-        // qty为5的倍数才渲染页面、
-        // if(nextState.qty%5===0){
-        //     return true;
-        // }else{
-        //     return false
-        // }
+    //     // qty为5的倍数才渲染页面、
+    //     // if(nextState.qty%5===0){
+    //     //     return true;
+    //     // }else{
+    //     //     return false
+    //     // }
 
-        if(nextProps.username === this.props.username){
-            return false;
-        }
-        return true;
-    }
+    //     if(nextProps.username === this.props.username){
+    //         return false;
+    //     }
+    //     return true;
+    // }
     render(){
         console.log('render')
         return (

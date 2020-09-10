@@ -329,6 +329,42 @@
                     * close
                     * reopen
                 * 指派（分配）
+* json数据格式的规范
+    * 规范
+        * 属性名必须使用双引号
+        * 字符串必须使用双引号
+        * 最后不允许多余逗号
+        * 不允许有注释
+        * 属性值值允许为以下类型
+            * Number
+            * String
+            * Boolean
+            * null
+            * Array
+            * Object
+    * json对象
+    * json字符串
+    * 转换
+        * JSON.stringify()  返回json字符串
+        * JSON.parse()      返回json对象
+    ```js
+        let user1 = {name:'jingjign',password:1234} // js对象
+        let user2 = {
+            "username":"jingjing", // 用户名
+            "password":1234
+        } 
+        let user3 = "{\"username\":\"jingjing\",\"password\":1234,}" // json字符串
+    ```
+* html语义化标签的理解
+    * div+css（table）
+    * 合适的位置使用合适标签
+    * SEO
+* 组件化化与模块化
+    * AMD/CMD   requre.js/sea.js
+    * CommonJS  nodejs
+    * ES Module  ECMAScript
+    * jquery如何实现模块化
+        * umd 
 
 ### 复习
 * 组件通讯
@@ -377,10 +413,23 @@
     * 特殊生命周期函数
         * componentWillReceiveProps
         * shouldComponentUpdate
+            * React.PureComponent：实现了shouldComponentUpdate的React.Component
 * 组件的自动刷新条件
     * state有修改
     * props有修改
     * 父组件刷新
 * 强制刷新（不推荐）：this.forceUpdate()
 
+#### React-Router
+> 万物皆组件
+* 路由类型
+    * HashRouter
+    * BrowserRouter
+* 路由渲染
+    * Switch
+    * Route
+    * Redirect
 
+* css加载器
+    * css-loader
+    * style-loader
