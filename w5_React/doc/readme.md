@@ -296,3 +296,91 @@
     ```
 * props默认值：defaultProps
     > 一般用于组件编写
+
+## day6-4
+
+### 面试题
+* 节流与防抖的理解
+    * 节流：执行第一次，忽略后面所有操作
+    * 防抖：执行最后一次，忽略前面所有操作
+* 如何进行项目自测
+    * 测试用例
+    ```js
+        function sum(a,b){
+            return a+b;
+        }
+    ```
+* 如何修复紧急线上bug
+    * hotfix  
+    * release
+        * 封版
+    * bug修复流程
+        * 需求文档（产品经理）
+        * 项目管理系统
+            * bug管理
+                * 添加bug
+                    * 截图/视频
+                    * 文字说明：如何重现bug
+                * 取消bug
+                * 修改bug状态
+                    * new
+                    * open
+                    * fixed
+                    * close
+                    * reopen
+                * 指派（分配）
+
+### 复习
+* 组件通讯
+    * 父->子：props
+        * props类型校验: prop-types
+            * 必填参数
+            * 数据类型
+        * 默认值：defaultProps静态属性
+    * 子->父：props
+        > 把父组件的方法通过props传到自组件中执行
+        * 规则：谁的数据谁修改
+    * 兄弟->兄弟
+        > 状态提升：把数据提升到他们共同的父级
+    * 多层次组件通讯
+        * 逐层转递
+        * context（配合模块化实现）
+            1. 创建context：
+                > const MyContext = React.createContext(defaultValue)
+            2. 父组件在context上共享数据
+                > <MyContext.Provider value={共享数据}>子组件</MyContext.Provider>
+            3. 子组件获取数据
+                * 函数组件
+                    * <MyContext.Consumer>{(value)=>{}}</MyContext.Consumer>
+                * 类组件
+                    * this.context
+                        > 设置静态属性：contextType
+                    * <MyContext.Consumer>{(value)=>{}}</MyContext.Consumer>
+
+### 知识点
+
+* 组件生命周（只适用于类组件）
+    > 组件的生命周期分成四个状态：
+    * Initial: 初始化阶段
+        * constructor
+            * 初始化state
+    * Mounting：挂载阶段
+        * componentWillMount
+        * componentDidMount
+    * Updating：更新阶段
+        * componentWillUpdate
+        * componentDidUpdate
+        > 所谓的更新视图就是重新执行一次render方法
+    * Unmounting：卸载阶段
+        * componentWillUnmount
+    
+    * 特殊生命周期函数
+        * componentWillReceiveProps
+        * shouldComponentUpdate
+* 组件的自动刷新条件
+    * state有修改
+    * props有修改
+    * 父组件刷新
+* 强制刷新（不推荐）：this.forceUpdate()
+
+
