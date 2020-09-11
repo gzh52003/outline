@@ -433,3 +433,138 @@
 * css加载器
     * css-loader
     * style-loader
+
+## day6-5
+
+### 项目介绍
+* 项目是做什么的
+* 项目有什么特点
+* 你负责的部分
+* 遇到的问题及解决方案
+    * 技术
+    * 团队协作
+
+### 面试题
+* 前端如何做信息攻防
+    * xss: Cross Site Scripting
+        * 利用服务器对客户端的信任进行攻击
+        * 防守：
+            * 对用户输入进行过滤
+            * 对输出进行处理
+                * v-html
+                * v-text
+    * csrf: Cross-site request forgery
+        * 利用用户对服务器的信任进行攻击
+        * icbc.com -> lcbc.com
+    * 接口权限管理
+    * 防爬
+
+### 复习
+* 生命周期与钩子函数
+    * 初始化阶段
+        * constructor
+            * state
+            * propTypes
+            * defaultProps
+    * 挂载阶段
+        * componentWillMount（不推荐）
+        * compoonetDidMount
+    * 更新阶段
+        * componentWillUpdate(nextProps,nextState) 不推荐
+        * componentDidUpdate(prevProp,prevState)
+            * 当前值：this.props/this.state
+    * 卸载阶段
+        * componentWillUnmount
+            * 取消ajax请求
+            * 清除定时器
+            * ...
+    * 特殊钩子函数
+        * componentWillReceiveProps(nextProps) 不推荐
+        * shouldComponentUpdate(nextProps, nextState)
+            * 必须要返回boolean
+                * true 允许组件更新
+                * false 不允许组件更新
+* React性能优化
+    * 组件刷新条件
+        * state有修改
+        * props有修改
+        * 父组件刷新
+        * 强制刷新：this.forceUpdate
+    * 优化方案
+        * shouldComponentUpdate
+        * PureComponent
+* React路由
+    > 一切皆组件
+    * 路由类型
+        > 使用react路由一定要先指定路由类型
+        * HashRouter
+        * BrowserRouter
+    * 路由渲染
+        * Route
+            * path
+            * component
+            * exact
+            * render
+        * Redirect
+            * from
+            * to
+            * exact
+        * Switch
+    * 路由导航
+        * 声明式导航
+            * Link
+                * to
+            * NavLink
+                * activeStyle
+                * activeClassName
+                * to
+        * 编程式导航
+### 知识点
+* 编程式导航
+    > 利用js实现跳转，编程式导航的三大对象：history,location,match
+    ```js
+        //this.$router.push()/this.$router.replace
+    ```
+    * history.push()
+    * history.replace()
+* 获取history对象
+    * 利用<Route/>渲染的组件
+        > 组件只要是通过`<Route component={组件}/>`方式渲染的组件，history对象自动传入组件的props（this.props.history访问）
+    * withRouter高阶组件（推荐）
+        > 高阶组件不是一个React组件，而是一个函数，包装函数
+
+* 高阶组件HOC
+    * 特点
+        * 高阶组件是一个**纯函数**
+            > 纯函数：不对传入的参数进行修改，固定的输入有固定的输出
+            ```js
+                // 纯函数
+                function sum(a,b){
+                    return a+b;
+                }
+                sum(1,2);//3 
+                sum(1,2);//3 
+
+                // 非纯函数
+                function randomNumber(min,max){
+                    return parseInt(Math.random()*(max-min+1)) + min
+                }
+
+                // 纯函数
+                const arr = [10,11,20,21,30,31]
+                function filter(arr){
+                    return arr.filter(item=>item%5===0);
+                }
+
+                filter(arr);// [10,20,30]
+                filter(arr);// [10,20,30]
+            ```
+        * 高阶组件的参数为组件，返回值为新组件
+        * 高阶组件是一种设计模式，类似于装饰器模式
+    * 应用场景
+        * 提取公共部分
+        * 为组件传递参数：向下传输 props
+        * 拦截生命周期、state、渲染过程等
+    * 自定义高阶组件
+        > 遵循官方命名规范：with+名字
+        * 获取用户信息

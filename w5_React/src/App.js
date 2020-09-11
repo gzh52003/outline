@@ -22,6 +22,7 @@ class App extends React.Component{
     render(){
         return (
             <div>
+                <TodoList />
                 {
                     this.state.show ? 
                     <Lifecycle username={this.state.username}/>

@@ -3,11 +3,15 @@ import myContext from './myContext'
 
 
 class TodoForm extends React.Component{
-    // constructor(){
-    //     super();
+    // constructor(props){
+    //     super(props);
     //     this.state = {
     //         keyword:'',
     //     }
+
+    //     console.log('this.props=',this.props)
+    //     console.log('this=',this)
+    //     console.log('props=',props)
         
     //     // this.changeKeyword = this.changeKeyword.bind(this);
     //     // this.add = this.add.bind(this);

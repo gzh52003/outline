@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, BrowserRouter, Route, Redirect, Switch,Link,NavLink } from 'react-router-dom'
+import { HashRouter, BrowserRouter, Route, Redirect, Switch,Link,NavLink,withRouter } from 'react-router-dom'
 
 import './App.css';
 
@@ -29,8 +29,13 @@ class App extends React.PureComponent{
             path:'/mine'
         }]
     }
+    goto = (path)=>{
+        // this.props.history.push(path);
+        this.props.history.replace(path);
+    }
     render() {
         const {menu} = this.state;
+        console.log('App.props=',this.props);
         return (
             <div>
                 <Switch>
@@ -45,12 +50,17 @@ class App extends React.PureComponent{
                     <Redirect to="/notfound" />
                 </Switch>
                 <nav>
-                    <ul>
+                    {/* <ul>
                         {
                             menu.map(item=><li key={item.name}><NavLink to={item.path} 
                                 //activeStyle={{color:'#f00',fontWeight:'bold'}}
                                 activeClassName="active"
                             >{item.text}</NavLink></li>)
+                        }
+                    </ul> */}
+                    <ul>
+                        {
+                            menu.map(item=><li key={item.name} onClick={this.goto.bind(this,item.path)}>{item.text}</li>)
                         }
                     </ul>
                 </nav>
@@ -58,5 +68,8 @@ class App extends React.PureComponent{
         )
     }
 }
+
+// 高阶组件（包装函数）
+App = withRouter(App);
 
 export default App;
