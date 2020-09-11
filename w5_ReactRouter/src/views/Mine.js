@@ -1,7 +1,11 @@
 import React from 'react';
 
-import {withUser,withAuth} from '../utils/hoc';
+import {withUser,withAuth, withStorage} from '../utils/hoc';
 
+@withStorage('logined')
+@withStorage('username')
+@withUser
+@withAuth
 class Mine extends React.PureComponent{
     componentDidMount(){
 
@@ -28,6 +32,7 @@ class Mine extends React.PureComponent{
     }
 }
 
-Mine = withAuth(Mine)
-Mine = withUser(Mine)
+// Mine = withAuth(Mine)
+// Mine = withUser(Mine)
+// Mine = withStorage('authorization')(Mine)
 export default Mine;

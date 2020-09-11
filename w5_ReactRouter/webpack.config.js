@@ -30,7 +30,15 @@ module.exports = {
                     options:{
                         presets:['@babel/preset-react'],
                         // 插件
-                        plugins:['@babel/plugin-proposal-class-properties']
+                        plugins:[
+                            ['@babel/plugin-proposal-decorators',{legacy: true}],
+                            ['@babel/plugin-proposal-class-properties',{ "loose": true }],
+                            ["import", {
+                                "libraryName": "antd",
+                                "libraryDirectory": "es",
+                                "style": "css" // `style: true` 会加载 less 文件
+                              }]
+                        ]
                     }
                 }]
             },

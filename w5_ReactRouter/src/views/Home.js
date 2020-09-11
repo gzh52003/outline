@@ -2,6 +2,7 @@ import React from 'react';
 
 import {withUser,withAuth} from '../utils/hoc'
 
+
 function Home(props){
     console.log('home.props=',props)
     // 获取用户信息
@@ -23,6 +24,6 @@ function Home(props){
     )
 }
 
-// Home = withUser(Home)
+Home = withUser(Home)
 
 export default Home;

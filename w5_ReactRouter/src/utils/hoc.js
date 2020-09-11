@@ -1,9 +1,11 @@
 /**
  * 高阶组件
     * 是一个纯函数
+    * 必须返回一个新的组件
  */
 
  import React from 'react';
+ import {Redirect} from 'react-router-dom'
 
 
 //  应用一：属性代理
@@ -34,6 +36,18 @@
     }
  }
 
+ export function withStorage(key){
+     const value = localStorage.getItem(key);
+     const data = {
+        [key]:value
+     }
+    return function(InnerComponent){
+        return function OuterComponent(props){
+            return <InnerComponent {...props} {...data}  />
+        }
+    }
+ }
+
 
 //  应用二：反向继承
 // 可以实现路由拦截
@@ -53,7 +67,8 @@ export function withAuth(InnerComponent){
             if(this.props.currentUser.username){
                 return super.render()
             }
-            return <div>未登录无法访问</div>
+            return <Redirect to="/login" />
+            // return <div>未登录无法访问</div>
         }
     }
 }

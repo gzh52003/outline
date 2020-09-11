@@ -1,0 +1,8 @@
+{
+    "presets":["@babel/preset-react"],
+    // 插件
+    "plugins":[
+        ["@babel/plugin-proposal-decorators",{"legacy": true}],
+        ["@babel/plugin-proposal-class-properties",{ "loose": true }],
+    ]
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, BrowserRouter, Route, Redirect, Switch,Link,NavLink,withRouter } from 'react-router-dom'
+import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
 import './App.css';
 
@@ -9,35 +9,61 @@ import Reg from './views/Reg'
 import Login from './views/Login'
 import Mine from './views/Mine'
 
-class App extends React.PureComponent{
+import { Menu } from 'antd';
+import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
+
+class App extends React.PureComponent {
     state = {
-        menu:[{
-            text:'首页',
-            name:'home',
-            path:'/home'
-        },{
-            text:'注册',
-            name:'reg',
-            path:'/reg'
-        },{
-            text:'登录',
-            name:'login',
-            path:'/login'
-        },{
-            text:'我的',
-            name:'mine',
-            path:'/mine'
-        }]
+        menu: [{
+            text: '首页',
+            name: 'home',
+            icon:<HomeOutlined />,
+            path: '/home'
+        }, {
+            text: '注册',
+            name: 'reg',
+            icon:<ContactsOutlined />,
+            path: '/reg'
+        }, {
+            text: '登录',
+            name: 'login',
+            icon:<TeamOutlined />,
+            path: '/login'
+        }, {
+            text: '我的',
+            name: 'mine',
+            icon:<UserOutlined />,
+            path: '/mine'
+        }],
+        current: '/home'
     }
-    goto = (path)=>{
-        // this.props.history.push(path);
-        this.props.history.replace(path);
+    goto = ({ key }) => {
+        this.setState({
+            current:key
+        })
+        this.props.history.push(key);
+        // this.props.history.replace(path);
+    }
+    componentWillMount(){
+        const {pathname} = this.props.location;
+        this.setState({
+            current:pathname
+        })
     }
     render() {
-        const {menu} = this.state;
-        console.log('App.props=',this.props);
+        const { menu, current } = this.state;
+        console.log('App.props=', this.props);
         return (
             <div>
+
+                <Menu onClick={this.goto} selectedKeys={[current]} mode="horizontal" theme="dark">
+                    {
+                        menu.map(item => <Menu.Item key={item.path}>
+                            {item.icon}
+                            {item.text}
+                        </Menu.Item>)
+                    }
+                </Menu>
                 <Switch>
                     <Route path="/home" component={Home} />
                     <Route path="/reg" component={Reg} />
@@ -45,25 +71,10 @@ class App extends React.PureComponent{
                     <Route path="/mine" component={Mine} />
                     <Route path="/notfound" render={() => <div>404</div>} />
                     <Redirect from="/" to="/home" exact />
-    
+
                     {/* 404 */}
                     <Redirect to="/notfound" />
                 </Switch>
-                <nav>
-                    {/* <ul>
-                        {
-                            menu.map(item=><li key={item.name}><NavLink to={item.path} 
-                                //activeStyle={{color:'#f00',fontWeight:'bold'}}
-                                activeClassName="active"
-                            >{item.text}</NavLink></li>)
-                        }
-                    </ul> */}
-                    <ul>
-                        {
-                            menu.map(item=><li key={item.name} onClick={this.goto.bind(this,item.path)}>{item.text}</li>)
-                        }
-                    </ul>
-                </nav>
             </div>
         )
     }
