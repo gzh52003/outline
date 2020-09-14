@@ -8,9 +8,16 @@ import Home from './views/Home'
 import Reg from './views/Reg'
 import Login from './views/Login'
 import Mine from './views/Mine'
+import Category from './views/Category'
 
 import { Menu } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
+
+const IQ = (props)=>{
+    console.log('iq=',props)
+    const {id} = props.match.params;
+    return <div>面试题</div>
+}
 
 class App extends React.PureComponent {
     state = {
@@ -69,11 +76,13 @@ class App extends React.PureComponent {
                     <Route path="/reg" component={Reg} />
                     <Route path="/login" component={Login} />
                     <Route path="/mine" component={Mine} />
+                    <Route path="/category" component={Category} />
+                    <Route path="/iq/:id" component={IQ} />
                     <Route path="/notfound" render={() => <div>404</div>} />
                     <Redirect from="/" to="/home" exact />
 
                     {/* 404 */}
-                    <Redirect to="/notfound" />
+                    {/* <Redirect to="/notfound" /> */}
                 </Switch>
             </div>
         )
