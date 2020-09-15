@@ -27,6 +27,9 @@ class Home extends React.Component{
         iqlist:[],
         hotlist:[]
     }
+    goto = (id)=>{
+        this.props.history.push('/iq/'+id)
+    }
     async componentDidMount(){
         const newData = await request.get('/iq',{
             size:10
@@ -45,13 +48,14 @@ class Home extends React.Component{
     render(){
         const {iqlist,hotlist} = this.state;
         return (
-            <div>
+            <div style={{padding:15}}>
                 <h1>最近面试题</h1>
                 <List 
                 dataSource={iqlist} 
                 renderItem={item => (
                     <List.Item>
-                        {item.question}
+                        <h4 onClick={this.goto.bind(this,item._id)}>{item.question}</h4>
+                        {item.answer} 回答 {item.hot} 浏览
                     </List.Item>
                     )} 
                 />
@@ -60,7 +64,8 @@ class Home extends React.Component{
                 dataSource={hotlist} 
                 renderItem={item => (
                     <List.Item>
-                        {item.question} - {item.hot}
+                        <h4 onClick={this.goto.bind(this,item._id)}>{item.question}</h4>
+                        {item.answer} 回答 {item.hot} 浏览
                     </List.Item>
                     )} 
                 />

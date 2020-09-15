@@ -20,7 +20,8 @@ export async function get(url,data,config={}){
 }
 
 export async function post(url,data,config={}){
-    const {data:result} = request({
+    const {data:result} = await request({
+        ...config,
         url,
         method:'post',
         data

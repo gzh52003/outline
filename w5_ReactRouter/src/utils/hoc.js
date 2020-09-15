@@ -4,29 +4,30 @@
     * 必须返回一个新的组件
  */
 
- import React from 'react';
- import {Redirect} from 'react-router-dom'
+import React from 'react';
+import { Redirect } from 'react-router-dom'
 
 
 //  应用一：属性代理
- export function withUser(InnerComponent){
-    let currentUser = localStorage.getItem('currentUser');
-    try{
-        currentUser = JSON.parse(currentUser)
-    }catch(err){
-        currentUser = currentUser;
-    }
+export function withUser(InnerComponent) {
 
-    if(!currentUser){
-        currentUser = {}
-    }
     //  return function OuterComponent(props){
     //      return (
     //         <InnerComponent {...props} currentUser={currentUser} />
     //      )
     //  }
-    return class OuterComponent extends React.Component{
-        render(){
+    return class OuterComponent extends React.Component {
+        render() {
+            let currentUser = localStorage.getItem('currentUser');
+            try {
+                currentUser = JSON.parse(currentUser)
+            } catch (err) {
+                currentUser = currentUser;
+            }
+
+            if (!currentUser) {
+                currentUser = {}
+            }
             return (
                 <InnerComponent {...this.props} currentUser={currentUser} />
                 //  {...this.props} 等效与 history={this.props.history} location={this.props.location}
@@ -34,35 +35,35 @@
 
         }
     }
- }
+}
 
- export function withStorage(key){
-     const value = localStorage.getItem(key);
-     const data = {
-        [key]:value
-     }
-    return function(InnerComponent){
-        return function OuterComponent(props){
-            return <InnerComponent {...props} {...data}  />
+export function withStorage(key) {
+    const value = localStorage.getItem(key);
+    const data = {
+        [key]: value
+    }
+    return function (InnerComponent) {
+        return function OuterComponent(props) {
+            return <InnerComponent {...props} {...data} />
         }
     }
- }
+}
 
 
 //  应用二：反向继承
 // 可以实现路由拦截
 
-export function withAuth(InnerComponent){
-    return class OuterComponent extends InnerComponent{
+export function withAuth(InnerComponent) {
+    return class OuterComponent extends InnerComponent {
         // constructor(props){
         //     super(props);
         // }
-        componentDidMount(){
+        componentDidMount() {
             super.componentDidMount();
         }
-        render(){
+        render() {
             // 根据条件选择是否渲染InnerComponent
-            if(this.props.currentUser.username){
+            if (this.props.currentUser.username) {
                 return super.render()
             }
             return <Redirect to="/login" />

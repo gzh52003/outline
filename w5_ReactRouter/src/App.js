@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
-import './App.css';
+import './App.scss';
 
 // 引入页面组件
 import Home from './views/Home'
@@ -9,14 +9,11 @@ import Reg from './views/Reg'
 import Login from './views/Login'
 import Mine from './views/Mine'
 import Category from './views/Category'
+import IQ from '~/IQ'
 
 import { Menu,Row,Col,Button } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
 
-const IQ = (props)=>{
-    const {id} = props.match.params;
-    return <div>面试题</div>
-}
 
 class App extends React.PureComponent {
     state = {
@@ -45,12 +42,15 @@ class App extends React.PureComponent {
         }],
         current: '/home'
     }
-    goto = ({ key }) => {
+    gotoPage = ({ key }) => {
         this.setState({
             current:key
         })
-        this.props.history.push(key);
+        this.goto(key);
         // this.props.history.replace(path);
+    }
+    goto = (path)=>{
+        this.props.history.push(path);
     }
     componentWillMount(){
         const {pathname} = this.props.location;
@@ -64,7 +64,7 @@ class App extends React.PureComponent {
             <div>
                 <Row style={{backgroundColor:'#001529'}}>
                     <Col span={12}>
-                        <Menu onClick={this.goto} selectedKeys={[current]} mode="horizontal" theme="dark">
+                        <Menu onClick={this.gotoPage} selectedKeys={[current]} mode="horizontal" theme="dark">
                             {
                                 menu.map(item => <Menu.Item key={item.path}>
                                     {item.icon}
@@ -74,8 +74,8 @@ class App extends React.PureComponent {
                         </Menu>
                     </Col>
                     <Col span={12} style={{textAlign:'right',lineHeight:'46px'}}>
-                        <Button type="link">注册</Button>
-                        <Button type="link">登录</Button>
+                        <Button type="link" onClick={this.goto.bind(this,'/reg')}>注册</Button>
+                        <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>
                     </Col>
                 </Row>
                 <Switch>

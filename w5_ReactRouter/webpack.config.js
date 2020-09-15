@@ -57,7 +57,17 @@ module.exports = {
             {
                 test:/\.css$/,
                 use:['style-loader','css-loader']
-            }
+            },
+
+             // sass loader
+             {
+                test:/\.s[ac]ss$/,
+
+                // 增加编译速度
+                // include:'./src',
+                // exclude:'./node_modules',
+                use:['style-loader','css-loader','sass-loader']
+            },
         ]
     },
 
