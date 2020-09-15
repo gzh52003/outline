@@ -58,11 +58,9 @@ export function withAuth(InnerComponent){
         //     super(props);
         // }
         componentDidMount(){
-            console.log('OuterComponent')
             super.componentDidMount();
         }
         render(){
-            console.log('OuterComponent.props=',this.props)
             // 根据条件选择是否渲染InnerComponent
             if(this.props.currentUser.username){
                 return super.render()
@@ -71,4 +69,10 @@ export function withAuth(InnerComponent){
             // return <div>未登录无法访问</div>
         }
     }
+}
+
+export default {
+    withUser,
+    withStorage,
+    withAuth
 }

@@ -21,7 +21,6 @@ class Mine extends React.PureComponent{
         //     currentUser = {}
         // }
 
-        console.log('Mine.props',this.props)
     }
     render(){
         return (

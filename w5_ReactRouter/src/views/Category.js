@@ -39,7 +39,6 @@ class Category extends React.PureComponent {
     }
     componentWillMount(){
         const {pathname} = this.props.location;
-        console.log('pathname=',pathname.replace(this.props.match.url,''));
         this.setState({
             current:pathname.replace(this.props.match.url,'')
         })
@@ -47,7 +46,6 @@ class Category extends React.PureComponent {
     render() {
         const {menu,current} = this.state;
         const {match} = this.props;
-        console.log('props=',this.props)
         return (
             <div>
                 <Layout>

@@ -588,3 +588,14 @@
 * 动态路由
 * 嵌套路由
     > Route组件的嵌套
+
+
+## day7-2
+
+### 面试题
+* webpack如何配置多页面
+    * 在plugins中利用HtmlWebpackPlugin输出多个页面
+    * 配置多入口:entry采用对象方式
+
+### 知识点
+* webpack配置路径别名

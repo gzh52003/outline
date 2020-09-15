@@ -10,11 +10,10 @@ import Login from './views/Login'
 import Mine from './views/Mine'
 import Category from './views/Category'
 
-import { Menu } from 'antd';
+import { Menu,Row,Col,Button } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
 
 const IQ = (props)=>{
-    console.log('iq=',props)
     const {id} = props.match.params;
     return <div>面试题</div>
 }
@@ -26,17 +25,19 @@ class App extends React.PureComponent {
             name: 'home',
             icon:<HomeOutlined />,
             path: '/home'
-        }, {
-            text: '注册',
-            name: 'reg',
-            icon:<ContactsOutlined />,
-            path: '/reg'
-        }, {
-            text: '登录',
-            name: 'login',
-            icon:<TeamOutlined />,
-            path: '/login'
-        }, {
+        }, 
+        // {
+        //     text: '注册',
+        //     name: 'reg',
+        //     icon:<ContactsOutlined />,
+        //     path: '/reg'
+        // }, {
+        //     text: '登录',
+        //     name: 'login',
+        //     icon:<TeamOutlined />,
+        //     path: '/login'
+        // }, 
+        {
             text: '我的',
             name: 'mine',
             icon:<UserOutlined />,
@@ -59,18 +60,24 @@ class App extends React.PureComponent {
     }
     render() {
         const { menu, current } = this.state;
-        console.log('App.props=', this.props);
         return (
             <div>
-
-                <Menu onClick={this.goto} selectedKeys={[current]} mode="horizontal" theme="dark">
-                    {
-                        menu.map(item => <Menu.Item key={item.path}>
-                            {item.icon}
-                            {item.text}
-                        </Menu.Item>)
-                    }
-                </Menu>
+                <Row style={{backgroundColor:'#001529'}}>
+                    <Col span={12}>
+                        <Menu onClick={this.goto} selectedKeys={[current]} mode="horizontal" theme="dark">
+                            {
+                                menu.map(item => <Menu.Item key={item.path}>
+                                    {item.icon}
+                                    {item.text}
+                                </Menu.Item>)
+                            }
+                        </Menu>
+                    </Col>
+                    <Col span={12} style={{textAlign:'right',lineHeight:'46px'}}>
+                        <Button type="link">注册</Button>
+                        <Button type="link">登录</Button>
+                    </Col>
+                </Row>
                 <Switch>
                     <Route path="/home" component={Home} />
                     <Route path="/reg" component={Reg} />

@@ -3,7 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     // 入口
-    entry:path.join(__dirname,'./src/main.js'),
+    entry:{
+        main:path.join(__dirname,'./src/main.js'),
+    },
 
     // 服务器
     devServer:{
@@ -18,6 +20,14 @@ module.exports = {
         //         target:
         //     }
         // }
+    },
+
+    resolve:{
+        alias:{
+            '@': path.join(__dirname,'src'),
+            '#': path.join(__dirname,'src/components'),
+            '~': path.join(__dirname,'src/views')
+        }
     },
 
     // 加载器
@@ -53,7 +63,13 @@ module.exports = {
 
     plugins:[
         new HtmlWebpackPlugin({
-            template:path.join(__dirname,'./public/template.html')
-        })
+            template:path.join(__dirname,'./public/template.html'),
+            title:'H5面试宝典'
+        }),
+        // new HtmlWebpackPlugin({
+        //     filename:'login.html',
+        //     template:path.join(__dirname,'./public/template.html'),
+        //     title:'登录'
+        // })
     ]
 }
