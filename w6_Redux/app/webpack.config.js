@@ -6,12 +6,10 @@ module.exports = {
     entry:{
         main:path.join(__dirname,'./src/main.js'),
     },
-    
 
     // 服务器
     devServer:{
         contentBase:path.join(__dirname,'./public'),
-        port:20030,
         // open:true,
         compress:true,
         host:'0.0.0.0',// 允许外部访问
@@ -48,7 +46,7 @@ module.exports = {
                                 "libraryName": "antd",
                                 "libraryDirectory": "es",
                                 "style": "css" // `style: true` 会加载 less 文件
-                              }]
+                            }],
                         ]
                     }
                 }]

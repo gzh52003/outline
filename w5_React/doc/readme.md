@@ -599,3 +599,71 @@
 
 ### 知识点
 * webpack配置路径别名
+
+* 加密解密
+    * 单向加密
+        * md5
+        * sha256
+        * ...
+    * 双向加密
+        * 对称加密
+            > 加密端与解密端使用同一把钥匙
+        * 非对称加密
+            * 公钥
+            * 私钥
+            > 原理：
+                * 加密：公钥加密的数据只有私钥才能解密
+                * 签名：使用私钥加密，公钥解密
+        * 应用
+            * git: 配置公钥
+                * push: 
+                    1. 本地利用私钥对数据签名
+                    2. github利用公钥进行解密
+                * pull:
+                    1. github利用公钥加密
+                    2. 本地利用私钥进行解密
+            * https
+                > 原理：公钥+私钥
+                1. 第一次访问https服务器时，证书会自动下载到本地
+                2. 利用整数进行加密数据
+                3. 在服务器对密文进行解密
+
+
+## day7-3
+
+### 知识点
+
+#### redux
+* redux使用步骤
+    1. 引入redux
+    ```js
+        import {createStore} from 'redux';
+    ```
+    2. 创建一个仓库
+    ```js
+        const store = createStore(Reducer);
+    ```
+    3. 使用
+        * 获取state
+            * store.getState()
+        * 修改state：唯一修改state的方式就是reducer
+            * store.dispath(action)
+        * 监听state
+            * store.subscribe(fn)
+
+* redux核心
+    * reducer
+        * Reducer 必须是一个**纯函数**，
+        * 用于指定state修改逻辑，
+        * 它接受当前 state 和 action 作为参数，并根据state和action的值返回新的state
+    * store
+        * 常用方法
+            * store.getState()  获取仓库最新state状态    `Vue: this.$store.state`
+            * store.dispatch()  触发reducer，并修改state
+            * store.subscribe() 监听state修改
+    * action
+        > 格式：{type:'xxx',}
+    * state: 状态，存放数据的地方
+        * store.getState() 获取**最新**状态
+
+* 搞懂概念与操作流程
