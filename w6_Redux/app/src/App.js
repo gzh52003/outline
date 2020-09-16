@@ -13,10 +13,15 @@ import IQ from '~/IQ'
 
 import { Menu,Row,Col,Button } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
+import {connect} from 'react-redux'
 
+// import store from '@/store'
+
+// console.log('App.store=',store)
 
 class App extends React.PureComponent {
     state = {
+        // currentUser:{},
         menu: [{
             text: '首页',
             name: 'home',
@@ -57,9 +62,23 @@ class App extends React.PureComponent {
         this.setState({
             current:pathname
         })
+
+        
     }
+    // componentDidMount(){
+    //     console.log('App.componentDidMount')
+    //     store.subscribe(()=>{
+    //         console.log('App.subscribe')
+    //         const {currentUser} = store.getState();
+    //         this.setState({
+    //             currentUser:currentUser
+    //         })
+    //     })
+    // }
     render() {
         const { menu, current } = this.state;
+        const {currentUser} = this.props;
+        console.log('App.props=',this.props)
         return (
             <div>
                 <Row style={{backgroundColor:'#001529'}}>
@@ -74,8 +93,15 @@ class App extends React.PureComponent {
                         </Menu>
                     </Col>
                     <Col span={12} style={{textAlign:'right',lineHeight:'46px'}}>
-                        <Button type="link" onClick={this.goto.bind(this,'/reg')}>注册</Button>
-                        <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>
+                        {
+                            currentUser._id ? <Button type="link" onClick={()=>{
+                                // store.dispatch({type:'logout'})
+                            }}>退出</Button> :
+                            <>
+                            <Button type="link" onClick={this.goto.bind(this,'/reg')}>注册</Button>
+                            <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>
+                            </>
+                        }
                     </Col>
                 </Row>
                 <Switch>
@@ -98,5 +124,13 @@ class App extends React.PureComponent {
 
 // 高阶组件（包装函数）
 App = withRouter(App);
+
+const mapStateToProps = function(state){
+    // state: redux的状态
+    return {
+       currentUser:state.currentUser
+    }
+}
+App = connect(mapStateToProps)(App)
 
 export default App;

@@ -1,3 +1,14 @@
+/**
+ * redux核心概念
+    * store
+    * reducer   state的修改逻辑
+        * 参数
+            * state
+            * action
+    * action
+        * 格式：{type:''}
+ */
+// 1. 引入reduxt
 import {createStore} from 'redux';
 
 const initState = {
@@ -16,6 +27,11 @@ const reducer = function(state=initState,action){
             ...state,
             currentUser:action.user
         }
+        case 'logout':
+            return {
+                ...state,
+                currentUser:{}
+            }
         case 'showmenu':
             return {
                 ...state,
@@ -28,6 +44,12 @@ const reducer = function(state=initState,action){
     }
 }
 
+// 2. 创建仓库
 const store = createStore(reducer);
 
 export default store;
+
+// 3. 使用
+// 获取：store.getState()
+// 修改：store.dispatch(action)
+// 监听：store.subscribe(fn)

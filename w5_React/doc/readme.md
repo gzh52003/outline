@@ -667,3 +667,20 @@
         * store.getState() 获取**最新**状态
 
 * 搞懂概念与操作流程
+
+* react-redux
+    > 连接react组件与redux状态
+    
+    * 原理：利用context+高阶组件实现
+        1. 通过Provider组件共享store状态
+            
+        2. 利用connect()高阶组件接收store数据
+            > 通过props把需要的数据传入目标组件
+    * 使用
+        ```js
+                <Provider store={store}></Provider>
+
+                // App.js
+                // mapStateToProps: 映射redux上的state到组件的props
+                App = connect(mapStateToProps,mapDispatchToProps)(App);
+        ```

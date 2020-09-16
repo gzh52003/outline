@@ -2,17 +2,19 @@ import React from 'react';
 import {Form, Input,Button,Checkbox} from 'antd';
 import request from '@/utils/request';
 import CryptoJS from 'crypto-js';
-import store from '../store';
-console.log('store=',store);
-window.store = store;
-console.log('initState=',store.getState());
+import {connect} from 'react-redux'
 
-// 监听state修改
-store.subscribe(function(){
-    // 这个函数在state有修改时执行（调用dispatch时执行）
-    const state = store.getState();
-    console.log('state=',state)
-})
+// import store from '../store';
+// console.log('store=',store);
+// window.store = store;
+// console.log('initState=',store.getState());
+
+// // 监听state修改
+// store.subscribe(function(){
+//     // 这个函数在state有修改时执行（调用dispatch时执行）
+//     const state = store.getState();
+//     console.log('state=',state)
+// })
 
 
 
@@ -26,7 +28,7 @@ const layout = {
   
 
 function Login(props){
-
+    console.log('Login.props=',props)
     const onFinish = async ({username,password,mdl}) => {
         password = CryptoJS.SHA256(password);
         password = CryptoJS.enc.Hex.stringify(password)
@@ -43,7 +45,9 @@ function Login(props){
             // 把用户信息存入本地（数据持久化）
             // localStorage.setItem('currentUser',JSON.stringify(data.data));
 
-            store.dispatch({type:'login',user:data.data})
+            // store.dispatch({type:'login',user:data.data})
+            // props.dispatch({type:'login',user:data.data})
+            props.login(data.data)
         }
       };
     
@@ -94,5 +98,16 @@ function Login(props){
         </div>
     )
 }
+
+const mapStateToProps = ({currentUser})=>({currentUser})
+const mapDispatchToProps = function(dispatch){
+    return {
+        login(user){
+            dispatch({type:'login',user})
+        },
+        dispatch
+    }
+}
+Login = connect(mapStateToProps,mapDispatchToProps)(Login)
 
 export default Login;
