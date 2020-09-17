@@ -684,3 +684,78 @@
                 // mapStateToProps: 映射redux上的state到组件的props
                 App = connect(mapStateToProps,mapDispatchToProps)(App);
         ```
+
+
+## day7-4
+
+### 复习
+* redux
+    * 核心
+        * store
+        * reducer
+        * state
+        * action
+            > 格式：{type}
+    * 操作
+        * 获取：store.getState()
+        * 修改: store.dispatch(action)
+        * 监听: store.subscribe(fn)
+
+    ```js
+        import {createStore} from 'redux'
+
+        const initState = {
+
+        }
+
+        const reducer = function(state=initState,action){
+            // reducer有redux内部执行，并传递state与action作为参数
+            // 返回一个新的state
+
+            // 定义如何修改state
+            // 修改规则：创建新的数据去覆盖旧的数据
+
+
+        }
+
+        const store = createStore(reducer)
+
+    ```
+
+* react-redux
+    > 一个辅助工具，利用Context+高阶组件的方式实现状态的共享
+
+    * 在React中实现数据共享需要解决的问题
+        * 如何在多个组件中共享数据: Context
+        * 组件如何刷新: 高阶组件传递props
+    * Provider
+        ```js
+
+            <Provider store={store}></Provider> // <MyContext.Provider value={}></MyContext.Provider>
+        ```
+    * connect()
+        ```js
+            App = connect(mapStateToProps,mapDispatchToProps)(App)
+        ```
+
+### 知识点
+* 编写简化版redux
+
+* redux模块化(reducer模块化)
+    > 为什么要模块化
+    ```js
+        // VueX
+        new VueX.Store({
+            modules:{}
+        })
+
+        // Redux
+
+    ```
+
+* <div dangerouslySetInnerHTML={{ __html: htmlString}}></div>
+
+* actionCreator
+    > 为了简化代码操作
+    * action Creator: 一个用于创建action的函数
+    * bindActionCreators()

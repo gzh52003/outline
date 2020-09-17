@@ -2,7 +2,9 @@ import React from 'react';
 import {Form, Input,Button,Checkbox} from 'antd';
 import request from '@/utils/request';
 import CryptoJS from 'crypto-js';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux'
+import userAction,{login} from '../store/actions/user'
 
 // import store from '../store';
 // console.log('store=',store);
@@ -101,12 +103,23 @@ function Login(props){
 
 const mapStateToProps = ({currentUser})=>({currentUser})
 const mapDispatchToProps = function(dispatch){
-    return {
-        login(user){
-            dispatch({type:'login',user})
-        },
-        dispatch
-    }
+    // return {
+    //     login(user){
+    //         // dispatch({type:'login',user})
+    //         dispatch(login(user))
+    //     },
+    //     dispatch
+    // }
+    return bindActionCreators(userAction,dispatch)
+    // {login,logout} 等效于以下代码(bindActionCreators内部帮我们实现了以下代码)
+    // {
+    //     login: function(user){
+    //         dispatch(login(user))
+    //     },
+    //     logout:function(){
+    //         dispatch(logout())
+    //     }
+    // }
 }
 Login = connect(mapStateToProps,mapDispatchToProps)(Login)
 

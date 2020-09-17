@@ -18,7 +18,13 @@ import {connect} from 'react-redux'
 // import store from '@/store'
 
 // console.log('App.store=',store)
-
+const mapStateToProps = function(state){
+    return {
+       currentUser:state.user
+    }
+}
+@connect(mapStateToProps)
+@withRouter
 class App extends React.PureComponent {
     state = {
         // currentUser:{},
@@ -123,14 +129,15 @@ class App extends React.PureComponent {
 }
 
 // 高阶组件（包装函数）
-App = withRouter(App);
+// App = withRouter(App);
 
-const mapStateToProps = function(state){
-    // state: redux的状态
-    return {
-       currentUser:state.currentUser
-    }
-}
-App = connect(mapStateToProps)(App)
+// const mapStateToProps = function(state){
+//     console.log('state=',state)
+//     // state: redux的状态
+//     return {
+//        currentUser:state.user
+//     }
+// }
+// App = connect(mapStateToProps)(App)
 
 export default App;

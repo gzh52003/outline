@@ -10,39 +10,42 @@
  */
 // 1. 引入reduxt
 import {createStore} from 'redux';
+import reducer from './reducers'
 
-const initState = {
-    currentUser:{},
-    showMenu:true,
-}
+// const initState = {
+//     currentUser:{},
+//     showMenu:true,
+// }
 
-// reducer必须为纯函数
-// dispatch({type:'changeUser',user})
-// dispatch({type:'changeMenu'})
-const reducer = function(state=initState,action){
-    console.log('reducer=',state,action);
-    switch(action.type){
-        case 'login':
-        return {
-            ...state,
-            currentUser:action.user
-        }
-        case 'logout':
-            return {
-                ...state,
-                currentUser:{}
-            }
-        case 'showmenu':
-            return {
-                ...state,
-                showMenu:action.show
-            }
+// // reducer必须为纯函数
+// // dispatch({type:'changeUser',user})
+// // dispatch({type:'changeMenu'})
+// const reducer = function(state=initState,action){
+//     console.log('reducer=',state,action);
+//     switch(action.type){
+//         case 'login':
+//         return {
+//             ...state,
+//             currentUser:action.user
+//         }
+//         case 'logout':
+//             return {
+//                 ...state,
+//                 currentUser:{}
+//             }
+//         case 'showmenu':
+//             return {
+//                 ...state,
+//                 showMenu:action.show
+//             }
         
 
-        default:
-            return state;
-    }
-}
+//         default:
+//             return state;
+//     }
+// }
+
+
 
 // 2. 创建仓库
 const store = createStore(reducer);
