@@ -2,36 +2,39 @@ import React from 'react';
 import { Rate,Avatar,Input,Button } from 'antd'
 import {UserOutlined,HeartOutlined} from '@ant-design/icons'
 import request from '@/utils/request';
+import {connect} from 'react-redux';
 
+@connect(state=>({
+    currentUser:state.user
+}),(dispatch)=>({
+    updateUser(user){
+        dispatch({type:'update_user',user})
+    }
+}))
 class IQ extends React.PureComponent {
     state = {
         data: {}
     }
     follow = async ()=>{
         const {data} = this.state;
+        const {currentUser,updateUser} = this.props;
         // 判断是否有收藏
-        const issc = data.focus.some(item=>item===data._id);
+        const issc = currentUser.focus.some(item=>item===data._id);
         const result = await request.put(`iq/${data._id}/follow`,{
-            userid:'5da2d3f8e9307b0cb050d958',
+            userid:currentUser._id,
             action:issc ? 'del' : 'add',//del
         });
 
         if(result.status === 200){
             if(issc){
                 // 取消收藏
-                this.setState({
-                    data:{
-                        ...data,
-                        focus:data.focus.filter(item=>item!==data._id)
-                    }
+                updateUser({
+                    focus:currentUser.focus.filter(id=>id!==data._id)
                 })
             }else{
                 // 添加收藏
-                this.setState({
-                    data:{
-                        ...data,
-                        focus:[data._id,...data.focus]
-                    }
+                updateUser({
+                    focus:[data._id,...currentUser.focus]
                 })
             }
         }
@@ -58,12 +61,13 @@ class IQ extends React.PureComponent {
     }
     render() {
         const { data } = this.state;
+        const {currentUser} = this.props;
         return <div style={{padding:15}}>
             <h1>{data.question}</h1>
     <div>
         {data.user ? <span><Avatar size="small" style={{marginRight:5}} icon={<UserOutlined />} />{data.user.username}</span>:''} 
         <span style={{margin:'0 10px'}}>难度：<Rate value={data.difficulty} disabled /></span> 
-    <span>浏览：{data.hot}</span> <Button type="link" size="small" icon={<HeartOutlined />} onClick={this.follow}>{data.focus && data.focus.some(item=>item===data._id) ? '取消' : '收藏'}</Button></div>
+    <span>浏览：{data.hot}</span> <Button type="link" size="small" icon={<HeartOutlined />} onClick={this.follow}>{currentUser.focus.some(item=>item===data._id) ? '取消' : '收藏'}</Button></div>
         <Input.TextArea style={{height:100,marginBottom:10}}></Input.TextArea>
         <Button type="primary" size="large">添加答案</Button>
         </div>

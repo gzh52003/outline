@@ -759,3 +759,36 @@
     > 为了简化代码操作
     * action Creator: 一个用于创建action的函数
     * bindActionCreators()
+
+* redux
+    * store
+    * state
+    * reducer
+    * 中间件middleware
+* redux-saga
+    * Generator 生成器
+        > 生成器函数，返回一个迭代器
+        * yield     暂停
+        * return    结束
+    * Iterator  迭代器(遍历)
+        * next()    返回格式为：{value,done}的对象
+            * value: 迭代到当前位置的值
+            * done： 迭代器是否迭代完毕
+        * for...of  能遍历具有迭代器特性的数据
+            > 内部会自动调用迭代器的next方法
+    ```js
+        function* show(){
+            console.log('start')
+            yield 10
+            console.log(1)
+            yield 20
+            console.log(2)
+            return 100
+            console.log('end')
+        }
+
+    ```
+
+    * sagaAction
+        > sagaAction = reducerAction + '_async'
+    * reducerAction

@@ -14,6 +14,7 @@ import IQ from '~/IQ'
 import { Menu,Row,Col,Button } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
 import {connect} from 'react-redux'
+import {logout} from './store/actions/user'
 
 // import store from '@/store'
 
@@ -23,7 +24,14 @@ const mapStateToProps = function(state){
        currentUser:state.user
     }
 }
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        logout(){
+            dispatch(logout())
+        }
+    }
+}
+@connect(mapStateToProps,mapDispatchToProps)
 @withRouter
 class App extends React.PureComponent {
     state = {
@@ -83,7 +91,7 @@ class App extends React.PureComponent {
     // }
     render() {
         const { menu, current } = this.state;
-        const {currentUser} = this.props;
+        const {currentUser,logout} = this.props;
         console.log('App.props=',this.props)
         return (
             <div>
@@ -100,9 +108,7 @@ class App extends React.PureComponent {
                     </Col>
                     <Col span={12} style={{textAlign:'right',lineHeight:'46px'}}>
                         {
-                            currentUser._id ? <Button type="link" onClick={()=>{
-                                // store.dispatch({type:'logout'})
-                            }}>退出</Button> :
+                            currentUser._id ? <Button type="link" onClick={logout}>退出</Button> :
                             <>
                             <Button type="link" onClick={this.goto.bind(this,'/reg')}>注册</Button>
                             <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>

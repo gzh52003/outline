@@ -1,11 +1,8 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
 import {withUser,withAuth, withStorage} from '../utils/hoc';
 
-@withStorage('logined')
-@withStorage('username')
-@withUser
-@withAuth
+@connect()
 class Mine extends React.PureComponent{
     componentDidMount(){
 
@@ -21,6 +18,7 @@ class Mine extends React.PureComponent{
         //     currentUser = {}
         // }
 
+        this.props.dispatch({type:'update_user_async',userid:'5f621e5f6b0ad020c4219012'})
     }
     render(){
         return (

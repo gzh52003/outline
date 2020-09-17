@@ -42,14 +42,16 @@ function Login(props){
         });
         console.log('user=',data.data);
         if(data.status === 200){
-            // 跳转到我的页面
-            props.history.push('/mine')
+            
             // 把用户信息存入本地（数据持久化）
             // localStorage.setItem('currentUser',JSON.stringify(data.data));
 
             // store.dispatch({type:'login',user:data.data})
             // props.dispatch({type:'login',user:data.data})
-            props.login(data.data)
+            props.login(data.data);
+
+            // 跳转到我的页面
+            props.history.push('/mine')
         }
       };
     
