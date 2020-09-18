@@ -9,8 +9,10 @@
         * 格式：{type:''}
  */
 // 1. 引入reduxt
-import {createStore,applyMiddleware} from 'redux';
+import {createStore,applyMiddleware,compose} from 'redux';
 import reducer from './reducers'
+
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 // const initState = {
 //     currentUser:{},
@@ -50,6 +52,7 @@ import mysaga from './saga';
 // saga使用步骤1：引入saga
 import createSagaMiddleware from 'redux-saga';
 
+
 // saga使用步骤2: 创建saga中间件
 const sagaMiddleware = createSagaMiddleware();
 
@@ -57,7 +60,11 @@ const sagaMiddleware = createSagaMiddleware();
 // 2. 创建仓库
 
 // saga使用步骤3：把saga中间件与store进行结合
-const enhancer = applyMiddleware(sagaMiddleware);
+let enhancer = applyMiddleware(sagaMiddleware);
+
+enhancer = composeWithDevTools(enhancer);
+
+// enhancer = compose(enhancer,composeWithDevTools())
 const store = createStore(reducer,enhancer);
 
 // saga使用步骤4：运行 Saga配置

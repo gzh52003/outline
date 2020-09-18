@@ -792,3 +792,47 @@
     * sagaAction
         > sagaAction = reducerAction + '_async'
     * reducerAction
+
+
+## day7-5
+
+### 复习
+* redux模块化（reducer模块化）
+    * 分离：把不同的模块分离到多个reducer中
+    * 合并：combineReducers
+* action creator
+    > 封装生成action的方法，可以简化我们的代码
+    * bindActionCreators
+* 简化版的redux
+
+* redux中间件
+    * redux-saga
+    * Generator
+        > 返回一个迭代器
+        * yield     暂停
+        * return    结束
+    * Iterator
+        * next() 返回格式为：{value,done} 的对象
+        * for...of
+
+    ```js
+        let obj = {a:10,b:20,c:30}
+        //for(let val of obj){
+            // 报错
+        //}
+
+        function* create(o){
+            let idx = 0;
+            let length = Object.keys(o).length
+            for(var key in o){
+                idx++
+                yield {value:o[key],done:idx===length}
+            }
+        }
+
+        Object.defineProperty(obj,Symbol.iterator,{
+            value(){
+                return create(obj)
+            }
+        })
+    ```
