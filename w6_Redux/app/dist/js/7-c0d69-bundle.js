@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{584:function(e,n,t){"use strict";t.r(n);var s,a=t(0),p=t.n(a),r=t(69);t(61);let c=Object(r.b)()(s=class extends p.a.PureComponent{componentDidMount(){this.props.dispatch({type:"update_user_async",userid:"5f621e5f6b0ad020c4219012"})}render(){return p.a.createElement("div",null,"Mine")}})||s;n.default=c}}]);

@@ -1,15 +1,23 @@
-import React from 'react';
+import React,{Suspense, lazy } from 'react';
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom'
 
 import './App.scss';
 
 // 引入页面组件
 import Home from './views/Home'
-import Reg from './views/Reg'
-import Login from './views/Login'
-import Mine from './views/Mine'
-import Category from './views/Category'
-import IQ from '~/IQ'
+// import Reg from './views/Reg'
+// import Login from './views/Login'
+// import Mine from './views/Mine'
+// import Category from './views/Category'
+// import IQ from '~/IQ'
+
+// 路由懒加载
+// const Home = lazy(() => import("./views/Home"));
+const Reg = lazy(() => import("./views/Reg"));
+const Login = lazy(() => import("./views/Login"));
+const Mine = lazy(() => import("./views/Mine"));
+const Category = lazy(() => import("./views/Category"));
+const IQ = lazy(() => import("./views/IQ"));
 
 import { Menu,Row,Col,Button } from 'antd';
 import { HomeOutlined, ContactsOutlined, TeamOutlined,UserOutlined } from '@ant-design/icons';
@@ -78,19 +86,22 @@ class App extends React.PureComponent {
                         <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>
                     </Col>
                 </Row>
-                <Switch>
-                    <Route path="/home" component={Home} />
-                    <Route path="/reg" component={Reg} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/mine" component={Mine} />
-                    <Route path="/category" component={Category} />
-                    <Route path="/iq/:id" component={IQ} />
-                    <Route path="/notfound" render={() => <div>404</div>} />
-                    <Redirect from="/" to="/home" exact />
+                <Suspense fallback={<div>loading...</div>}>
+                    <Switch>
+                        <Route path="/home" component={Home} />
+                        <Route path="/reg" component={Reg} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/mine" component={Mine} />
+                        <Route path="/category" component={Category} />
+                        <Route path="/iq/:id" component={IQ} />
+                        <Route path="/notfound" render={() => <div>404</div>} />
+                        <Redirect from="/" to="/home" exact />
 
-                    {/* 404 */}
-                    {/* <Redirect to="/notfound" /> */}
-                </Switch>
+                        {/* 404 */}
+                        {/* <Redirect to="/notfound" /> */}
+                    </Switch>
+
+                </Suspense>
             </div>
         )
     }

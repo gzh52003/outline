@@ -1,10 +1,18 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     // 入口
     entry:{
         main:path.join(__dirname,'./src/main.js'),
+    },
+
+    // 出口配置
+    output:{
+        // 打包后文件保存路径
+        path:path.join(__dirname,'dist'),
+        filename: "js/[name]-[hash:5]-bundle.js"//打包后输出的文件名
     },
 
     // 服务器
@@ -34,6 +42,7 @@ module.exports = {
         rules:[
             {
                 test:/\.jsx?$/,
+                exclude:path.resolve(__dirname,'./node_modules'),
                 use:[{
                     loader:'babel-loader',
                     options:{
@@ -80,5 +89,6 @@ module.exports = {
         //     template:path.join(__dirname,'./public/template.html'),
         //     title:'登录'
         // })
+        new CleanWebpackPlugin(),
     ]
 }
