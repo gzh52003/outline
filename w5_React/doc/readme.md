@@ -844,3 +844,25 @@
 * HOOK
     * 注意事项
         * 只能在函数组件中使用
+        * 不要在循环语句，条件或嵌套函数中调用 Hook， 确保总是在你的 React 函数的最顶层调用他们
+        * 函数组件每次更新都会从上往下执行完内部所有的代码
+    * useState
+        > 用法：`const [value,changeValue] = useState(initValue)`
+    * useEffect
+        > 用来实现类组件中生命周期函数的功能
+        * 用法：
+            1. useEffect(function(){})
+            2. useEffect(function(){},[qty])
+            3. useEffect(function(){},[])
+            4. 
+            ```js
+                useEffect(function(){ 
+                    return function(){
+                        // 这里的代码在组件被销毁时执行
+                    }
+                },[])
+            ```
+    * useMemo
+        > 返回值：依赖改变返回新的值，否则返回缓存值
+    * useCallback
+    * useContext

@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 
 import App from './App'
 
+import MyContext from './context'
+
 ReactDOM.render(
-    <App/> // React.createElement()
+    <MyContext.Provider value={{username:'laoxie',password:123456}}>
+        <App/>
+    </MyContext.Provider>
     ,
     document.querySelector('#app')
 )
