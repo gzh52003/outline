@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx'
 import TodoList from './components/TodoList/'
 import Lifecycle from './components/Lifecycle'
 
+import Hook from './pages/Hook.jsx'
 // function App(){
 //     return <div>
 //         {/* <TodoList /> */}
@@ -22,7 +23,7 @@ class App extends React.Component{
     render(){
         return (
             <div>
-                <TodoList />
+                {/* <TodoList />
                 {
                     this.state.show ? 
                     <Lifecycle username={this.state.username}/>
@@ -43,7 +44,10 @@ class App extends React.Component{
                     this.setState({
                         age:this.state.age+1
                     })
-                }}>修改age:{this.state.age}</button>
+                }}>修改age:{this.state.age}</button> */}
+
+
+                <Hook/>
             </div>
         )
     }
