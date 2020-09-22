@@ -32,6 +32,7 @@ function reducer(state,action){
 }
 
 function UseReducer() {
+
     const [state, dispatch] = useReducer(reducer, initState);
     const clearCart = useCallback(function(){
         const action = {type:'clear'}

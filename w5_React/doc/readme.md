@@ -843,7 +843,7 @@
 ### 知识点
 * HOOK
     * 注意事项
-        * 只能在函数组件中使用
+        * 只能在函数组件或自定义Hook中使用
         * 不要在循环语句，条件或嵌套函数中调用 Hook， 确保总是在你的 React 函数的最顶层调用他们
         * 函数组件每次更新都会从上往下执行完内部所有的代码
     * useState
@@ -866,3 +866,23 @@
         > 返回值：依赖改变返回新的值，否则返回缓存值
     * useCallback
     * useContext
+
+
+## day8-2
+
+### 复习
+* useState
+* useEffect
+* useCallback
+* useMemo
+* useContext
+* useReducer
+
+### 知识点
+* useRef
+* useLayoutEffect   useEffect的同步版本
+* useImperativeHandle
+* useDebugValue
+
+* 自定义hook
+    * 需求驱动开发

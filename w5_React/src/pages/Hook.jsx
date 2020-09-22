@@ -6,6 +6,7 @@ import UseMemo from '../components/Hook/UseMemo';
 import UseCallback from '../components/Hook/UseCallback';
 import UseContext from '../components/Hook/UseContext';
 import UseReducer from '../components/Hook/UseReducer';
+import UseStorage from '../components/Hook/UseStorage';
 
 function Hook(){
     const [show,changeShow] = useState(true)
@@ -28,6 +29,7 @@ function Hook(){
             <UseCallback/>
             <UseContext/>
             <UseReducer/>
+            <UseStorage/>
         </div>
     )
 }
