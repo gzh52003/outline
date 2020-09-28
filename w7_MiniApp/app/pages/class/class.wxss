@@ -1,1 +1,6 @@
 /* pages/class/class.wxss */
+
+.current{
+  font-weight:bold;
+  color:#f90
+}

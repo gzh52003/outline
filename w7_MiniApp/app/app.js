@@ -33,6 +33,10 @@ App({
       }
     })
   },
+  onShow(option){
+    console.log('App.onShow',option);
+    
+  },
   globalData: {
     userInfo: null
   }

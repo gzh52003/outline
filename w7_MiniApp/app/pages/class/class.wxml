@@ -1,2 +1,6 @@
-<!--pages/class/class.wxml-->
-<text>pages/class/class.wxml</text>
+<view>
+  <view wx:for="{{classList}}" class="{{item.is_current?'current':''}}">
+    {{item.city}}-{{item.category}}-{{item.name}}
+  </view>
+
+</view>

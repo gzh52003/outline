@@ -1,11 +1,21 @@
 <view>
     <view class="title">Mine</view>
-    <view>
+    <view wx:if="{{showUser}}">
         <view>用户信息</view>
         <image class="avatar" lazy-load src="{{userInfo.avatarUrl}}"></image>
         <view>{{userInfo.username}} - {{userInfo.role}} - {{qty}}</view>
         <label for="username">用户名：</label>
         <!-- <input type="text" value="{{userInfo.username}}" bind:input="changeUsername"/> -->
         <input type="text" model:value="{{qty}}"/>
+    </view>
+    <button type="primary" bind:tap="changeUserStatus">显示/隐藏</button>
+    <view class="list">
+        <block wx:for="{{goodslist}}" wx:key="*this">
+            <view>
+            {{index+1}}-{{item.name}}
+                <view wx:for="{{item.list}}" wx:for-item="it" wx:for-index="idx">{{index+1}}.{{idx+1}} - {{item.key}} : {{it}}</view>
+            </view>
+            <view>111</view>
+        </block>
     </view>
 </view>
