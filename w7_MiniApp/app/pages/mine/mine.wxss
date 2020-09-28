@@ -1,0 +1,8 @@
+/* pages/mine/mine.wxss */
+
+.title{
+    font-size:24px;
+    text-align:center;
+}
+
+.avatar{width:60rpx;height:60rpx}

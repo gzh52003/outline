@@ -1,0 +1,11 @@
+<view>
+    <view class="title">Mine</view>
+    <view>
+        <view>用户信息</view>
+        <image class="avatar" lazy-load src="{{userInfo.avatarUrl}}"></image>
+        <view>{{userInfo.username}} - {{userInfo.role}} - {{qty}}</view>
+        <label for="username">用户名：</label>
+        <!-- <input type="text" value="{{userInfo.username}}" bind:input="changeUsername"/> -->
+        <input type="text" model:value="{{qty}}"/>
+    </view>
+</view>
