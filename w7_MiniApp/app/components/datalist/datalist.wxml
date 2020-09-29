@@ -1,0 +1,6 @@
+<view>
+  datalist组件
+  <view wx:for="{{data}}">
+    {{item.username || item.name}}
+  </view>
+</view>

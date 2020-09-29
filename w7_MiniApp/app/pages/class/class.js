@@ -22,7 +22,7 @@ Page({
         console.log(data);
 
         this.setData({
-          classList:data.data
+          classList:data.data.result
         })
       }
     })
@@ -33,6 +33,11 @@ Page({
    */
   onReady: function () {
     console.log('onReady')
+
+    const tabbar = this.getTabBar();
+    tabbar.setData({
+      current:1
+    })
   },
 
   /**

@@ -1,6 +1,7 @@
 <view>
-  <view wx:for="{{classList}}" class="{{item.is_current?'current':''}}">
+  <datalist data="{{classList}}"></datalist>
+  <!-- <view wx:for="{{classList}}" class="{{item.is_current?'current':''}}">
     {{item.city}}-{{item.category}}-{{item.name}}
-  </view>
+  </view> -->
 
 </view>

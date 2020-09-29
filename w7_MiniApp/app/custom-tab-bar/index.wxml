@@ -1,0 +1,5 @@
+<!--custom-tab-bar/index.wxml-->
+<cover-view class="tabbar">
+    <!-- <text wx:for="{{menu}}">{{item.text}}</text> -->
+    <mp-tabbar list="{{menu}}" bindchange="tabChange" current="{{current}}"></mp-tabbar>
+</cover-view>
