@@ -12,7 +12,7 @@
       </swiper-item>
   </swiper>
   <rich-text nodes="<div><h1>test</h1><p>abc</p></div>"></rich-text>
-
+  <view>{{motto}}</view>
   <view class="section">
   <view class="section__title">普通选择器</view>
   <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
@@ -54,8 +54,22 @@
     </view>
   </picker>
 </view>
+<view>date:{{format.formatData()}} {{format.formatTime()}}</view>
+<view>format.wxs:{{date.formatDate()}} -> {{date.formatDate('2020/9/29')}}</view>
 <navigator url="/pages/logs/logs">logs</navigator>
 <button bindtap="goto">logs</button>
 
 <datalist data="{{userList}}"></datalist>
+
 </view>
+
+<wxs module="format">
+  function formatData(){
+    return '2020-9-29'
+  }
+  module.exports.formatData = formatData;
+  module.exports.formatTime = function(){
+    return '14:38:39'
+  }
+</wxs>
+<wxs src="../../wxs/format.wxs" module="date"></wxs>

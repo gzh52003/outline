@@ -29,7 +29,16 @@ Page({
         key:'marketPrice',
         list:[31,32,33]
       }],
-      showUser:false
+      showUser:false,
+      userList:[{
+        username:'laoxie',
+        role:'admin',
+        avatar:'/assets/img/home.png'
+      },{
+        username:'jingjing',
+        role:'vip',
+        avatar:'/assets/img/home_active.png'
+      }]
   },
 
   changeUsername(e){

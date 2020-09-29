@@ -161,4 +161,27 @@
     * weui-miniprogram
         1. 安装：`npm i weui-miniprogram`
         2. 构建编译npm模块
-        3. 
+        3. usingComponents引入模块
+
+
+
+#### 模块化
+* js模块化
+    > 符合commonJS规范的模块化
+    * 导入
+        * require()
+    * 导出
+        * module.exports
+        * exports
+* this指向
+    > 函数怎么调用
+    * 是否通过new调用: new request.post()
+        * this指向创建的实例
+    * 是否通过`.`语法调用: request.post()
+        * this指向`.`前面的对象
+    * 直接调用: post()
+        * this指向window
+* wxs模块化
+
+* wxml模板
+    > 提取重复的wxml结构到单独的文件中,然后在需要的地方引入

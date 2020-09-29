@@ -1,0 +1,29 @@
+<!-- 模板定义 -->
+<wxs module="common">
+
+</wxs>
+<template name="userInfo">
+    <view class="box">
+        <view class="left">
+            <image src="{{user.avatar}}" style="width:100px;height:100px" />
+        </view>
+        <view class="right">
+            <view class="title">{{user.username}}</view>
+            <view class="info">
+                角色: {{user.role}}
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="goodslist">
+    <view class="datalist">
+        <view class="right">
+            商品列表
+        </view>
+    </view>
+</template>
+
+<view>
+    template以外的内容
+</view>

@@ -226,5 +226,6 @@ Page({
     wx.navigateTo({
       url:'/pages/logs/logs'
     })
-  }
+  },
+  
 })

@@ -1,3 +1,6 @@
+<!-- 引入模板 -->
+<import src="../../template/index.wxml" />
+
 <view>
     <view class="title">Mine</view>
     <view wx:if="{{showUser}}">
@@ -9,7 +12,7 @@
         <input type="text" model:value="{{qty}}"/>
     </view>
     <button type="primary" bind:tap="changeUserStatus">显示/隐藏</button>
-    <view class="list">
+    <!-- <view class="list">
         <block wx:for="{{goodslist}}" wx:key="*this">
             <view>
             {{index+1}}-{{item.name}}
@@ -17,5 +20,10 @@
             </view>
             <view>111</view>
         </block>
-    </view>
+    </view> -->
+
+    <!-- 使用模板 -->
+    <template is="userInfo" data="{{user:userList[0]}}"></template>
+    <template is="userInfo" data="{{user:userList[1]}}"></template>
+    <include src="../../template/index.wxml"></include>
 </view>

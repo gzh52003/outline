@@ -1,0 +1,18 @@
+/**
+ * wxs与javascript是不同的语言,有自己的语法
+ */
+ function formatDate(d){
+    d = d ? getDate(d) : getDate();
+    var year = d.getFullYear();
+    var month = d.getMonth()+1;
+    var date = d.getDate();
+
+    month = month<10 ? '0' + month : month;
+    date = date<10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date
+ }
+
+module.exports = {
+    formatDate:formatDate
+}

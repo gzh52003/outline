@@ -1,4 +1,6 @@
 // pages/class/class.js
+const request = require('../../utils/request');
+
 Page({
 
   /**
@@ -11,20 +13,25 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
     console.log('onLoad');
 
     // 获取班级信息
     // $.ajax({url,method})
-    wx.request({
-      url:'https://api.qfh5.cn/api/class',
-      success:({data})=>{
-        console.log(data);
+    // wx.request({
+    //   url:'https://api.qfh5.cn/api/class',
+    //   success:({data})=>{
+    //     console.log(data);
 
-        this.setData({
-          classList:data.data.result
-        })
-      }
+    //     this.setData({
+    //       classList:data.data.result
+    //     })
+    //   }
+    // })
+
+    const data = await request.get('/class');
+    this.setData({
+      classList:data.data.result
     })
   },
 
