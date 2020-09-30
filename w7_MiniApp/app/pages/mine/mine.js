@@ -38,7 +38,9 @@ Page({
         username:'jingjing',
         role:'vip',
         avatar:'/assets/img/home_active.png'
-      }]
+      }],
+      devicePosition:'back',
+      photo:''
   },
 
   changeUsername(e){
@@ -53,6 +55,33 @@ Page({
       showUser:!this.data.showUser
     })
   },
+  changeCamera(){
+    const {devicePosition} = this.data;
+    this.setData({
+      devicePosition: devicePosition==='back' ? 'front' :'back'
+    })
+  },
+  takePhoto(){
+    this.camera.takePhoto({
+      success:({tempImagePath})=>{
+        console.log('tempImagePath=',tempImagePath)
+        this.setData({
+          photo:tempImagePath
+        })
+
+        // 存入相册
+        wx.saveImageToPhotosAlbum({
+          filePath:tempImagePath,
+          success(){
+            wx.showToast({
+              icon:'none',
+              title:'存入相册成功'
+            })
+          }
+        })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -65,7 +94,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-   
+    this.camera = wx.createCameraContext();
   },
 
   /**
@@ -109,7 +138,13 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    console.log('share',res)
+    // 此事件处理函数需要 return 一个 Object，用于自定义转发内容，返回内容如下
+    return {
+      title:'震惊!xxx同学这样健身',
+      path:'/pages/mine/mine',
+      imageUrl:'/assets/img/jingjing.png'
+    }
   }
 })

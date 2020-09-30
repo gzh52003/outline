@@ -57,7 +57,10 @@ Page({
   onReady: function () {
     console.log('onReady')
 
-   
+   wx.setStorage({
+     key:'username',
+     data:{username:'laoxie',password:123456}
+   })
   },
 
   /**

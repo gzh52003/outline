@@ -76,6 +76,13 @@
 					"id": -1,
 					"name": "class",
 					"pathName": "pages/class/class",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "map",
+					"pathName": "pages/map/map",
 					"scene": null
 				}
 			]

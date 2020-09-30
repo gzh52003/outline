@@ -222,3 +222,13 @@
 
 
 ### 知识点
+* 常用接口
+    * 本地存储
+        * wx.setStorage()
+        * web:localStorage/sessionStorage
+    * 获取当前位置
+        * wx.getLocation()
+            * type
+                * wgs84    国际标准，从GPS设备中取出的数据的坐标系 
+                * gcj02    中国标准，从国行移动设备中定位获取的坐标数据使用这个坐标系
+                * bd09     在gcj02基础上进行二次加密后的坐标系
