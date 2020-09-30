@@ -7,13 +7,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classList:[]
+    classList:[],
+    page:1,
+    size:10,
+    hasMore:true
+  },
+
+  async getData(){
+    const {classList,page,size} = this.data;
+    // wx.showLoading({
+    //   title:'加载中...'
+    // })
+    const data = await request.get('/class',{
+      page,
+      size
+    });
+    this.setData({
+      classList:[...classList,...data.data.result],
+      total:data.data.total
+    });
+    // wx.hideLoading()
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
+  onLoad: function (options) {
     console.log('onLoad');
 
     // 获取班级信息
@@ -29,10 +48,7 @@ Page({
     //   }
     // })
 
-    const data = await request.get('/class');
-    this.setData({
-      classList:data.data.result
-    })
+    this.getData();
   },
 
   /**
@@ -41,10 +57,7 @@ Page({
   onReady: function () {
     console.log('onReady')
 
-    const tabbar = this.getTabBar();
-    tabbar.setData({
-      current:1
-    })
+   
   },
 
   /**
@@ -52,6 +65,10 @@ Page({
    */
   onShow: function () {
     console.log('class.onShow')
+    const tabbar = this.getTabBar();
+    tabbar.setData({
+      current:1
+    })
   },
 
   /**
@@ -72,14 +89,34 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log('刷新')
+    this.setData({
+      page:1,
+      size:10,
+      hasMore:true,
+      classList:[]
+    });
+    this.getData();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log('触底')
+    const {page,classList,total} = this.data;
+    if(classList.length<total){
+      this.setData({
+        page:page+1
+      });
+  
+      this.getData();
 
+    }else{
+      this.setData({
+        hasMore:false
+      })
+    }
   },
 
   /**

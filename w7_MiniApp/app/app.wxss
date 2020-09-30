@@ -10,3 +10,7 @@
   justify-content: space-between;
   box-sizing: border-box;
 } 
+.page-title{font-size:50rpx;color:#58bc58;}
+page{
+  padding-bottom:60px;
+}

@@ -1,5 +1,8 @@
 /* pages/class/class.wxss */
-
+.datalist{padding:30rpx}
+.list-item{
+  padding:40rpx 0;
+}
 .current{
   font-weight:bold;
   color:#f90

@@ -185,3 +185,40 @@
 
 * wxml模板
     > 提取重复的wxml结构到单独的文件中,然后在需要的地方引入
+
+## day8-3
+
+### 复习
+* 特殊组件
+    * block
+    * cover-view
+    * wxs
+    * template
+    * import
+    * include
+* 模块化
+    * js模块化
+    * wxs模块化
+    * wxml模板
+* 自定义组件
+    * App
+    * Page
+    * Component
+
+    * 定义组件
+    * 使用组件
+        * usingComponents
+    * 自定义tabbar
+        1. app.json-> tabBar.custom=true
+        2. 根目录创建custom-tab-bar
+* 第三方组件
+    * weui-miniprogram
+    * vant-weapp
+* 在小程序中使用npm模块
+    * 构建
+* 小程序跳转
+    * navigator
+    * 接口
+
+
+### 知识点

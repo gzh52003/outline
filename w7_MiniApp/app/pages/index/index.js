@@ -179,6 +179,29 @@ Page({
     })
   },
   onLoad: function () {
+    // wx.showToast({
+    //   icon:'none',
+    //   title: '数据删除成功',
+    //   mask:true,
+    // })
+
+    // wx.showModal({
+    //   content:'test',
+    //   success (res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // });
+
+    wx.showActionSheet({
+      itemList:['A','B','C'],
+      success (res) {
+        console.log(res.tapIndex)
+      },
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

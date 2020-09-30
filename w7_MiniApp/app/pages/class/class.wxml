@@ -1,7 +1,9 @@
-<view>
-  <datalist data="{{classList}}"></datalist>
-  <!-- <view wx:for="{{classList}}" class="{{item.is_current?'current':''}}">
+<view class="datalist">
+  <!-- <datalist data="{{classList}}"></datalist> -->
+  <view class="page-title">班级列表</view>
+  <view wx:for="{{classList}}" class="list-item {{item.is_current?'current':''}}">
     {{item.city}}-{{item.category}}-{{item.name}}
-  </view> -->
-
+  </view>
+  <view wx:if="{{!hasMore}}">------我是有底线的------</view>
+  <view wx:else>加载中...</view>
 </view>
