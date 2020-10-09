@@ -232,3 +232,77 @@
                 * wgs84    国际标准，从GPS设备中取出的数据的坐标系 
                 * gcj02    中国标准，从国行移动设备中定位获取的坐标数据使用这个坐标系
                 * bd09     在gcj02基础上进行二次加密后的坐标系
+
+## day8-5
+
+### 知识点
+* http与https的区别
+    * ssl
+    * 端口：80/443
+* 申请免费ssl
+    1. 购买域名
+    2. 购买免费ssl证书
+    3. ssl与域名绑定
+    4. 服务器配置ssl证书
+#### 云开发
+* 数据库
+* 存储空间
+* 云函数
+    > nodejs模块
+    * 使用步骤
+        1. 初始化
+            > 指定env环境
+        2. 操作
+            * 前端操作：接口
+            * 后端操作：云函数
+
+    * 在云函数中（后端）操作数据库
+    ```js
+        // 云开发初始化
+        const cloud = require('wx-server-sdk');
+
+        cloud.init({
+            env:'qf-52690b'
+        })
+        
+
+        exports.main = async function(){
+            // 获取数据库对象
+            const db = cloud.database();
+
+            // 获取对应集合
+            const col = db.collection('class');
+
+            // 获取班级列表（所有数据）
+            col.get()
+
+            // 获取对应条件的数据
+            const res = await col.where({
+                city:'广州'
+            }).get()
+
+
+            return {
+                code:1,
+                data:res,
+                msg:'success'
+            };
+        }
+    ```
+
+    * 在小程序段（前端）操作数据库
+    ```js
+
+        wx.cloud.init({
+            // cloud.DYNAMIC_CURRENT_ENV 云函数所在的环境
+            env:wx.cloud.DYNAMIC_CURRENT_ENV
+        });
+
+
+        const db = wx.cloud.database();
+        const col = db.collection('class');
+
+        const res = await col.get();
+        console.log('小程序端操作数据库',res);
+
+    ```

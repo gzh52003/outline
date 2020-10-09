@@ -1,5 +1,5 @@
 
-const baseUrl = 'http://120.76.247.5:2020' // https://api.qfh5.cn
+const baseUrl = 'https://api.qfh5.cn';//'http://120.76.247.5:2020' // 
 const apiUrl = baseUrl + '/api'
 
 function request(url,data={},options={}) {
