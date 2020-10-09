@@ -17,9 +17,15 @@ exports.main = async function(){
     // 获取班级列表（所有数据）
     //col.get()
 
+    // 云函数中调用其他云函数
+    // data = await cloud.callFunction({
+    //     name: 'city'
+    // })
+
     // 获取对应条件的数据
     const res = await col.where({
-        city:'广州'
+        city:'广州',
+        cc
     }).get()
 
 

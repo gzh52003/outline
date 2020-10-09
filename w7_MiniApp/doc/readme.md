@@ -245,64 +245,121 @@
     3. ssl与域名绑定
     4. 服务器配置ssl证书
 #### 云开发
-* 数据库
-* 存储空间
-* 云函数
-    > nodejs模块
-    * 使用步骤
-        1. 初始化
-            > 指定env环境
-        2. 操作
-            * 前端操作：接口
-            * 后端操作：云函数
+* 使用步骤
+    1. 初始化
+        > 指定env环境id，也可以使用一个常量：`cloud.DYNAMIC_CURRENT_ENV`
+    2. 操作
+        * 前端操作：接口
+            > wx.cloud
+        * 后端操作：云函数
+            > wx-server-sdk
+* 分类
+    * 数据库
+        > database,collection,document
+        * 在云函数中（后端）操作数据库
+        ```js
+            // 云开发初始化
+            const cloud = require('wx-server-sdk');
 
-    * 在云函数中（后端）操作数据库
-    ```js
-        // 云开发初始化
-        const cloud = require('wx-server-sdk');
+            cloud.init({
+                env:'qf-52690b'
+            })
+            
 
-        cloud.init({
-            env:'qf-52690b'
-        })
-        
+            exports.main = async function(){
+                // 获取数据库对象
+                const db = cloud.database();
 
-        exports.main = async function(){
-            // 获取数据库对象
-            const db = cloud.database();
+                // 获取对应集合
+                const col = db.collection('class');
 
-            // 获取对应集合
+                // 获取班级列表（所有数据）
+                col.get()
+
+                // 获取对应条件的数据
+                const res = await col.where({
+                    city:'广州'
+                }).get()
+
+
+                return {
+                    code:1,
+                    data:res,
+                    msg:'success'
+                };
+            }
+        ```
+
+        * 在小程序段（前端）操作数据库
+        ```js
+
+            wx.cloud.init({
+                // cloud.DYNAMIC_CURRENT_ENV 云函数所在的环境
+                env:wx.cloud.DYNAMIC_CURRENT_ENV
+            });
+
+
+            const db = wx.cloud.database();
             const col = db.collection('class');
 
-            // 获取班级列表（所有数据）
-            col.get()
+            const res = await col.get();
+            console.log('小程序端操作数据库',res);
 
-            // 获取对应条件的数据
-            const res = await col.where({
-                city:'广州'
-            }).get()
+        ```
+        * 数据常用方法
+            * 数据库方法
+                * cloud.database()  获取数据库对象
+                * db.collection(name)   获取集合
+            * 集合方法
+                * add({data})     添加
+                * remove()  删除
+                * update({data})  更新
+                * get()     获取集合下所有文档
+                * doc(id)   通过id获取文档
+                ```js
+                    col.where({id:'xxxx'}).remove()
+                ```
+            * 查询条件
+                * where
+                * limit
+                * orderBy
+                * skip
+            * 操作符：db.command
+            * 文档操作
+                * get()
+                * set()
+                * update()
+                * remove()
+    * 存储空间
+    * 云函数
+        * 定义
+            > nodejs模块
+            ```js
+                exports.main = function(event){
+                    // event.a,event.b获取传入的参数
+                    return 100
+                }
+            ```
+        * 使用
+            * 小程序端
+                > 接口：wx.cloud.callFunction
+            * 云函数调用云函数
+                > wx-server-sdk
 
+            ```js
+                wx.cloud.callFunction({
+                    name:'class',
 
-            return {
-                code:1,
-                data:res,
-                msg:'success'
-            };
-        }
-    ```
+                    // 云函数传参
+                    data:{
+                        a:10,
+                        b:20
+                    },
+                    success(res){
+                        // res.result为云函数的返回值
+                    }
+                })
 
-    * 在小程序段（前端）操作数据库
-    ```js
-
-        wx.cloud.init({
-            // cloud.DYNAMIC_CURRENT_ENV 云函数所在的环境
-            env:wx.cloud.DYNAMIC_CURRENT_ENV
-        });
-
-
-        const db = wx.cloud.database();
-        const col = db.collection('class');
-
-        const res = await col.get();
-        console.log('小程序端操作数据库',res);
-
-    ```
+            ```
+        * 测试
+    

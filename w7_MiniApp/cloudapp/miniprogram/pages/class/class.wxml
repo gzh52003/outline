@@ -1,2 +1,6 @@
 <!--pages/class/class.wxml-->
-<text>pages/class/class.wxml</text>
+<view>
+    <!-- <image src="cloud://qf-52690b.7166-qf-52690b-1257864894/icons/list_active.png"/>
+    <view wx:for="{{classList}}">{{item.city}}-{{item.category}}-{{item.name}}</view> -->
+    <button bindtap="uploadImage">选择图片</button>
+</view>
