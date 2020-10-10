@@ -1,0 +1,1 @@
+<view class="content"><view class="_h1">首页</view><image class="logo _img" src="/static/logo.png"></image><view class="text-area"><text class="title">{{title+" "+username}}</text></view></view>

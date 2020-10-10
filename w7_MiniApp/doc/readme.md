@@ -342,7 +342,7 @@
             ```
         * 使用
             * 小程序端
-                > 接口：wx.cloud.callFunction
+                > 接口：`wx.cloud.callFunction`
             * 云函数调用云函数
                 > wx-server-sdk
 
@@ -363,3 +363,23 @@
             ```
         * 测试
     
+## day8-6
+
+### 知识点
+* 跨平台框架
+    * uni-app
+    * taro
+    * mpvue
+    * ...
+* 跨平台框架实现原理
+    > 实现了一个编译器，把源代码编译成各个平台支持的代码
+* 注意事项
+
+
+* nativeApp
+* hybridApp
+* webApp
+* 小程序
+
+
+* mobx
