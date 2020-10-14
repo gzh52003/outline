@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>摄像头操作</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.container{padding:15px;}
+			.input-group{position: relative;}
+			.input-group .mui-icon{height:40px;position: absolute;right:5px;top:5px;bottom:0;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="input-group">
+				<input type="search" id="keyword" />
+				<i class="mui-icon mui-icon-mic" id="btnSpeech"></i>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			document.addEventListener('plusready',()=>{
+				btnSpeech.onclick = ()=>{
+					plus.speech.startRecognize( {
+						lang:'zh-cantonese',
+						engine:'iFly'
+					}, (result)=>{
+						console.log('result',result);
+						keyword.value = result;
+					}, (err)=>{
+						console.log('语音识别失败',JSON.stringify(err))
+					} )
+				}
+				
+			})
+		</script>
+	</body>
+</html>
