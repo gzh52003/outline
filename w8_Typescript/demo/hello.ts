@@ -103,3 +103,105 @@ const goodslist:Array<IGoods> = [{
  * 元组：元素类型不同的数组
  */
 let arr:[number,number,string] = [10,20,'h5']
+
+
+/**
+ * 函数类型校验
+    * 声明式函数
+        * 参数
+        * 返回值
+    * 赋值式函数
+ */
+
+ interface IData{
+     page?:number,
+     size?:number,
+     category?:string
+ }
+ interface IReturnData{
+     code:number,
+     data:Array<IGoods>,
+     msg:string,
+     get?:()=>IGoods, // 指定get为一个方法
+ }
+
+ function getData(url:string,data?:IData):IReturnData{
+     // ajax
+    return {
+        code:1,
+        data:[],
+        msg:'succes'
+    }
+}
+
+const result1 = getData('/list')
+const result2 = getData('/list',{page:2})
+
+// 无返回值函数
+function getData2(url:string):void{
+    
+}
+
+const getData3:(url:string,page:number,size:number)=>void = function(url:string,page:number=1,size:number=10):void{
+
+}
+
+
+/**
+ * 泛型编程
+ * 好处：可扩展行更强
+ */
+function getUser(arg:string):string{
+    return arg
+}
+
+// T为类型变量number,string
+function getUser2<T>(arg:T):T{
+    return arg
+}
+
+getUser('laoxie');// laoxie
+getUser2(100);
+getUser2('laoxie');
+
+
+/**
+ * class类
+ */
+
+ class Component{
+    // 公有方法：可以在任意位置访问
+    public getData(){
+        this.changeData();
+        this.username;//
+    }
+
+    // 私有方法：只能在内部访问
+    private  changeData(){
+
+    }
+
+    // 受保护的属性/方法：只能在当前类和子类中访问
+    protected name:string = 'component'
+
+    // 实例属性
+    username:string = 'laoxie'
+    // 静态属性/方法
+    static username:string = 'jingjing';
+ }
+ const com = new Component()
+ com.getData()
+//  com.changeData();
+com.username; // laoxie
+Component.username;//jingjing
+
+ class Home extends Component{
+    render(){
+        this.username;
+    }
+ }
+
+
+ const home = new Home();
+ home.getData();
+ home.changeData()
