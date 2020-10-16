@@ -7,7 +7,9 @@ const app = express();
 // express.static()中间件处理逻辑：
 // 1. 如匹配静态资源，直接返回
 // 2. 如果不匹配，则执行next()
-const middleware = express.static('./');
+const middleware = express.static('./',{
+    maxAge:1000*30
+});
 app.use(middleware); // next()
 
 // 自定义中间件

@@ -76,13 +76,27 @@ module.exports = {
                 // exclude:'./node_modules',
                 use:['style-loader','css-loader','sass-loader']
             },
+
+            // url-loader
+            {
+                test:/\.(jpe?g|png|gif|bmp)$/i,
+                use:[{
+                    loader:'url-loader',
+                    options: {
+                        // 图片大小如果小于等于10k，url-loader会自动把图片转成Base64编码吗
+                        limit: 10000,
+                        name: 'img/[name].[hash:5].[ext]'
+                      }
+                }]
+            }
         ]
     },
 
     plugins:[
         new HtmlWebpackPlugin({
             template:path.join(__dirname,'./public/template.html'),
-            title:'H5面试宝典'
+            title:'H5面试宝典',
+            hash:true
         }),
         // new HtmlWebpackPlugin({
         //     filename:'login.html',
